@@ -11,15 +11,22 @@ namespace SjonnieLoper.Core
         [Key]
         [Required]
         public int Id { get; set; }
+
         [Required]
         public ApplicationUser Customer { get; set; }
+
         [Required]
         [DisplayName("Orderd Wiskey")]
         public WhiskeyBase Orderd_Wiskey { get; set; }
+
         [Required]
         [DisplayName("Amount Orderd")]
         public int AmountOrderd { get; set; }
+
         [Required]
         public decimal Ordercost { get; set; }
+
+        [Required]
+        public bool Delivery { get; set; }
     }
 }
