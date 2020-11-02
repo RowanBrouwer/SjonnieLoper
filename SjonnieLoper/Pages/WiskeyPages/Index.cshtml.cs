@@ -26,8 +26,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public void OnGet()
         {
-            string name = null;
-            context.GetAllWhiskeys(name);
+            whiskeys = context.GetAllWhiskeys(SearchTerm);
         }
     }
 }

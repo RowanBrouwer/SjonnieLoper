@@ -23,8 +23,4 @@
     <ProjectReference Include="..\SjonnieLoper.DataBase\SjonnieLoper.DataBase.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
-
 </Project>

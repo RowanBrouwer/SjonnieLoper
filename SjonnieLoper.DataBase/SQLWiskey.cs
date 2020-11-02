@@ -57,7 +57,8 @@ namespace SjonnieLoper.DataBase
         public IEnumerable<WhiskeyBase> GetAllWhiskeys(string name)
         {
             var query = from w in db.Whiskeys
-                        where w.Name.StartsWith(name) || string.IsNullOrEmpty(name)
+                        where w.SoftDeleted == false
+                        where w.Name.StartsWith(name) || string.IsNullOrEmpty(name) || w.Brand.StartsWith(name) || w.CountryOforigin.StartsWith(name)
                         orderby w.Name
                         select w;
             return query;

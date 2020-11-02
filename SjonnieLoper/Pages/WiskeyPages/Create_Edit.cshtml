@@ -1,0 +1,54 @@
+﻿@page "{whiskeyId:int?}"
+@model SjonnieLoper.Pages.WiskeyPages.Create_EditModel
+@{
+}
+
+<h2>Editing @Model.Whiskey.Name</h2>
+
+<form method="post">
+
+    <input type="hidden" asp-for="Whiskey.Id" />
+
+    <div class="form-group">
+        <label asp-for="Whiskey.Brand"></label>
+        <input asp-for="Whiskey.Brand" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.Brand"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.Name"></label>
+        <input asp-for="Whiskey.Name" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.CountryOforigin"></label>
+        <input asp-for="Whiskey.CountryOforigin" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.CountryOforigin"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.Procentage"></label>
+        <input asp-for="Whiskey.Procentage" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.Procentage"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.AmountInStorage"></label>
+        <input asp-for="Whiskey.AmountInStorage" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.AmountInStorage"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.DateOfBottling"></label>
+        <input asp-for="Whiskey.DateOfBottling" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.DateOfBottling"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.Type"></label>
+        <select asp-for="Whiskey.Type" class="form-control" asp-items="Model.Types">
+        </select>
+        <span class="text-danger" asp-validation-for="Whiskey.Type"></span>
+    </div>
+
+    <button type="submit" class="btn btn-outline-dark">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

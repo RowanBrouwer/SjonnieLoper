@@ -1,0 +1,40 @@
+﻿@page  "{whiskeyId:int}"
+@model SjonnieLoper.Pages.WiskeyPages.DetailsModel
+@{
+}
+<h2>@Model.Whiskey.Name</h2>
+
+@if (Model.Message != null)
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<div>
+    Id: @Model.Whiskey.Id
+</div>
+<div>
+    Brand: @Model.Whiskey.Brand
+</div>
+<div>
+    Name: @Model.Whiskey.Name
+</div>
+<div>
+    Type: @Model.Whiskey.Type
+</div>
+<div>
+    Alc%: @Model.Whiskey.Procentage
+</div>
+<div>
+    Price: @Model.Whiskey.Price
+</div>
+<div>
+    Origin: @Model.Whiskey.CountryOforigin
+</div>
+<div>
+    Bottled Date: @Model.Whiskey.DateOfBottling
+</div>
+<div>
+    Amount avaible: @Model.Whiskey.AmountInStorage
+</div>
+
+<a asp-page="./Index" class="btn btn-outline-dark">All Whiskeys</a>

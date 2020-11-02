@@ -11,16 +11,16 @@
         <span>Cuisine: @Model.DateOfBottling</span>
     </div>
     <div class="panel-footer">
-        <a class="btn btn-lg" asp-page="./Detail"
-           asp-route-restaurantId="@Model.Id">
+        <a class="btn btn-lg" asp-page="./Details"
+           asp-route-whiskeyId="@Model.Id">
             <i class="glyphicon glyphicon-zoom-in"></i>
         </a>
-        <a class="btn btn-lg" asp-page="./Edit"
-           asp-route-restaurantId="@Model.Id">
+        <a class="btn btn-lg" asp-page="./Create_Edit"
+           asp-route-whiskeyId="@Model.Id">
             <i class="glyphicon glyphicon-edit"></i>
         </a>
         <a class="btn btn-lg" asp-page="./Delete"
-           asp-route-restaurantId="@Model.Id">
+           asp-route-whiskeyId="@Model.Id">
             <i class="glyphicon glyphicon-trash"></i>
         </a>
     </div>
