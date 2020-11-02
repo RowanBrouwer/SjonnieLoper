@@ -16,7 +16,6 @@ namespace SjonnieLoper.Core
         [Required]
         public string LName { get; set; }
 
-        [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Birthday  { get; set; }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SjonnieLoper.Data;
 
-namespace SjonnieLoper.Data.Migrations
+namespace SjonnieLoper.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -168,10 +168,12 @@ namespace SjonnieLoper.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -208,10 +210,12 @@ namespace SjonnieLoper.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -232,16 +236,12 @@ namespace SjonnieLoper.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CustomerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("Delivery")
-                        .HasColumnType("bit");
+                    b.Property<double>("Ordercost")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("Ordercost")
-                        .HasColumnType("decimal(18,20)");
-
-                    b.Property<int>("Orderd_WiskeyId")
+                    b.Property<int?>("Orderd_WiskeyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -264,26 +264,22 @@ namespace SjonnieLoper.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Brand")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CountryOforigin")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateOfBottling")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,20)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<double>("Procentage")
                         .HasColumnType("float");
@@ -296,7 +292,7 @@ namespace SjonnieLoper.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("whiskeys");
+                    b.ToTable("Whiskeys");
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.ApplicationUser", b =>
@@ -306,23 +302,11 @@ namespace SjonnieLoper.Data.Migrations
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Employee")
                         .HasColumnType("bit");
 
                     b.Property<string>("FName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("HouseNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("HouseNumberAddon")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LName")
@@ -331,15 +315,6 @@ namespace SjonnieLoper.Data.Migrations
 
                     b.Property<string>("MName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ZipCodeLet")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ZipCodeNum")
-                        .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -399,15 +374,11 @@ namespace SjonnieLoper.Data.Migrations
                 {
                     b.HasOne("SjonnieLoper.Core.ApplicationUser", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("SjonnieLoper.Core.WhiskeyBase", "Orderd_Wiskey")
                         .WithMany()
-                        .HasForeignKey("Orderd_WiskeyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Orderd_WiskeyId");
                 });
 #pragma warning restore 612, 618
         }

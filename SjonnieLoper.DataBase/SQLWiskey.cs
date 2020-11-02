@@ -56,7 +56,7 @@ namespace SjonnieLoper.DataBase
 
         public IEnumerable<WhiskeyBase> GetAllWhiskeys(string name)
         {
-            var query = from w in db.whiskeys
+            var query = from w in db.Whiskeys
                         where w.Name.StartsWith(name) || string.IsNullOrEmpty(name)
                         orderby w.Name
                         select w;
@@ -70,29 +70,29 @@ namespace SjonnieLoper.DataBase
 
         public int GetCountOfWhiskeys()
         {
-            return db.whiskeys.Count();
+            return db.Whiskeys.Count();
         }
 
         public ApplicationUser GetUserByName(string name)
         {
-            return db.applicationUsers.FirstOrDefault(a => a.UserName == name);
+            return db.ApplicationUsers.FirstOrDefault(a => a.UserName == name);
         }
 
         public WhiskeyBase GetWhiskeyById(int id)
         {
-            return db.whiskeys.FirstOrDefault(w => w.Id == id);
+            return db.Whiskeys.FirstOrDefault(w => w.Id == id);
         }
 
         public ApplicationUser UpdateUserInfo(ApplicationUser updatedUser)
         {
-            var entity = db.applicationUsers.Attach(updatedUser);
+            var entity = db.ApplicationUsers.Attach(updatedUser);
             entity.State = EntityState.Modified;
             return updatedUser;
         }
 
         public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey)
         {
-            var entity = db.whiskeys.Attach(UpdatedWhiskey);
+            var entity = db.Whiskeys.Attach(UpdatedWhiskey);
             entity.State = EntityState.Modified;
             return UpdatedWhiskey;
         }
