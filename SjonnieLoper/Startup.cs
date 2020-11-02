@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SjonnieLoper.Data;
 using SjonnieLoper.Core;
+using SjonnieLoper.DataBase;
 
 namespace SjonnieLoper
 {
@@ -36,6 +37,8 @@ namespace SjonnieLoper
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddScoped<IWiskey, SQLWiskey>();
 
             services.AddRazorPages();
         }
