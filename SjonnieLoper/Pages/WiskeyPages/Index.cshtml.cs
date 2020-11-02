@@ -14,6 +14,9 @@ namespace SjonnieLoper.Pages.WiskeyPages
     {
         private readonly IWiskey context;
 
+        [TempData]
+        public string Message { get; set; }
+
         public IEnumerable<WhiskeyBase> whiskeys { get; set; }
 
         [BindProperty(SupportsGet = true)]
