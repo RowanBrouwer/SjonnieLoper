@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace SjonnieLoper.Core
@@ -30,9 +31,13 @@ namespace SjonnieLoper.Core
         public string CountryOforigin { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:##.##}")]
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18,20)")]
         public decimal Price { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:##}")]
         public double Procentage { get; set; }
 
         [Required]

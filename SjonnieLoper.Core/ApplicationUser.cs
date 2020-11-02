@@ -20,20 +20,6 @@ namespace SjonnieLoper.Core
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Birthday  { get; set; }
 
-        public int ZipCodeNum { get; set; }
-
-        public string ZipCodeLet { get; set; }
-
-        public int HouseNumber { get; set; }
-
-        public string HouseNumberAddon { get; set; }
-
-        public string Country { get; set; }
-
-        public string StreetName { get; set; }
-
-        public bool Employee { get; set; }
-
         public bool Deleted { get; set; }
 
     }
