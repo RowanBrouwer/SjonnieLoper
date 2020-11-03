@@ -7,52 +7,41 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
 using SjonnieLoper.Data;
+using SjonnieLoper.DataBase;
 
 namespace SjonnieLoper.Pages.OrderPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly SjonnieLoper.Data.ApplicationDbContext _context;
+        private readonly IWiskey context;
 
-        public DeleteModel(SjonnieLoper.Data.ApplicationDbContext context)
+        public OrdersAndReservations Order { get; set; }
+
+
+        public DeleteModel(IWiskey context)
         {
-            _context = context;
+            this.context = context;
         }
 
-        [BindProperty]
-        public OrdersAndReservations OrdersAndReservations { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int OrderId)
         {
-            if (id == null)
+            Order = context.GetOrderById(OrderId);
+            if (Order == null)
             {
-                return NotFound();
-            }
-
-            OrdersAndReservations = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (OrdersAndReservations == null)
-            {
-                return NotFound();
+                return RedirectToPage("./NotFound");
             }
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int OrderId)
         {
-            if (id == null)
+            Order = context.DeleteOrder(OrderId);
+            context.Commit();
+            if (Order == null)
             {
-                return NotFound();
+                return RedirectToPage("./NotFound");
             }
-
-            OrdersAndReservations = await _context.Orders.FindAsync(id);
-
-            if (OrdersAndReservations != null)
-            {
-                _context.Orders.Remove(OrdersAndReservations);
-                await _context.SaveChangesAsync();
-            }
-
+            TempData["Message"] = $"{Order.Id}{Order.Orderd_Wiskey.Brand}{Order.Orderd_Wiskey.Name} order deleted";
             return RedirectToPage("./Index");
         }
     }

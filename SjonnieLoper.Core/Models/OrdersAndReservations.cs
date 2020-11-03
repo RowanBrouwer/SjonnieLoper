@@ -26,5 +26,8 @@ namespace SjonnieLoper.Core
         
         public double Ordercost { get; set; }
 
+
+        public bool SoftDeleted { get; set; }
+
     }
 }

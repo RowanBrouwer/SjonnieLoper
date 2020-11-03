@@ -19,7 +19,8 @@ namespace SjonnieLoper.DataBase
 
         public OrdersAndReservations AddOrder(OrdersAndReservations NewOrder)
         {
-            throw new NotImplementedException();
+            db.Add(NewOrder);
+            return NewOrder;
         }
 
         public ApplicationUser AddUser(ApplicationUser NewUser)
@@ -44,7 +45,7 @@ namespace SjonnieLoper.DataBase
             var DelOrder = GetOrderById(id);
             if (DelOrder != null)
             {
-                
+                DelOrder.SoftDeleted = true;
             }
             return DelOrder;
         }
@@ -54,7 +55,7 @@ namespace SjonnieLoper.DataBase
             var appuser = GetUserByName(name);
             if (appuser != null)
             {
-                appuser.Deleted = true;
+                appuser.SoftDeleted = true;
             }
             return appuser;
         }
@@ -69,9 +70,19 @@ namespace SjonnieLoper.DataBase
             return whiskey;
         }
 
-        public OrdersAndReservations GetAllOrdersAndReservations(string name)
+        public IEnumerable<OrdersAndReservations> GetAllOrdersAndReservations(string name)
         {
-            throw new NotImplementedException();
+            var query = from o in db.Orders
+                        where o.SoftDeleted == false
+                        where o.Customer.FName.StartsWith(name) ||
+                        o.Customer.LName.StartsWith(name) ||
+                        o.Customer.Email.StartsWith(name) ||
+                        o.Orderd_Wiskey.Name.StartsWith(name) ||
+                        o.Orderd_Wiskey.Brand.StartsWith(name) ||
+                        o.Orderd_Wiskey.CountryOforigin.StartsWith(name)
+                        orderby o.AmountOrderd
+                        select o;
+            return query;
         }
 
         public IEnumerable<WhiskeyBase> GetAllWhiskeys(string name)
@@ -86,12 +97,7 @@ namespace SjonnieLoper.DataBase
 
         public int GetCountOfOrders()
         {
-            throw new NotImplementedException();
-        }
-
-        public int GetCountOfSpecificOrders(int id)
-        {
-            throw new NotImplementedException();
+            return db.Orders.Count();
         }
 
         public int GetCountOfSpecificWhiskey(int id)
@@ -106,7 +112,7 @@ namespace SjonnieLoper.DataBase
 
         public OrdersAndReservations GetOrderById(int id)
         {
-            throw new NotImplementedException();
+            return db.Orders.FirstOrDefault(o => o.Id == id);
         }
 
         public ApplicationUser GetUserByName(string name)
@@ -121,7 +127,9 @@ namespace SjonnieLoper.DataBase
 
         public OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder)
         {
-            throw new NotImplementedException();
+            var entity = db.Orders.Attach(updatedOrder);
+            entity.State = EntityState.Modified;
+            return updatedOrder;
         }
 
         public ApplicationUser UpdateUserInfo(ApplicationUser updatedUser)

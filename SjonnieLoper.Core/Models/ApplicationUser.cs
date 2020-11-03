@@ -16,10 +16,10 @@ namespace SjonnieLoper.Core
         [Required]
         public string LName { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{MM/dd/yyyy}")]
         public DateTime Birthday  { get; set; }
 
-        public bool Deleted { get; set; }
+        public bool SoftDeleted { get; set; }
 
     }
 }

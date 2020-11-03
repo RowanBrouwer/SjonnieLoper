@@ -27,13 +27,12 @@ namespace SjonnieLoper.DataBase
 
         //Order commands//
 
-        OrdersAndReservations GetAllOrdersAndReservations(string name);
+        IEnumerable<OrdersAndReservations> GetAllOrdersAndReservations(string name);
         OrdersAndReservations GetOrderById(int id);
         OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder);
         OrdersAndReservations AddOrder(OrdersAndReservations NewOrder);
         OrdersAndReservations DeleteOrder(int id);
         int GetCountOfOrders();
-        int GetCountOfSpecificOrders(int id);
 
         //general commands//
 

@@ -18,21 +18,19 @@ namespace SjonnieLoper.Pages.OrderPages
         [TempData]
         public string Message { get; set; }
 
-        public IEnumerable<WhiskeyBase> whiskeys { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
+
+        public IEnumerable<OrdersAndReservations> OrdersAndReservations { get; set; }
 
         public IndexModel(IWiskey context)
         {
             this.context = context;
         }
 
-        public IList<OrdersAndReservations> OrdersAndReservations { get;set; }
-
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
-            
+           OrdersAndReservations = context.GetAllOrdersAndReservations(SearchTerm);
         }
     }
 }
