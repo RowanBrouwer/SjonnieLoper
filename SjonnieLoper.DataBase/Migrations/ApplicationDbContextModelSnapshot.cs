@@ -244,6 +244,9 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.Property<int?>("Orderd_WiskeyId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -302,9 +305,6 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("FName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -315,6 +315,9 @@ namespace SjonnieLoper.DataBase.Migrations
 
                     b.Property<string>("MName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SoftDeleted")
+                        .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });

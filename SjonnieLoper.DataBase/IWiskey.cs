@@ -33,7 +33,6 @@ namespace SjonnieLoper.DataBase
         OrdersAndReservations AddOrder(OrdersAndReservations NewOrder);
         OrdersAndReservations DeleteOrder(int id);
         int GetCountOfOrders();
-        int GetCountOfSpecificOrders(int id);
 
         //general commands//
 

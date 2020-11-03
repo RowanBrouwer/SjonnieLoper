@@ -19,7 +19,8 @@ namespace SjonnieLoper.DataBase
 
         public OrdersAndReservations AddOrder(OrdersAndReservations NewOrder)
         {
-            throw new NotImplementedException();
+            db.Add(NewOrder);
+            return NewOrder;
         }
 
         public ApplicationUser AddUser(ApplicationUser NewUser)
@@ -44,7 +45,7 @@ namespace SjonnieLoper.DataBase
             var DelOrder = GetOrderById(id);
             if (DelOrder != null)
             {
-                
+                DelOrder.SoftDeleted = true;
             }
             return DelOrder;
         }
@@ -54,7 +55,7 @@ namespace SjonnieLoper.DataBase
             var appuser = GetUserByName(name);
             if (appuser != null)
             {
-                appuser.Deleted = true;
+                appuser.SoftDeleted = true;
             }
             return appuser;
         }
@@ -86,12 +87,7 @@ namespace SjonnieLoper.DataBase
 
         public int GetCountOfOrders()
         {
-            throw new NotImplementedException();
-        }
-
-        public int GetCountOfSpecificOrders(int id)
-        {
-            throw new NotImplementedException();
+            return db.Orders.Count();
         }
 
         public int GetCountOfSpecificWhiskey(int id)
@@ -106,7 +102,7 @@ namespace SjonnieLoper.DataBase
 
         public OrdersAndReservations GetOrderById(int id)
         {
-            throw new NotImplementedException();
+            return db.Orders.FirstOrDefault(o => o.Id == id);
         }
 
         public ApplicationUser GetUserByName(string name)
@@ -121,7 +117,9 @@ namespace SjonnieLoper.DataBase
 
         public OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder)
         {
-            throw new NotImplementedException();
+            var entity = db.Orders.Attach(updatedOrder);
+            entity.State = EntityState.Modified;
+            return updatedOrder;
         }
 
         public ApplicationUser UpdateUserInfo(ApplicationUser updatedUser)

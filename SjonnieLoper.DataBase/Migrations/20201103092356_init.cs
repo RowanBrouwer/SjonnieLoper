@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class initializeDB : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,7 @@ namespace SjonnieLoper.DataBase.Migrations
                     MName = table.Column<string>(nullable: true),
                     LName = table.Column<string>(nullable: true),
                     Birthday = table.Column<DateTime>(nullable: true),
-                    Deleted = table.Column<bool>(nullable: true)
+                    SoftDeleted = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -189,7 +189,8 @@ namespace SjonnieLoper.DataBase.Migrations
                     CustomerId = table.Column<string>(nullable: true),
                     Orderd_WiskeyId = table.Column<int>(nullable: true),
                     AmountOrderd = table.Column<int>(nullable: false),
-                    Ordercost = table.Column<double>(nullable: false)
+                    Ordercost = table.Column<double>(nullable: false),
+                    SoftDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
