@@ -209,6 +209,19 @@ namespace SjonnieLoper.DataBase.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Whiskeys",
+                columns: new[] { "Id", "AmountInStorage", "Brand", "CountryOforigin", "DateOfBottling", "ImagePath", "Name", "Price", "Procentage", "SoftDeleted", "Type" },
+                values: new object[,]
+                {
+                    { 1, 22, "Tullamore", "Ireland", new DateTime(1999, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage1.png", "Tullamore Dew", 25.0, 0.40000000000000002, false, 0 },
+                    { 2, 20, "Talisker", "Scotland", new DateTime(2010, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage2.png", "Talisker 10 years Gift Tube", 37.5, 0.45000000000000001, false, 1 },
+                    { 3, 10, "Jack Daniels", "America", new DateTime(2018, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage3.png", "Jack Daniels", 23.5, 0.40000000000000002, false, 4 },
+                    { 4, 12, "Glenfiddich", "Scotland", new DateTime(2002, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage2.png", "Glenfiddich Fire & Cane", 44.0, 0.42999999999999999, false, 1 },
+                    { 5, 18, "Ardbeg", "Scotland", new DateTime(2016, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage1.png", "Ardbeg 5 years Wee Beastie", 44.0, 0.46999999999999997, false, 1 },
+                    { 6, 7, "Lagavulin", "Scotland", new DateTime(2011, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage3.png", "Lagavulin 9 years House Lannister ", 74.950000000000003, 0.46000000000000002, false, 1 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",

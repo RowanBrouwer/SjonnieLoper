@@ -296,6 +296,92 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Whiskeys");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AmountInStorage = 22,
+                            Brand = "Tullamore",
+                            CountryOforigin = "Ireland",
+                            DateOfBottling = new DateTime(1999, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImagePath = "MockImage1.png",
+                            Name = "Tullamore Dew",
+                            Price = 25.0,
+                            Procentage = 0.40000000000000002,
+                            SoftDeleted = false,
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AmountInStorage = 20,
+                            Brand = "Talisker",
+                            CountryOforigin = "Scotland",
+                            DateOfBottling = new DateTime(2010, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImagePath = "MockImage2.png",
+                            Name = "Talisker 10 years Gift Tube",
+                            Price = 37.5,
+                            Procentage = 0.45000000000000001,
+                            SoftDeleted = false,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AmountInStorage = 10,
+                            Brand = "Jack Daniels",
+                            CountryOforigin = "America",
+                            DateOfBottling = new DateTime(2018, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImagePath = "MockImage3.png",
+                            Name = "Jack Daniels",
+                            Price = 23.5,
+                            Procentage = 0.40000000000000002,
+                            SoftDeleted = false,
+                            Type = 4
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AmountInStorage = 12,
+                            Brand = "Glenfiddich",
+                            CountryOforigin = "Scotland",
+                            DateOfBottling = new DateTime(2002, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImagePath = "MockImage2.png",
+                            Name = "Glenfiddich Fire & Cane",
+                            Price = 44.0,
+                            Procentage = 0.42999999999999999,
+                            SoftDeleted = false,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AmountInStorage = 18,
+                            Brand = "Ardbeg",
+                            CountryOforigin = "Scotland",
+                            DateOfBottling = new DateTime(2016, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImagePath = "MockImage1.png",
+                            Name = "Ardbeg 5 years Wee Beastie",
+                            Price = 44.0,
+                            Procentage = 0.46999999999999997,
+                            SoftDeleted = false,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AmountInStorage = 7,
+                            Brand = "Lagavulin",
+                            CountryOforigin = "Scotland",
+                            DateOfBottling = new DateTime(2011, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImagePath = "MockImage3.png",
+                            Name = "Lagavulin 9 years House Lannister ",
+                            Price = 74.950000000000003,
+                            Procentage = 0.46000000000000002,
+                            SoftDeleted = false,
+                            Type = 1
+                        });
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.ApplicationUser", b =>

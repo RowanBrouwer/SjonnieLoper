@@ -21,6 +21,7 @@ namespace SjonnieLoper.Core
 
         
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBottling { get; set; }
 
         

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
+using SjonnieLoper.DataBase.Data;
 
 namespace SjonnieLoper.Data
 {
@@ -17,5 +18,10 @@ namespace SjonnieLoper.Data
         public DbSet<WhiskeyBase> Whiskeys { get; set; }
         public DbSet<OrdersAndReservations> Orders { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Seed();
+        }
     }
 }
