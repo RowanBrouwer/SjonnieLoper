@@ -17,6 +17,11 @@ namespace SjonnieLoper.DataBase
             this.db = db;
         }
 
+        public OrdersAndReservations AddOrder(OrdersAndReservations NewOrder)
+        {
+            throw new NotImplementedException();
+        }
+
         public ApplicationUser AddUser(ApplicationUser NewUser)
         {
             db.Add(NewUser);
@@ -32,6 +37,16 @@ namespace SjonnieLoper.DataBase
         public int Commit()
         {
             return db.SaveChanges();
+        }
+
+        public OrdersAndReservations DeleteOrder(int id)
+        {
+            var DelOrder = GetOrderById(id);
+            if (DelOrder != null)
+            {
+                
+            }
+            return DelOrder;
         }
 
         public ApplicationUser DeleteUser(string name)
@@ -54,6 +69,11 @@ namespace SjonnieLoper.DataBase
             return whiskey;
         }
 
+        public OrdersAndReservations GetAllOrdersAndReservations(string name)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<WhiskeyBase> GetAllWhiskeys(string name)
         {
             var query = from w in db.Whiskeys
@@ -62,6 +82,16 @@ namespace SjonnieLoper.DataBase
                         orderby w.Name
                         select w;
             return query;
+        }
+
+        public int GetCountOfOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetCountOfSpecificOrders(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public int GetCountOfSpecificWhiskey(int id)
@@ -74,6 +104,11 @@ namespace SjonnieLoper.DataBase
             return db.Whiskeys.Count();
         }
 
+        public OrdersAndReservations GetOrderById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public ApplicationUser GetUserByName(string name)
         {
             return db.ApplicationUsers.FirstOrDefault(a => a.UserName == name);
@@ -82,6 +117,11 @@ namespace SjonnieLoper.DataBase
         public WhiskeyBase GetWhiskeyById(int id)
         {
             return db.Whiskeys.FirstOrDefault(w => w.Id == id);
+        }
+
+        public OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder)
+        {
+            throw new NotImplementedException();
         }
 
         public ApplicationUser UpdateUserInfo(ApplicationUser updatedUser)

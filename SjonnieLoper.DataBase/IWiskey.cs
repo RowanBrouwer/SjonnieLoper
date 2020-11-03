@@ -25,6 +25,16 @@ namespace SjonnieLoper.DataBase
         ApplicationUser AddUser(ApplicationUser NewUser);
         ApplicationUser DeleteUser(string name);
 
+        //Order commands//
+
+        OrdersAndReservations GetAllOrdersAndReservations(string name);
+        OrdersAndReservations GetOrderById(int id);
+        OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder);
+        OrdersAndReservations AddOrder(OrdersAndReservations NewOrder);
+        OrdersAndReservations DeleteOrder(int id);
+        int GetCountOfOrders();
+        int GetCountOfSpecificOrders(int id);
+
         //general commands//
 
         int Commit();

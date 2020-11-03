@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SjonnieLoper.Core;
+using SjonnieLoper.DataBase;
 
 namespace SjonnieLoper.Pages
 {
@@ -19,7 +21,7 @@ namespace SjonnieLoper.Pages
 
         public void OnGet()
         {
-
+            
         }
     }
 }
