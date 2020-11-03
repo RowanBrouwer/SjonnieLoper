@@ -70,9 +70,19 @@ namespace SjonnieLoper.DataBase
             return whiskey;
         }
 
-        public OrdersAndReservations GetAllOrdersAndReservations(string name)
+        public IEnumerable<OrdersAndReservations> GetAllOrdersAndReservations(string name)
         {
-            throw new NotImplementedException();
+            var query = from o in db.Orders
+                        where o.SoftDeleted == false
+                        where o.Customer.FName.StartsWith(name) ||
+                        o.Customer.LName.StartsWith(name) ||
+                        o.Customer.Email.StartsWith(name) ||
+                        o.Orderd_Wiskey.Name.StartsWith(name) ||
+                        o.Orderd_Wiskey.Brand.StartsWith(name) ||
+                        o.Orderd_Wiskey.CountryOforigin.StartsWith(name)
+                        orderby o.AmountOrderd
+                        select o;
+            return query;
         }
 
         public IEnumerable<WhiskeyBase> GetAllWhiskeys(string name)

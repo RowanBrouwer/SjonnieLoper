@@ -10,37 +10,47 @@
 {
     <div class="alert alert-info">@Model.Message</div>
 }
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchTerm" />
+            <span class="input-group-btn">
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdersAndReservations[0].AmountOrderd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrdersAndReservations[0].Ordercost)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.OrdersAndReservations)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AmountOrderd)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ordercost)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@foreach (var o in Model.OrdersAndReservations)
+{
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>@o.Customer.FName</h3>
+    </div>
+    <div class="panel-body d-flex flex-column">
+        <span>Brand: @o.Orderd_Wiskey.Brand</span>
+        <span>Alch%: @o.Orderd_Wiskey.Procentage</span>
+        <span>Price: @o.Orderd_Wiskey.Price</span>
+        <span>Bottle Date: @o.Orderd_Wiskey.DateOfBottling</span>
+    </div>
+    <div class="panel-footer">
+        <a class="btn btn-lg" asp-page="./Details"
+           asp-route-whiskeyId="@o.Id">
+            <i class="glyphicon glyphicon-zoom-in"></i>
+        </a>
+        <a class="btn btn-lg" asp-page="./Create_Edit"
+           asp-route-whiskeyId="@o.Id">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-lg" asp-page="./Delete"
+           asp-route-whiskeyId="@o.Id">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+</div>
+}

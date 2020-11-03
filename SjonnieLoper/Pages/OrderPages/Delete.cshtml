@@ -1,34 +1,17 @@
-﻿@page
+﻿@page "{OrderId}"
 @model SjonnieLoper.Pages.OrderPages.DeleteModel
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h2>Delete!</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>OrdersAndReservations</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OrdersAndReservations.AmountOrderd)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OrdersAndReservations.AmountOrderd)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OrdersAndReservations.Ordercost)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OrdersAndReservations.Ordercost)
-        </dd>
-    </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="OrdersAndReservations.Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
+<div class="alert alert-danger">
+    Are you sure you want to delete order @*@Model.OrdersAndReservations.Id?*@
 </div>
+
+<form method="post">
+    <button type="submit" class="btn btn-dark">Yes!</button>
+    <a asp-page="Index" class="btn btn-outline-dark">Cancel</a>
+</form>
