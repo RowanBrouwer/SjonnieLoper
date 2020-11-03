@@ -29,13 +29,13 @@ namespace SjonnieLoper.Pages.WiskeyPages
         }
 
 
-        public IActionResult OnGet(int? whiskeyId)
+        public async Task<IActionResult> OnGet(int? whiskeyId)
         {
             Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
 
             if (whiskeyId.HasValue)
             {
-                Whiskey = context.GetWhiskeyById(whiskeyId.Value);
+                Whiskey = await context.GetWhiskeyById(whiskeyId.Value);
             }
             else
             {
@@ -48,7 +48,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -61,9 +61,9 @@ namespace SjonnieLoper.Pages.WiskeyPages
             }
             else
             {
-                context.AddWhiskey(Whiskey);
+                await context.AddWhiskey(Whiskey);
             }
-            context.Commit();
+            await context.Commit();
             TempData["Message"] = "Whiskey saved!";
             return RedirectToPage("./Details", new { whiskeyId = Whiskey.Id });
         }

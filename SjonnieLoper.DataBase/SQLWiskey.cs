@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using SjonnieLoper.Core;
 using SjonnieLoper.Data;
+using System.Threading.Tasks;
 
 namespace SjonnieLoper.DataBase
 {
@@ -17,32 +18,33 @@ namespace SjonnieLoper.DataBase
             this.db = db;
         }
 
-        public OrdersAndReservations AddOrder(OrdersAndReservations NewOrder)
+        public async Task<OrdersAndReservations> AddOrder(OrdersAndReservations NewOrder)
         {
-            db.Add(NewOrder);
+            await db.AddAsync(NewOrder);
             return NewOrder;
         }
 
-        public ApplicationUser AddUser(ApplicationUser NewUser)
+        public async Task<ApplicationUser> AddUser(ApplicationUser NewUser)
         {
-            db.Add(NewUser);
+            await db.AddAsync(NewUser);
             return NewUser;
         }
 
-        public WhiskeyBase AddWhiskey(WhiskeyBase NewWhiskey)
+        public async Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey)
         {
-            db.Add(NewWhiskey);
+            await db.AddAsync(NewWhiskey);
             return NewWhiskey;
         }
 
-        public int Commit()
+        public async Task<int> Commit()
         {
-            return db.SaveChanges();
+            int PB = await db.SaveChangesAsync();
+            return PB;
         }
 
-        public OrdersAndReservations DeleteOrder(int id)
+        public async Task<OrdersAndReservations> DeleteOrder(int id)
         {
-            var DelOrder = GetOrderById(id);
+            var DelOrder = await GetOrderById(id);
             if (DelOrder != null)
             {
                 DelOrder.SoftDeleted = true;
@@ -50,9 +52,9 @@ namespace SjonnieLoper.DataBase
             return DelOrder;
         }
 
-        public ApplicationUser DeleteUser(string name)
+        public async Task<ApplicationUser> DeleteUser(string name)
         {
-            var appuser = GetUserByName(name);
+            var appuser = await GetUserByNameAsync(name);
             if (appuser != null)
             {
                 appuser.SoftDeleted = true;
@@ -60,9 +62,9 @@ namespace SjonnieLoper.DataBase
             return appuser;
         }
 
-        public WhiskeyBase DeleteWhiskey(int id)
+        public async Task<WhiskeyBase> DeleteWhiskey(int id)
         {
-            var whiskey = GetWhiskeyById(id);
+            var whiskey = await GetWhiskeyById(id);
             if (whiskey != null)
             {
                 whiskey.SoftDeleted = true;
@@ -70,7 +72,7 @@ namespace SjonnieLoper.DataBase
             return whiskey;
         }
 
-        public IEnumerable<OrdersAndReservations> GetAllOrdersAndReservations(string name)
+        public async Task<IEnumerable<OrdersAndReservations>> GetAllOrdersAndReservations(string name)
         {
             var query = from o in db.Orders
                         where o.SoftDeleted == false
@@ -82,47 +84,42 @@ namespace SjonnieLoper.DataBase
                         o.Orderd_Wiskey.CountryOforigin.StartsWith(name)
                         orderby o.AmountOrderd
                         select o;
-            return query;
+            return await query.ToListAsync();
         }
 
-        public IEnumerable<WhiskeyBase> GetAllWhiskeys(string name)
+        public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeys(string name)
         {
             var query = from w in db.Whiskeys
                         where w.SoftDeleted == false
                         where w.Name.StartsWith(name) || string.IsNullOrEmpty(name) || w.Brand.StartsWith(name) || w.CountryOforigin.StartsWith(name)
                         orderby w.Name
                         select w;
-            return query;
+            return await query.ToListAsync();
         }
 
-        public int GetCountOfOrders()
+        public async Task<int> GetCountOfOrders()
         {
-            return db.Orders.Count();
+            return await db.Orders.CountAsync();
         }
 
-        public int GetCountOfSpecificWhiskey(int id)
+        public async Task<int> GetCountOfWhiskeys()
         {
-            return GetWhiskeyById(id).AmountInStorage;
+            return await db.Whiskeys.CountAsync();
         }
 
-        public int GetCountOfWhiskeys()
+        public async Task<OrdersAndReservations> GetOrderById(int id)
         {
-            return db.Whiskeys.Count();
+            return await db.Orders.FirstOrDefaultAsync(o => o.Id == id);
         }
 
-        public OrdersAndReservations GetOrderById(int id)
+        public async Task<ApplicationUser> GetUserByNameAsync(string name)
         {
-            return db.Orders.FirstOrDefault(o => o.Id == id);
+            return await db.ApplicationUsers.FirstOrDefaultAsync(a => a.UserName == name);
         }
 
-        public ApplicationUser GetUserByName(string name)
+        public async Task<WhiskeyBase> GetWhiskeyById(int id)
         {
-            return db.ApplicationUsers.FirstOrDefault(a => a.UserName == name);
-        }
-
-        public WhiskeyBase GetWhiskeyById(int id)
-        {
-            return db.Whiskeys.FirstOrDefault(w => w.Id == id);
+            return await db.Whiskeys.FirstOrDefaultAsync(w => w.Id == id);
         }
 
         public OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder)

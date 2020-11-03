@@ -27,9 +27,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
             this.context = context;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            whiskeys = context.GetAllWhiskeys(SearchTerm);
+            whiskeys = await context.GetAllWhiskeys(SearchTerm);
+            return Page();
         }
     }
 }

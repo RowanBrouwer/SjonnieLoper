@@ -28,9 +28,10 @@ namespace SjonnieLoper.Pages.OrderPages
             this.context = context;
         }
 
-        public void OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-           OrdersAndReservations = context.GetAllOrdersAndReservations(SearchTerm);
+            OrdersAndReservations = await context.GetAllOrdersAndReservations(SearchTerm);
+            return Page();
         }
     }
 }

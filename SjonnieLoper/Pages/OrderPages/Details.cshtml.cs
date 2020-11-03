@@ -7,32 +7,32 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
 using SjonnieLoper.Data;
+using SjonnieLoper.DataBase;
 
 namespace SjonnieLoper.Pages.OrderPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly SjonnieLoper.Data.ApplicationDbContext _context;
+        private readonly IWiskey context;
 
-        public DetailsModel(SjonnieLoper.Data.ApplicationDbContext context)
+        public OrdersAndReservations Order { get; set; }
+
+        [TempData]
+        public string Message { get; set; }
+
+        public DetailsModel(IWiskey context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public OrdersAndReservations OrdersAndReservations { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int OrderId)
         {
-            if (id == null)
+            Order = await context.GetOrderById(OrderId);
+            if (Order == null)
             {
-                return NotFound();
-            }
-
-            OrdersAndReservations = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (OrdersAndReservations == null)
-            {
-                return NotFound();
+                return RedirectToPage("./NotFound");
             }
             return Page();
         }

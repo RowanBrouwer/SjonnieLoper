@@ -25,11 +25,11 @@ namespace SjonnieLoper.Pages.OrderPages
         }
 
 
-        public IActionResult OnGet(int? OrderId)
+        public async Task<IActionResult> OnGet(int? OrderId)
         {
             if (OrderId.HasValue)
             {
-                OrdersAndReservations = context.GetOrderById(OrderId.Value);
+                OrdersAndReservations = await context.GetOrderById(OrderId.Value);
             }
             else
             {

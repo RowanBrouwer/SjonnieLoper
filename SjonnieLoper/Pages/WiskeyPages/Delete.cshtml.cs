@@ -19,9 +19,9 @@ namespace SjonnieLoper.Pages.WiskeyPages
             this.context = context;
         }
 
-        public IActionResult OnGet(int whiskeyId)
+        public async Task<IActionResult> OnGet(int whiskeyId)
         {
-            whiskey = context.GetWhiskeyById(whiskeyId);
+            whiskey = await context.GetWhiskeyById(whiskeyId);
             if (whiskey == null)
             {
                 return RedirectToPage("./NotFound");
@@ -29,10 +29,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
             return Page();
         }
 
-        public IActionResult OnPost(int whiskeyId)
+        public async Task<IActionResult> OnPost(int whiskeyId)
         {
-            whiskey = context.DeleteWhiskey(whiskeyId);
-            context.Commit();
+            whiskey = await context.DeleteWhiskey(whiskeyId);
+            await context.Commit();
             if (whiskey == null)
             {
                 return RedirectToPage("./NotFound");

@@ -23,9 +23,9 @@ namespace SjonnieLoper.Pages.OrderPages
             this.context = context;
         }
 
-        public IActionResult OnGet(int OrderId)
+        public async Task<IActionResult> OnGet(int OrderId)
         {
-            Order = context.GetOrderById(OrderId);
+            Order = await context.GetOrderById(OrderId);
             if (Order == null)
             {
                 return RedirectToPage("./NotFound");
@@ -33,10 +33,10 @@ namespace SjonnieLoper.Pages.OrderPages
             return Page();
         }
 
-        public IActionResult OnPost(int OrderId)
+        public async Task<IActionResult> OnPost(int OrderId)
         {
-            Order = context.DeleteOrder(OrderId);
-            context.Commit();
+            Order = await context.DeleteOrder(OrderId);
+            await context.Commit();
             if (Order == null)
             {
                 return RedirectToPage("./NotFound");

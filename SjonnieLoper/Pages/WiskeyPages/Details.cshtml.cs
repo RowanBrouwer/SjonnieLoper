@@ -23,9 +23,9 @@ namespace SjonnieLoper.Pages.WiskeyPages
             this.context = context;
         }
 
-        public IActionResult OnGet(int whiskeyId)
+        public async Task<IActionResult> OnGet(int whiskeyId)
         {
-            Whiskey = context.GetWhiskeyById(whiskeyId);
+            Whiskey = await context.GetWhiskeyById(whiskeyId);
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");

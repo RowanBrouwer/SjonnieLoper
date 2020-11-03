@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using SjonnieLoper.Core;
 using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SjonnieLoper.DataBase
 {
@@ -10,33 +12,32 @@ namespace SjonnieLoper.DataBase
     {
         //whiskey commands//
 
-        IEnumerable<WhiskeyBase> GetAllWhiskeys(string name);
-        WhiskeyBase GetWhiskeyById(int id);
-        WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey);
-        WhiskeyBase AddWhiskey(WhiskeyBase NewWhiskey);
-        WhiskeyBase DeleteWhiskey(int id);
-        int GetCountOfWhiskeys();
-        int GetCountOfSpecificWhiskey(int id);
+        public Task<IEnumerable<WhiskeyBase>> GetAllWhiskeys(string name);
+        public Task<WhiskeyBase> GetWhiskeyById(int id);
+        public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey);
+        public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey);
+        public Task<WhiskeyBase> DeleteWhiskey(int id);
+        public Task<int> GetCountOfWhiskeys();
 
         //user commands//
 
-        ApplicationUser GetUserByName(string name);
-        ApplicationUser UpdateUserInfo(ApplicationUser updatedUser);
-        ApplicationUser AddUser(ApplicationUser NewUser);
-        ApplicationUser DeleteUser(string name);
+        public Task<ApplicationUser> GetUserByNameAsync(string name);
+        public ApplicationUser UpdateUserInfo(ApplicationUser updatedUser);
+        public Task<ApplicationUser> AddUser(ApplicationUser NewUser);
+        public Task<ApplicationUser> DeleteUser(string name);
 
         //Order commands//
 
-        IEnumerable<OrdersAndReservations> GetAllOrdersAndReservations(string name);
-        OrdersAndReservations GetOrderById(int id);
-        OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder);
-        OrdersAndReservations AddOrder(OrdersAndReservations NewOrder);
-        OrdersAndReservations DeleteOrder(int id);
-        int GetCountOfOrders();
+        public Task<IEnumerable<OrdersAndReservations>> GetAllOrdersAndReservations(string name);
+        public Task<OrdersAndReservations> GetOrderById(int id);
+        public OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder);
+        public Task<OrdersAndReservations> AddOrder(OrdersAndReservations NewOrder);
+        public Task<OrdersAndReservations> DeleteOrder(int id);
+        public Task<int> GetCountOfOrders();
 
         //general commands//
 
-        int Commit();
+        public Task<int> Commit();
         
     }
 }
