@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonnieLoper.Core;
-using SjonnieLoper.Data;
 using SjonnieLoper.DataBase;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace SjonnieLoper.Pages.WiskeyPages
 {
@@ -17,10 +16,61 @@ namespace SjonnieLoper.Pages.WiskeyPages
         [TempData]
         public string Message { get; set; }
 
-        public IEnumerable<WhiskeyBase> whiskeys { get; set; }
+        public IEnumerable<WhiskeyBase> Whiskeys { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
+
+
+        #region Search Properties
+        #region DataProperties
+        [BindProperty(SupportsGet = true)]
+        public string SearchName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchBrand { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string SearchCountry { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        [DataType(DataType.Date)]
+        public DateTime SearchDate1 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        [DataType(DataType.Date)]
+        public DateTime SearchDate2 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public WhiskeyType SearchType { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public double SearchPercent1 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public double SearchPercent2 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public double SearchPrice1 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public double SearchPrice2 { get; set; }
+        #endregion
+
+        #region booleans
+        [BindProperty(SupportsGet = true)]
+        public bool DoAdvancedSearch { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool DoAdvancedSearch2 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool SearchForType { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool SearchForDate { get; set; }
+        #endregion
+        #endregion
 
         public IndexModel(IWiskey context)
         {
@@ -29,7 +79,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet()
         {
-            whiskeys = await context.GetAllWhiskeys(SearchTerm);
+            if (DoAdvancedSearch || DoAdvancedSearch2)
+                Whiskeys = await context.GetAllWhiskeysSearch(SearchName, SearchBrand, SearchCountry);
+            else
+                Whiskeys = await context.GetAllWhiskeys(SearchTerm);
             return Page();
         }
     }

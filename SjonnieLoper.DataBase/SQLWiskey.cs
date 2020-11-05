@@ -97,6 +97,19 @@ namespace SjonnieLoper.DataBase
             return await query.ToListAsync();
         }
 
+        public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeysSearch(string searchName, string searchBrand, string searchCountry)
+        {
+            var query = from w in db.Whiskeys
+                        where w.SoftDeleted == false
+                        where (string.IsNullOrEmpty(searchName) || w.Name.Contains(searchName))
+                        where (string.IsNullOrEmpty(searchBrand) || w.Brand.Contains(searchBrand))
+                        where (string.IsNullOrEmpty(searchCountry) || w.CountryOforigin.Contains(searchCountry))
+                        orderby w.Name
+                        select w;
+
+            return await query.ToListAsync();
+        }
+
         public async Task<int> GetCountOfOrders()
         {
             return await db.Orders.CountAsync();

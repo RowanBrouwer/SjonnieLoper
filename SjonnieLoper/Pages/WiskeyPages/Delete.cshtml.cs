@@ -13,7 +13,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
     {
         private readonly IWiskey context;
 
-        public WhiskeyBase whiskey { get; set; }
+        public WhiskeyBase Whiskey { get; set; }
         public DeleteModel(IWiskey context)
         {
             this.context = context;
@@ -21,8 +21,8 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet(int whiskeyId)
         {
-            whiskey = await context.GetWhiskeyById(whiskeyId);
-            if (whiskey == null)
+            Whiskey = await context.GetWhiskeyById(whiskeyId);
+            if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
             }
@@ -31,13 +31,13 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnPost(int whiskeyId)
         {
-            whiskey = await context.DeleteWhiskey(whiskeyId);
+            Whiskey = await context.DeleteWhiskey(whiskeyId);
             await context.Commit();
-            if (whiskey == null)
+            if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
             }
-            TempData["Message"] = $"{whiskey.Brand}{whiskey.Name} deleted";
+            TempData["Message"] = $"{Whiskey.Brand}{Whiskey.Name} deleted";
             return RedirectToPage("./Index");
         }
     }

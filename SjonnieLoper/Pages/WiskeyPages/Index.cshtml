@@ -8,7 +8,7 @@
 </head>
 @if (Model.Message != null)
 {
-<div class="alert alert-info">@Model.Message</div>
+    <div class="alert alert-info">@Model.Message</div>
 }
 <form method="get">
     <div class="form-group">
@@ -22,8 +22,75 @@
         </div>
     </div>
 </form>
+<div class="form-check form-check-inline">
+    <input class="form-check-input" asp-for="DoAdvancedSearch" type="checkbox" data-toggle="collapse" data-target="#AdvancedSearch">
+    <label class="form-check-label" asp-for="DoAdvancedSearch">Advanced Search</label>
+</div>
+<div class="form-check form-check-inline">
+    <input asp-for="DoAdvancedSearch2"/>
+    <label class="form-check-label" asp-for="DoAdvancedSearch2">Advanced Search</label>
+</div>
 
-@foreach (var W in Model.whiskeys)
+<div class="collapse" id="AdvancedSearch">
+    <form method="get">
+        <div class="form-group">
+
+            <div class="form-row">
+                <div class="col-4 form-group">
+                    @*<label class="col-2 col-form-label" asp-for="SearchName"></label>*@
+            <input class="form-control" type="search" asp-for="SearchName" placeholder="Name" />
+        </div>
+        <div class="col-4 form-group">
+            @*<label class="col-2 col-form-label" asp-for="SearchBrand"></label>*@
+                    <input class=" form-control" type="search" asp-for="SearchBrand" placeholder="Brand" />
+                </div>
+        <div class="col-4  form-group">
+            @*<label class="col-2 col-form-label" asp-for="SearchCountry"></label>*@
+                <input class=" form-control" type="search" asp-for="SearchCountry" placeholder="Country" />
+            </div>
+        </div>
+        @*<div class="input-group">
+                <input type="checkbox" class="form-check" asp-for="SearchForType"/>
+                <label asp-for="SearchType"></label>
+                <input type="search" class="form-control" asp-for="SearchType" />
+            </div>
+            <div class="input-group">
+                <input type="checkbox" class="form-check" asp-for="SearchForDate" />
+                <label asp-for="SearchDate1"></label>
+                <input type="search" class="form-control" asp-for="SearchDate1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchDate2"></label>
+                <input type="search" class="form-control" asp-for="SearchDate2" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPercent1"></label>
+                <input type="search" class="form-control" asp-for="SearchPercent1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPercent2"></label>
+                <input type="search" class="form-control" asp-for="SearchPercent2" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPrice1"></label>
+                <input type="search" class="form-control" asp-for="SearchPrice1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPrice2"></label>
+                <input type="search" class="form-control" asp-for="SearchPrice2" />
+            </div>*@
+            <span class="input-group-btn">
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                    Search
+                </button>
+            </span>
+
+        </div>
+    </form>
+</div>
+
+@foreach (var W in Model.Whiskeys)
 {
     <partial name="_Summary" model="W" />
 }
