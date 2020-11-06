@@ -62,9 +62,6 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public bool DoAdvancedSearch { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public bool DoAdvancedSearch2 { get; set; }
-
-        [BindProperty(SupportsGet = true)]
         public bool SearchForType { get; set; }
 
         [BindProperty(SupportsGet = true)]
@@ -79,7 +76,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet()
         {
-            if (DoAdvancedSearch || DoAdvancedSearch2)
+            if (DoAdvancedSearch)
                 Whiskeys = await context.GetAllWhiskeysSearch(SearchName, SearchBrand, SearchCountry);
             else
                 Whiskeys = await context.GetAllWhiskeys(SearchTerm);
