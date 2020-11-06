@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SjonnieLoper.Core;
 using SjonnieLoper.DataBase;
 using System;
@@ -21,7 +22,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
         [BindProperty(SupportsGet = true)]
         public string SearchTerm { get; set; }
 
-
+  
         #region Search Properties
         #region DataProperties
         [BindProperty(SupportsGet = true)]
@@ -76,8 +77,9 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet()
         {
+
             if (DoAdvancedSearch)
-                Whiskeys = await context.GetAllWhiskeysSearch(SearchName, SearchBrand, SearchCountry);
+                Whiskeys = await context.GetAllWhiskeysSearch(SearchName, SearchBrand, SearchCountry, SearchForType, SearchType);
             else
                 Whiskeys = await context.GetAllWhiskeys(SearchTerm);
             return Page();

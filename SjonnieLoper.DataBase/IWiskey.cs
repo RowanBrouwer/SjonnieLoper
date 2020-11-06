@@ -13,7 +13,7 @@ namespace SjonnieLoper.DataBase
         //whiskey commands//
 
         public Task<IEnumerable<WhiskeyBase>> GetAllWhiskeys(string name);
-        public Task<IEnumerable<WhiskeyBase>> GetAllWhiskeysSearch(string searchName, string searchBrand, string searchCountry);
+        public Task<IEnumerable<WhiskeyBase>> GetAllWhiskeysSearch(string searchName, string searchBrand, string searchCountry, bool searchForType, WhiskeyType searchType);
         public Task<WhiskeyBase> GetWhiskeyById(int id);
         public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey);
         public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey);
