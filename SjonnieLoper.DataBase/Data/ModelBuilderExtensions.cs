@@ -1,8 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Helpers;
+using SjonnieLoper.Data;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using System.Text;
 
 namespace SjonnieLoper.DataBase.Data
@@ -11,7 +17,8 @@ namespace SjonnieLoper.DataBase.Data
     {
         public static void Seed(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<WhiskeyBase>().HasData(new WhiskeyBase
+
+        modelBuilder.Entity<WhiskeyBase>().HasData(new WhiskeyBase
             {
                 Id = 1,
                 Name = "Tullamore Dew",
@@ -100,6 +107,36 @@ namespace SjonnieLoper.DataBase.Data
                 ImagePath = ImageNames.Img3,
                 AmountInStorage = 7,
                 SoftDeleted = false
+            });
+                
+            var hasher = new PasswordHasher<IdentityUser>();
+
+            string ROLE_ID = Guid.NewGuid().ToString();
+            string USER_ID = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole {Id= ROLE_ID, Name = "Employee", NormalizedName = "EMPLOYEE".ToUpper() });
+
+
+            modelBuilder.Entity<ApplicationUser>().HasData(new ApplicationUser
+                {
+                Id = USER_ID,
+                FName = "Rowan",
+                MName = "",
+                LName = "Brouwer",
+                SoftDeleted = false,
+                Email = "Admin1@Admin1",
+                NormalizedEmail = "ADMIN1@ADMIN1",
+                EmailConfirmed = true,
+                UserName = "Admin1@Admin1",
+                NormalizedUserName = "ADMIN1@ADMIN1",
+                SecurityStamp = Guid.NewGuid().ToString("D"),
+                PasswordHash = hasher.HashPassword(null, "!Admin123") 
+            });
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = USER_ID
             });
         }
     }

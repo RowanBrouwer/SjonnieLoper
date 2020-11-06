@@ -14,6 +14,7 @@ namespace SjonnieLoper.Data
         {
         }
 
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<WhiskeyBase> Whiskeys { get; set; }
         public DbSet<OrdersAndReservations> Orders { get; set; }
