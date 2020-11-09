@@ -77,7 +77,6 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet()
         {
-
             if (DoAdvancedSearch)
                 Whiskeys = await context.GetAllWhiskeysSearch(SearchName, SearchBrand, SearchCountry, SearchForType, SearchType);
             else

@@ -41,7 +41,6 @@
                         <input class="form-control" type="search" asp-for="SearchBrand" placeholder="Brand" />
                     </div>
                     <div class="col-4  form-group">
-                        @*<label class="col-2 col-form-label" asp-for="SearchCountry"></label>*@
                         <input class="form-control" type="search" asp-for="SearchCountry" placeholder="Country" />
                     </div>
                 </div>
@@ -55,8 +54,9 @@
                                 </div>
                             </div>
                         </div>
-                        <select class="custom-select" asp-for="SearchType" asp-items="Html.GetEnumSelectList<WhiskeyType>()"
-                                id="SelectWType" name="SelectWType" disabled>
+                        <select class="custom-select" 
+                                asp-for="SearchType" asp-items="Html.GetEnumSelectList<WhiskeyType>()" 
+                                id="SelectWType" disabled>
                         </select>
                     </div>
                 </div>
@@ -121,11 +121,16 @@
                 $('#AdvancedSearch').addClass("show")
             }
 
+            @*After search keeps searchtype bar enabled if checkbox was checked.*@
+            if ($('#WTypeCheckbox').is(':checked')) {
+                $('#SelectWType').prop('disabled', false);
+            }
+
             $('#WTypeCheckbox').change(function () {
                 if ($(this).is(':checked')) {
                     $('#SelectWType').prop('disabled', false);
                 } else {
-                    $('select[name="SelectWType"]').prop('disabled', true);
+                    $('#SelectWType').prop('disabled', true);
                 }
 
                 //$('select[name="SelectWType"]').prop('disabled', this.is(':checked') ? false : true);
