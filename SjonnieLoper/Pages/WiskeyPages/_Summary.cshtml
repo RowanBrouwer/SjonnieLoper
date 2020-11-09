@@ -1,30 +1,27 @@
 ﻿@using SjonnieLoper.Core
 @model WhiskeyBase
-
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3>@Model.Name</h3>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-text">@Model.Name</h5>
     </div>
-    <div class="panel-body d-flex flex-column">
-        <span>Brand: @Model.Brand</span>
-        <span>Alch%: @Model.Procentage</span>
-        <span>Price: @Model.Price</span>
-        <span>Bottle Date:  @Html.DisplayFor(w => w.DateOfBottling)</span>
-       
+    <div class="card-body d-flex flex-column">
+        <span class="card-text">Brand: @Model.Brand</span>
+        <span class="card-text">Alch%: @Model.Procentage</span>
+        <span class="card-text">Price: @Model.Price</span>
+        <span class="card-text">Bottle Date:  @Html.DisplayFor(w => w.DateOfBottling)</span>
     </div>
-    <div class="panel-footer">
+    <div class="card-footer d-flex py-0">
         <a class="btn btn-lg" asp-page="./Details"
            asp-route-whiskeyId="@Model.Id">
-            <i class="glyphicon glyphicon-zoom-in"></i>
+            <i class="fas fa-search-plus"></i>
         </a>
         <a class="btn btn-lg" asp-page="./Create_Edit"
            asp-route-whiskeyId="@Model.Id">
-            <i class="glyphicon glyphicon-edit"></i>
+            <i class="fas fa-edit"></i>
         </a>
         <a class="btn btn-lg" asp-page="./Delete"
            asp-route-whiskeyId="@Model.Id">
-            <i class="glyphicon glyphicon-trash"></i>
+            <i class="fas fa-trash-alt"></i>
         </a>
     </div>
 </div>
