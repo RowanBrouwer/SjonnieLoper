@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,6 +22,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public WhiskeyBase Whiskey { get; set; }
 
         public IEnumerable<SelectListItem> Types { get; set; }
+        public IEnumerable<SelectListItem> Images { get; set; }
 
         public Create_EditModel(IWiskey context, IHtmlHelper htmlHelper)
         {
@@ -32,6 +34,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
             Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
+            Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
 
             if (whiskeyId.HasValue)
             {

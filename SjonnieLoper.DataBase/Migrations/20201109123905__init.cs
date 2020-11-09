@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class init : Migration
+    public partial class _init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,11 +60,11 @@ namespace SjonnieLoper.DataBase.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Brand = table.Column<string>(nullable: true),
-                    DateOfBottling = table.Column<DateTime>(nullable: false),
+                    AgeYears = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    CountryOforigin = table.Column<string>(nullable: true),
-                    Price = table.Column<double>(nullable: false),
-                    Procentage = table.Column<double>(nullable: false),
+                    CountryOfOrigin = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Percentage = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
                     ImagePath = table.Column<string>(nullable: true),
                     AmountInStorage = table.Column<int>(nullable: false),
                     SoftDeleted = table.Column<bool>(nullable: false)
@@ -211,15 +211,15 @@ namespace SjonnieLoper.DataBase.Migrations
 
             migrationBuilder.InsertData(
                 table: "Whiskeys",
-                columns: new[] { "Id", "AmountInStorage", "Brand", "CountryOforigin", "DateOfBottling", "ImagePath", "Name", "Price", "Procentage", "SoftDeleted", "Type" },
+                columns: new[] { "Id", "AgeYears", "AmountInStorage", "Brand", "CountryOfOrigin", "ImagePath", "Name", "Percentage", "Price", "SoftDeleted", "Type" },
                 values: new object[,]
                 {
-                    { 1, 22, "Tullamore", "Ireland", new DateTime(1999, 8, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage1.png", "Tullamore Dew", 25.0, 0.40000000000000002, false, 0 },
-                    { 2, 20, "Talisker", "Scotland", new DateTime(2010, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage2.png", "Talisker 10 years Gift Tube", 37.5, 0.45000000000000001, false, 1 },
-                    { 3, 10, "Jack Daniels", "America", new DateTime(2018, 11, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage3.png", "Jack Daniels", 23.5, 0.40000000000000002, false, 4 },
-                    { 4, 12, "Glenfiddich", "Scotland", new DateTime(2002, 10, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage2.png", "Glenfiddich Fire & Cane", 44.0, 0.42999999999999999, false, 1 },
-                    { 5, 18, "Ardbeg", "Scotland", new DateTime(2016, 5, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage1.png", "Ardbeg 5 years Wee Beastie", 44.0, 0.46999999999999997, false, 1 },
-                    { 6, 7, "Lagavulin", "Scotland", new DateTime(2011, 3, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "MockImage3.png", "Lagavulin 9 years House Lannister ", 74.950000000000003, 0.46000000000000002, false, 1 }
+                    { 1, 21, 22, "Tullamore", "Ireland", "MockImage1.png", "Tullamore Dew", 0.4m, 25m, false, 0 },
+                    { 2, 10, 20, "Talisker", "Scotland", "MockImage2.png", "Talisker 10 years Gift Tube", 0.45m, 37.50m, false, 1 },
+                    { 3, 2, 10, "Jack Daniels", "America", "MockImage3.png", "Jack Daniels", 0.40m, 23.50m, false, 4 },
+                    { 4, 18, 12, "Glenfiddich", "Scotland", "MockImage2.png", "Glenfiddich Fire & Cane", 0.43m, 44m, false, 1 },
+                    { 5, 4, 18, "Ardbeg", "Scotland", "MockImage1.png", "Ardbeg 5 years Wee Beastie", 0.47m, 44m, false, 1 },
+                    { 6, 9, 7, "Lagavulin", "Scotland", "MockImage3.png", "Lagavulin 9 years House Lannister ", 0.46m, 74.95m, false, 1 }
                 });
 
             migrationBuilder.CreateIndex(

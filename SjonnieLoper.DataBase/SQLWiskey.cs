@@ -81,7 +81,7 @@ namespace SjonnieLoper.DataBase
                         o.Customer.Email.StartsWith(name) ||
                         o.Orderd_Wiskey.Name.StartsWith(name) ||
                         o.Orderd_Wiskey.Brand.StartsWith(name) ||
-                        o.Orderd_Wiskey.CountryOforigin.StartsWith(name)
+                        o.Orderd_Wiskey.CountryOfOrigin.StartsWith(name)
                         orderby o.AmountOrderd
                         select o;
             return await query.ToListAsync();
@@ -91,7 +91,7 @@ namespace SjonnieLoper.DataBase
         {
             var query = from w in db.Whiskeys
                         where w.SoftDeleted == false
-                        where w.Name.StartsWith(name) || string.IsNullOrEmpty(name) || w.Brand.StartsWith(name) || w.CountryOforigin.StartsWith(name)
+                        where w.Name.StartsWith(name) || string.IsNullOrEmpty(name) || w.Brand.StartsWith(name) || w.CountryOfOrigin.StartsWith(name)
                         orderby w.Name
                         select w;
             return await query.ToListAsync();
@@ -103,7 +103,7 @@ namespace SjonnieLoper.DataBase
                         where w.SoftDeleted == false
                         where (string.IsNullOrEmpty(searchName) || w.Name.Contains(searchName))
                         where (string.IsNullOrEmpty(searchBrand) || w.Brand.Contains(searchBrand))
-                        where (string.IsNullOrEmpty(searchCountry) || w.CountryOforigin.Contains(searchCountry))
+                        where (string.IsNullOrEmpty(searchCountry) || w.CountryOfOrigin.Contains(searchCountry))
                         where (!searchForType || w.Type == searchType)
                         orderby w.Name
                         select w;

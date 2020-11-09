@@ -10,45 +10,51 @@
     <input type="hidden" asp-for="Whiskey.Id" />
 
     <div class="form-group">
+        <div class="form-group">
+            <label asp-for="Whiskey.Name"></label>
+            <input asp-for="Whiskey.Name" class="form-control" />
+            <span class="text-danger" asp-validation-for="Whiskey.Name"></span>
+        </div>
         <label asp-for="Whiskey.Brand"></label>
         <input asp-for="Whiskey.Brand" class="form-control" />
         <span class="text-danger" asp-validation-for="Whiskey.Brand"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Whiskey.Name"></label>
-        <input asp-for="Whiskey.Name" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.Name"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.CountryOforigin"></label>
-        <input asp-for="Whiskey.CountryOforigin" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.CountryOforigin"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.Procentage"></label>
-        <input asp-for="Whiskey.Procentage" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.Procentage"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.Price"></label>
-        <input asp-for="Whiskey.Price" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.Price"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.AmountInStorage"></label>
-        <input asp-for="Whiskey.AmountInStorage" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.AmountInStorage"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.DateOfBottling"></label>
-        <input asp-for="Whiskey.DateOfBottling" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.DateOfBottling"></span>
+        <label asp-for="Whiskey.AgeYears"></label>
+        <input asp-for="Whiskey.AgeYears" class="form-control" min="0"/>
+        <span class="text-danger" asp-validation-for="Whiskey.AgeYears"></span>
     </div>
     <div class="form-group">
         <label asp-for="Whiskey.Type"></label>
         <select asp-for="Whiskey.Type" class="form-control" asp-items="Model.Types">
         </select>
         <span class="text-danger" asp-validation-for="Whiskey.Type"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.CountryOfOrigin"></label>
+        <input asp-for="Whiskey.CountryOfOrigin" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.CountryOfOrigin"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.Price"></label>
+        <input asp-for="Whiskey.Price" class="form-control" type="number" min="0"/>
+        <span class="text-danger" asp-validation-for="Whiskey.Price"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.Percentage"></label>
+        <input asp-for="Whiskey.Percentage" class="form-control" type="number" min="0"/>
+        <span class="text-danger" asp-validation-for="Whiskey.Percentage"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.ImagePath"></label>
+        <select asp-for="Whiskey.ImagePath" class="form-control" asp-items="Model.Images">
+        </select>
+        <span class="text-danger" asp-validation-for="Whiskey.ImagePath"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Whiskey.AmountInStorage"></label>
+        <input asp-for="Whiskey.AmountInStorage" class="form-control" min="0"/>
+        <span class="text-danger" asp-validation-for="Whiskey.AmountInStorage"></span>
     </div>
 
     <button type="submit" class="btn btn-outline-dark">Save</button>

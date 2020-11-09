@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201102095753_initializeDB2.cs" />
     <Compile Remove="Migrations\20201102095753_initializeDB2.Designer.cs" />
+    <Compile Remove="Migrations\20201109105512_ModelWhiskyUpdate.cs" />
+    <Compile Remove="Migrations\20201109105512_ModelWhiskyUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20201109125900_DecimalAdjustment.cs" />
+    <Compile Remove="Migrations\20201109125900_DecimalAdjustment.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Images\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

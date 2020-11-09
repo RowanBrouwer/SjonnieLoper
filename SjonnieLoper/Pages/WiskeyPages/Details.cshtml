@@ -13,25 +13,28 @@
     Id: @Model.Whiskey.Id
 </div>
 <div>
-    Brand: @Model.Whiskey.Brand
+    Name: @Model.Whiskey.Name
 </div>
 <div>
-    Name: @Model.Whiskey.Name
+    <img src="@Url.Content("~/Images/" + Model.Whiskey.ImagePath)"/>
+</div>
+<div>
+    Brand: @Model.Whiskey.Brand
 </div>
 <div>
     Type: @Model.Whiskey.Type
 </div>
 <div>
-    Alc%: @Model.Whiskey.Procentage
+    Alc%: @Model.Whiskey.Percentage
 </div>
 <div>
     Price: @Model.Whiskey.Price
 </div>
 <div>
-    Origin: @Model.Whiskey.CountryOforigin
+    Origin: @Model.Whiskey.CountryOfOrigin
 </div>
 <div>
-    Bottled Date: @Model.Whiskey.DateOfBottling
+    Age: @Model.Whiskey.AgeYears Years
 </div>
 <div>
     Amount avaible: @Model.Whiskey.AmountInStorage

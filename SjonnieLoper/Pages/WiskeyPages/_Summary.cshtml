@@ -6,9 +6,10 @@
     </div>
     <div class="card-body d-flex flex-column">
         <span class="card-text">Brand: @Model.Brand</span>
-        <span class="card-text">Alch%: @Model.Procentage</span>
-        <span class="card-text">Price: @Model.Price</span>
-        <span class="card-text">Bottle Date:  @Html.DisplayFor(w => w.DateOfBottling)</span>
+        <span class="card-text">Alch%: @Model.Percentage</span>
+        <span class="card-text">Price: €@Model.Price</span>
+        <span class="card-text">Type: @Model.Type</span>
+        <span class="card-text">@Html.DisplayFor(w => w.AgeYears) Years</span>
     </div>
     <div class="card-footer d-flex py-0">
         <a class="btn btn-lg" asp-page="./Details"
