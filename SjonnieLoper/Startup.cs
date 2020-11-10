@@ -61,7 +61,8 @@ namespace SjonnieLoper
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            //For localization checking in regards to decimals.
+
+            //For temporary decimal "solution".
             app.UseRequestLocalization("en-GB");
 
                 
