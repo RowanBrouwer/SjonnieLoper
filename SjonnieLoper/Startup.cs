@@ -62,7 +62,7 @@ namespace SjonnieLoper
                 app.UseHsts();
             }
             //For localization checking in regards to decimals.
-            //app.UseRequestLocalization("en-NL");
+            app.UseRequestLocalization("en-GB");
 
                 
             app.UseHttpsRedirection();

@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using NuGet.Frameworks;
 using SjonnieLoper.Core;
 using SjonnieLoper.DataBase;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Threading.Tasks;
+
 
 namespace SjonnieLoper.Pages.WiskeyPages
 {
@@ -83,5 +86,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
                 Whiskeys = await context.GetAllWhiskeys(SearchTerm);
             return Page();
         }
+
+
     }
 }
