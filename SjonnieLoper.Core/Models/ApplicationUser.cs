@@ -21,7 +21,6 @@ namespace SjonnieLoper.Core
         public DateTime Birthday  { get; set; }
 
         public bool SoftDeleted { get; set; }
-
         public bool Employee { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class _init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,7 +45,8 @@ namespace SjonnieLoper.DataBase.Migrations
                     MName = table.Column<string>(nullable: true),
                     LName = table.Column<string>(nullable: true),
                     Birthday = table.Column<DateTime>(nullable: true),
-                    SoftDeleted = table.Column<bool>(nullable: true)
+                    SoftDeleted = table.Column<bool>(nullable: true),
+                    Employee = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,8 +64,8 @@ namespace SjonnieLoper.DataBase.Migrations
                     AgeYears = table.Column<int>(nullable: false),
                     Type = table.Column<int>(nullable: false),
                     CountryOfOrigin = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
-                    Percentage = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Percentage = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     ImagePath = table.Column<string>(nullable: true),
                     AmountInStorage = table.Column<int>(nullable: false),
                     SoftDeleted = table.Column<bool>(nullable: false)
@@ -207,19 +208,6 @@ namespace SjonnieLoper.DataBase.Migrations
                         principalTable: "Whiskeys",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Whiskeys",
-                columns: new[] { "Id", "AgeYears", "AmountInStorage", "Brand", "CountryOfOrigin", "ImagePath", "Name", "Percentage", "Price", "SoftDeleted", "Type" },
-                values: new object[,]
-                {
-                    { 1, 21, 22, "Tullamore", "Ireland", "MockImage1.png", "Tullamore Dew", 0.4m, 25m, false, 0 },
-                    { 2, 10, 20, "Talisker", "Scotland", "MockImage2.png", "Talisker 10 years Gift Tube", 0.45m, 37.50m, false, 1 },
-                    { 3, 2, 10, "Jack Daniels", "America", "MockImage3.png", "Jack Daniels", 0.40m, 23.50m, false, 4 },
-                    { 4, 18, 12, "Glenfiddich", "Scotland", "MockImage2.png", "Glenfiddich Fire & Cane", 0.43m, 44m, false, 1 },
-                    { 5, 4, 18, "Ardbeg", "Scotland", "MockImage1.png", "Ardbeg 5 years Wee Beastie", 0.47m, 44m, false, 1 },
-                    { 6, 9, 7, "Lagavulin", "Scotland", "MockImage3.png", "Lagavulin 9 years House Lannister ", 0.46m, 74.95m, false, 1 }
                 });
 
             migrationBuilder.CreateIndex(

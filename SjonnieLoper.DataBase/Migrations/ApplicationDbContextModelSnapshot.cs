@@ -282,7 +282,7 @@ namespace SjonnieLoper.DataBase.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Percentage")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
