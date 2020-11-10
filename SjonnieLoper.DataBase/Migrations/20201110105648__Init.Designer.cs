@@ -10,8 +10,8 @@ using SjonnieLoper.Data;
 namespace SjonnieLoper.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201110104612_init")]
-    partial class init
+    [Migration("20201110105648__Init")]
+    partial class _Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

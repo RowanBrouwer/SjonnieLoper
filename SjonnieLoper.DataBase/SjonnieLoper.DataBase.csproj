@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20201109105512_ModelWhiskyUpdate.Designer.cs" />
     <Compile Remove="Migrations\20201109125900_DecimalAdjustment.cs" />
     <Compile Remove="Migrations\20201109125900_DecimalAdjustment.Designer.cs" />
+    <Compile Remove="Migrations\20201110105449__SecondInit.cs" />
+    <Compile Remove="Migrations\20201110105449__SecondInit.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
