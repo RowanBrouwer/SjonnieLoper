@@ -296,92 +296,6 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Whiskeys");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AgeYears = 21,
-                            AmountInStorage = 22,
-                            Brand = "Tullamore",
-                            CountryOfOrigin = "Ireland",
-                            ImagePath = "MockImage1.png",
-                            Name = "Tullamore Dew",
-                            Percentage = 0.4m,
-                            Price = 25m,
-                            SoftDeleted = false,
-                            Type = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AgeYears = 10,
-                            AmountInStorage = 20,
-                            Brand = "Talisker",
-                            CountryOfOrigin = "Scotland",
-                            ImagePath = "MockImage2.png",
-                            Name = "Talisker 10 years Gift Tube",
-                            Percentage = 0.45m,
-                            Price = 37.50m,
-                            SoftDeleted = false,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AgeYears = 2,
-                            AmountInStorage = 10,
-                            Brand = "Jack Daniels",
-                            CountryOfOrigin = "America",
-                            ImagePath = "MockImage3.png",
-                            Name = "Jack Daniels",
-                            Percentage = 0.40m,
-                            Price = 23.50m,
-                            SoftDeleted = false,
-                            Type = 4
-                        },
-                        new
-                        {
-                            Id = 4,
-                            AgeYears = 18,
-                            AmountInStorage = 12,
-                            Brand = "Glenfiddich",
-                            CountryOfOrigin = "Scotland",
-                            ImagePath = "MockImage2.png",
-                            Name = "Glenfiddich Fire & Cane",
-                            Percentage = 0.43m,
-                            Price = 44m,
-                            SoftDeleted = false,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 5,
-                            AgeYears = 5,
-                            AmountInStorage = 18,
-                            Brand = "Ardbeg",
-                            CountryOfOrigin = "Scotland",
-                            ImagePath = "MockImage1.png",
-                            Name = "Ardbeg 5 years Wee Beastie",
-                            Percentage = 0.47m,
-                            Price = 44m,
-                            SoftDeleted = false,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            AgeYears = 9,
-                            AmountInStorage = 7,
-                            Brand = "Lagavulin",
-                            CountryOfOrigin = "Scotland",
-                            ImagePath = "MockImage3.png",
-                            Name = "Lagavulin 9 years House Lannister ",
-                            Percentage = 0.46m,
-                            Price = 74.95m,
-                            SoftDeleted = false,
-                            Type = 1
-                        });
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.ApplicationUser", b =>
@@ -390,6 +304,9 @@ namespace SjonnieLoper.DataBase.Migrations
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("Employee")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FName")
                         .IsRequired()

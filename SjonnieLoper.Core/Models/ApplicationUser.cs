@@ -22,5 +22,6 @@ namespace SjonnieLoper.Core
 
         public bool SoftDeleted { get; set; }
 
+        public bool Employee { get; set; }
     }
 }

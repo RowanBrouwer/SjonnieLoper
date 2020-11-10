@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
@@ -15,6 +15,7 @@ namespace SjonnieLoper.Data
         {
         }
 
+
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<WhiskeyBase> Whiskeys { get; set; }
         public DbSet<OrdersAndReservations> Orders { get; set; }
@@ -22,8 +23,6 @@ namespace SjonnieLoper.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Seed();
         }
     }
 }
