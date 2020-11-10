@@ -2,6 +2,7 @@
 @model SjonnieLoper.Pages.WiskeyPages.IndexModel
 @{
 }
+@System.Globalization.CultureInfo.CurrentUICulture
 <head>
     <script src="https://kit.fontawesome.com/f6dbf9a0a1.js" crossorigin="anonymous"></script>
 </head>
@@ -54,41 +55,41 @@
                                 </div>
                             </div>
                         </div>
-                        <select class="custom-select" 
-                                asp-for="SearchType" asp-items="Html.GetEnumSelectList<WhiskeyType>()" 
+                        <select class="custom-select"
+                                asp-for="SearchType" asp-items="Html.GetEnumSelectList<WhiskeyType>()"
                                 id="SelectWType" disabled>
                         </select>
                     </div>
                 </div>
-      
+
 
                 <div>
                     @*
-            <div class="input-group">
-                <input type="checkbox" class="form-check" asp-for="SearchForDate" />
-                <label asp-for="SearchDate1"></label>
-                <input type="search" class="form-control" asp-for="SearchDate1" />
-            </div>
-            <div class="input-group">
-                <label asp-for="SearchDate2"></label>
-                <input type="search" class="form-control" asp-for="SearchDate2" />
-            </div>
-            <div class="input-group">
-                <label asp-for="SearchPercent1"></label>
-                <input type="search" class="form-control" asp-for="SearchPercent1" />
-            </div>
-            <div class="input-group">
-                <label asp-for="SearchPercent2"></label>
-                <input type="search" class="form-control" asp-for="SearchPercent2" />
-            </div>
-            <div class="input-group">
-                <label asp-for="SearchPrice1"></label>
-                <input type="search" class="form-control" asp-for="SearchPrice1" />
-            </div>
-            <div class="input-group">
-                <label asp-for="SearchPrice2"></label>
-                <input type="search" class="form-control" asp-for="SearchPrice2" />
-            </div>*@
+                        <div class="input-group">
+                            <input type="checkbox" class="form-check" asp-for="SearchForDate" />
+                            <label asp-for="SearchDate1"></label>
+                            <input type="search" class="form-control" asp-for="SearchDate1" />
+                        </div>
+                        <div class="input-group">
+                            <label asp-for="SearchDate2"></label>
+                            <input type="search" class="form-control" asp-for="SearchDate2" />
+                        </div>
+                        <div class="input-group">
+                            <label asp-for="SearchPercent1"></label>
+                            <input type="search" class="form-control" asp-for="SearchPercent1" />
+                        </div>
+                        <div class="input-group">
+                            <label asp-for="SearchPercent2"></label>
+                            <input type="search" class="form-control" asp-for="SearchPercent2" />
+                        </div>
+                        <div class="input-group">
+                            <label asp-for="SearchPrice1"></label>
+                            <input type="search" class="form-control" asp-for="SearchPrice1" />
+                        </div>
+                        <div class="input-group">
+                            <label asp-for="SearchPrice2"></label>
+                            <input type="search" class="form-control" asp-for="SearchPrice2" />
+                        </div>*@
                 </div>
 
                 <span>

@@ -30,11 +30,13 @@ namespace SjonnieLoper.Core
 
 
         [DisplayFormat(DataFormatString = "{0:##}")]
+        [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:##}")]
-        [Column(TypeName = "decimal(18,2)")]
+
+        [DisplayFormat(DataFormatString = "{0:####}")]
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Percentage { get; set; }
  
         public string ImagePath { get; set; }
