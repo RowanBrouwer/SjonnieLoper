@@ -91,7 +91,7 @@ namespace SjonnieLoper.DataBase
         {
             var query = from w in db.Whiskeys
                         where w.SoftDeleted == false
-                        where w.Name.StartsWith(name) || string.IsNullOrEmpty(name) || w.Brand.StartsWith(name) || w.CountryOforigin.StartsWith(name)
+                        where w.Name.Contains(name) || string.IsNullOrEmpty(name) || w.Brand.Contains(name) || w.CountryOforigin.Contains(name)
                         orderby w.Name
                         select w;
             return await query.ToListAsync();

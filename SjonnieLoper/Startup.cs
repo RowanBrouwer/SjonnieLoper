@@ -14,7 +14,7 @@ using Microsoft.Extensions.Hosting;
 using SjonnieLoper.Data;
 using SjonnieLoper.Core;
 using SjonnieLoper.DataBase;
-using SjonnieLoper.Areas.Identity;
+using SjonnieLoper.DataBase.Data;
 
 namespace SjonnieLoper
 {
@@ -36,16 +36,20 @@ namespace SjonnieLoper
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddScoped<IWiskey, SQLWiskey>();
+            services.AddDefaultIdentity<ApplicationUser>().AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
+            services.AddAuthorization(o => o.AddPolicy("Employee", (p => p.RequireRole("Employee"))));
+
+            services.AddScoped<IWiskey, SQLWiskey>();            
 
             services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, ApplicationDbContext db, RoleManager<IdentityRole> roleManager)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,6 +62,7 @@ namespace SjonnieLoper
                 app.UseHsts();
             }
 
+                
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -65,6 +70,8 @@ namespace SjonnieLoper
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            ApplicationDbInit.Seed(userManager, db, roleManager);
 
             app.UseEndpoints(endpoints =>
             {
