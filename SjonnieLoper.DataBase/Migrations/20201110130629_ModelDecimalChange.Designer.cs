@@ -10,8 +10,8 @@ using SjonnieLoper.Data;
 namespace SjonnieLoper.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201110104612_init")]
-    partial class init
+    [Migration("20201110130629_ModelDecimalChange")]
+    partial class ModelDecimalChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -284,7 +284,7 @@ namespace SjonnieLoper.DataBase.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Percentage")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
