@@ -136,8 +136,6 @@ namespace SjonnieLoper.DataBase
             return await countrys.ToListAsync();
         }
 
-
-
         public async Task<OrdersAndReservations> GetOrderById(int id)
         {
             return await db.Orders.FirstOrDefaultAsync(o => o.Id == id);
