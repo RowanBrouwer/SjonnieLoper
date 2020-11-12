@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class countrylist : Migration
+    public partial class _init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,7 +184,7 @@ namespace SjonnieLoper.DataBase.Migrations
                     Type = table.Column<int>(nullable: false),
                     CountryOfOriginId = table.Column<int>(nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Percentage = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    Percentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImagePath = table.Column<string>(nullable: true),
                     AmountInStorage = table.Column<int>(nullable: false),
                     SoftDeleted = table.Column<bool>(nullable: false)
