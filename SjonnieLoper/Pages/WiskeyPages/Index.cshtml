@@ -61,39 +61,87 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="input-group col-6">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <div>
+                                    <label class="form-check-label" for="WAgeCheckbox">Age Range</label>
+                                    <input class="form-check form-check-inline" type="checkbox" asp-for="SearchRangeAge" id="WAgeCheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <input class="form-control" type="search" asp-for="SearchAge1" placeholder="Age" />
+                    </div>
+                    <div class="input-group col-6">
+                        <input class="form-control" type="search" asp-for="SearchAge2" placeholder="Age" id="InputWAge2" disabled />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group col-6">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <div>
+                                    <label class="form-check-label" for="WPriceCheckbox">Price Range</label>
+                                    <input class="form-check form-check-inline" type="checkbox" asp-for="SearchRangePrice" id="WPriceCheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <input class="form-control" type="search" asp-for="SearchPrice1" placeholder="Price" />
+                    </div>
+                    <div class="input-group col-6">
+                        <input class="form-control" type="search" asp-for="SearchPrice2" placeholder="Price" id="InputWPrice2" disabled />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="input-group col-6">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <div>
+                                    <label class="form-check-label" for="WPercentCheckbox">Percent Range</label>
+                                    <input class="form-check form-check-inline" type="checkbox" asp-for="SearchRangePercent" id="WPercentCheckbox" />
+                                </div>
+                            </div>
+                        </div>
+                        <input class="form-control" type="search" asp-for="SearchPercent1" placeholder="0.00" />
+                    </div>
+                    <div class="input-group col-6">
+                        <input class="form-control" type="search" asp-for="SearchPercent2" placeholder="0.00" id="InputWPercent2" disabled />
+                    </div>
+                </div>
 
 
                 <div>
                     @*
-                        <div class="input-group">
-                            <input type="checkbox" class="form-check" asp-for="SearchForDate" />
-                            <label asp-for="SearchDate1"></label>
-                            <input type="search" class="form-control" asp-for="SearchDate1" />
-                        </div>
-                        <div class="input-group">
-                            <label asp-for="SearchDate2"></label>
-                            <input type="search" class="form-control" asp-for="SearchDate2" />
-                        </div>
-                        <div class="input-group">
-                            <label asp-for="SearchPercent1"></label>
-                            <input type="search" class="form-control" asp-for="SearchPercent1" />
-                        </div>
-                        <div class="input-group">
-                            <label asp-for="SearchPercent2"></label>
-                            <input type="search" class="form-control" asp-for="SearchPercent2" />
-                        </div>
-                        <div class="input-group">
-                            <label asp-for="SearchPrice1"></label>
-                            <input type="search" class="form-control" asp-for="SearchPrice1" />
-                        </div>
-                        <div class="input-group">
-                            <label asp-for="SearchPrice2"></label>
-                            <input type="search" class="form-control" asp-for="SearchPrice2" />
-                        </div>*@
+            <div class="input-group">
+                <input type="checkbox" class="form-check" asp-for="SearchForDate" />
+                <label asp-for="SearchDate1"></label>
+                <input type="search" class="form-control" asp-for="SearchDate1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchDate2"></label>
+                <input type="search" class="form-control" asp-for="SearchDate2" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPercent1"></label>
+                <input type="search" class="form-control" asp-for="SearchPercent1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPercent2"></label>
+                <input type="search" class="form-control" asp-for="SearchPercent2" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPrice1"></label>
+                <input type="search" class="form-control" asp-for="SearchPrice1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPrice2"></label>
+                <input type="search" class="form-control" asp-for="SearchPrice2" />
+            </div>*@
                 </div>
 
                 <span>
-                    <button class="btn btn-default">
+                    <button class="btn btn-default btn-light">
                         <i class="fas fa-search"></i>
                         Search
                     </button>
@@ -113,7 +161,9 @@
 
 @section Scripts{
     <script>
+
         $(document).ready(function () {
+            //Advanced Search
             if ($('#ASCheckbox').is(':checked'))
             {
                 @*Use this if you want to include transition.
@@ -122,6 +172,7 @@
                 $('#AdvancedSearch').addClass("show")
             }
 
+            //Type Checkbox
             @*After search keeps searchtype bar enabled if checkbox was checked.*@
             if ($('#WTypeCheckbox').is(':checked')) {
                 $('#SelectWType').prop('disabled', false);
@@ -133,9 +184,49 @@
                 } else {
                     $('#SelectWType').prop('disabled', true);
                 }
-
                 //$('select[name="SelectWType"]').prop('disabled', this.is(':checked') ? false : true);
             });
+
+            //Age Checkbox
+            if ($('#WAgeCheckbox').is(':checked')) {
+                $('#InputWAge2').prop('disabled', false);
+            }
+
+            $('#WAgeCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#InputWAge2').prop('disabled', false);
+                } else {
+                    $('#InputWAge2').prop('disabled', true);
+                }
+            });
+
+            //Price Checkbox
+            if ($('#WPriceCheckbox').is(':checked')) {
+                $('#InputWPrice2').prop('disabled', false);
+            }
+
+            $('#WPriceCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#InputWPrice2').prop('disabled', false);
+                } else {
+                    $('#InputWPrice2').prop('disabled', true);
+                }
+            });
+
+            //Percent Checkbox
+            if ($('#WPercentCheckbox').is(':checked')) {
+                $('#InputWPercent2').prop('disabled', false);
+            }
+
+            $('#WPercentCheckbox').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#InputWPercent2').prop('disabled', false);
+                } else {
+                    $('#InputWPercent2').prop('disabled', true);
+                }
+            });
+
+       
         });
     </script>
 }
