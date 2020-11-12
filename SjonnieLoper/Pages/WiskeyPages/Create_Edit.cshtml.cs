@@ -26,6 +26,12 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Images { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public bool NewCountry { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string NewCountryString { get; set; }
+
         public Create_EditModel(IWiskey context, IHtmlHelper htmlHelper)
         {
             this.context = context;
@@ -35,7 +41,14 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
-            countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country");
+            if (NewCountry)
+            {
+
+            }
+            else
+            {
+                countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country");
+            }
             Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
             Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
 

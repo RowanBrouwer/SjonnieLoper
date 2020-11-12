@@ -30,35 +30,56 @@
         </select>
         <span class="text-danger" asp-validation-for="Whiskey.Type"></span>
     </div>
-    <div class="form-group">
+    @if (!Model.NewCountry)
+    {
+     <div class="form-group">
         <label asp-for="Whiskey.CountryOfOrigin"></label>
         <select asp-for="Whiskey.CountryOfOrigin" class="form-control" asp-items="Model.countrys">
         </select>
         <span class="text-danger" asp-validation-for="Whiskey.CountryOfOrigin"></span>
     </div>
+    }
+    else
+    {
     <div class="form-group">
-        <label asp-for="Whiskey.Price"></label>
-        <input asp-for="Whiskey.Price" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.Price"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.Percentage"></label>
-        <input asp-for="Whiskey.Percentage" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.Percentage"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.ImagePath"></label>
-        <select asp-for="Whiskey.ImagePath" class="form-control" asp-items="Model.Images">
+        <label asp-for="Whiskey.CountryOfOrigin"></label>
+        <select asp-for="Whiskey.CountryOfOrigin" class="form-control" asp-items="Model.countrys" disabled>
         </select>
-        <span class="text-danger" asp-validation-for="Whiskey.ImagePath"></span>
+        <span class="text-danger" asp-validation-for="Whiskey.CountryOfOrigin"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.AmountInStorage"></label>
-        <input asp-for="Whiskey.AmountInStorage" class="form-control" min="0" />
-        <span class="text-danger" asp-validation-for="Whiskey.AmountInStorage"></span>
+    }
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" asp-for="NewCountry" type="checkbox" id="ASCheckbox" data-toggle="collapse" data-target="#NewCountryThing" />
+        <label class="form-check-label" asp-for="NewCountry" for="ASCheckbox">Add Country</label>
     </div>
+    <div class="collapse" id="NewCountryThing">
+        <div class="col-4 form-group">
+            <input class="form-control" type="search" asp-for="NewCountryString" placeholder="Country" />
+        </div>
+    </div>
+        <div class="form-group">
+            <label asp-for="Whiskey.Price"></label>
+            <input asp-for="Whiskey.Price" class="form-control" />
+            <span class="text-danger" asp-validation-for="Whiskey.Price"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Whiskey.Percentage"></label>
+            <input asp-for="Whiskey.Percentage" class="form-control" />
+            <span class="text-danger" asp-validation-for="Whiskey.Percentage"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Whiskey.ImagePath"></label>
+            <select asp-for="Whiskey.ImagePath" class="form-control" asp-items="Model.Images">
+            </select>
+            <span class="text-danger" asp-validation-for="Whiskey.ImagePath"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Whiskey.AmountInStorage"></label>
+            <input asp-for="Whiskey.AmountInStorage" class="form-control" min="0" />
+            <span class="text-danger" asp-validation-for="Whiskey.AmountInStorage"></span>
+        </div>
 
-    <button type="submit" class="btn btn-outline-dark">Save</button>
+        <button type="submit" class="btn btn-outline-dark">Save</button>
 </form>
 
 @section Scripts {
