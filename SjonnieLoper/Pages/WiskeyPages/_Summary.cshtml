@@ -2,15 +2,17 @@
 @model WhiskeyBase
 <div class="card">
     <div class="card-header">
-        <h5 class="card-text">@Model.Name</h5>
+        <h5 class="card-text">@Html.DisplayFor(w => w.Name)</h5>
     </div>
-    <div class="card-body d-flex flex-column">
-        <span class="card-text">Brand: @Model.Brand</span>
-        <span class="card-text">Alch%: @Model.Percentage</span>
-        <span class="card-text">Price: @Model.Price</span>
-        <span class="card-text">Type: @Model.Type</span>
-        <span class="card-text">@Html.DisplayFor(w => w.AgeYears) Years</span>
-    </div>
+            <div class="card-body">
+                <div class="d-flex flex-column">
+                    <span class="card-text">@Html.DisplayFor(w => w.Brand)</span>
+                    <span class="card-text">@Html.DisplayFor(w => w.Percentage)%</span>
+                    <span class="card-text">€ @Html.DisplayFor(w => w.Price)</span>
+                    <span class="card-text">@Html.DisplayFor(w => w.Type)</span>
+                    <span class="card-text">@Html.DisplayFor(w => w.AgeYears) Years</span>
+                </div>
+            </div>
     <div class="card-footer d-flex py-0">
         <a class="btn btn-lg" asp-page="./Details"
            asp-route-whiskeyId="@Model.Id">

@@ -225,6 +225,21 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SjonnieLoper.Core.Models.Countrys", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
+                });
+
             modelBuilder.Entity("SjonnieLoper.Core.OrdersAndReservations", b =>
                 {
                     b.Property<int>("Id")
@@ -272,8 +287,8 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CountryOfOrigin")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CountryOfOriginId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
@@ -282,7 +297,7 @@ namespace SjonnieLoper.DataBase.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Percentage")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -294,6 +309,8 @@ namespace SjonnieLoper.DataBase.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CountryOfOriginId");
 
                     b.ToTable("Whiskeys");
                 });
@@ -385,6 +402,13 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.HasOne("SjonnieLoper.Core.WhiskeyBase", "Orderd_Wiskey")
                         .WithMany()
                         .HasForeignKey("Orderd_WiskeyId");
+                });
+
+            modelBuilder.Entity("SjonnieLoper.Core.WhiskeyBase", b =>
+                {
+                    b.HasOne("SjonnieLoper.Core.Models.Countrys", "CountryOfOrigin")
+                        .WithMany()
+                        .HasForeignKey("CountryOfOriginId");
                 });
 #pragma warning restore 612, 618
         }

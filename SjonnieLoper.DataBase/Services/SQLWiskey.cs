@@ -6,6 +6,7 @@ using System.Linq;
 using SjonnieLoper.Core;
 using SjonnieLoper.Data;
 using System.Threading.Tasks;
+using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.DataBase
 {
@@ -81,7 +82,7 @@ namespace SjonnieLoper.DataBase
                         o.Customer.Email.StartsWith(name) ||
                         o.Orderd_Wiskey.Name.StartsWith(name) ||
                         o.Orderd_Wiskey.Brand.StartsWith(name) ||
-                        o.Orderd_Wiskey.CountryOfOrigin.StartsWith(name)
+                        o.Orderd_Wiskey.CountryOfOrigin.Country.Contains(name)
                         orderby o.AmountOrderd
                         select o;
             return await query.ToListAsync();
@@ -89,22 +90,27 @@ namespace SjonnieLoper.DataBase
 
         public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeys(string name)
         {
-            var query = from w in db.Whiskeys
-                        where w.SoftDeleted == false
-                        where w.Name.StartsWith(name) || string.IsNullOrEmpty(name) || w.Brand.StartsWith(name) || w.CountryOfOrigin.StartsWith(name)
-                        orderby w.Name
-                        select w;
+
+            var query = db.Whiskeys.Where(w => w.SoftDeleted == false && w.Name.Contains(name) || string.IsNullOrEmpty(name) || w.Brand.Contains(name) || w.CountryOfOrigin.Country.Contains(name)).OrderBy(w => w.Name);
+
             return await query.ToListAsync();
         }
 
-        public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeysSearch(string searchName, string searchBrand, string searchCountry, bool searchForType, WhiskeyType searchType)
+        public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeysSearch(string searchName, string searchBrand, string searchCountry, 
+            bool searchForType, WhiskeyType searchType,
+            bool searchRangeAge, int searchAge1, int searchAge2,
+            bool searchRangePrice, decimal searchPrice1, decimal searchPrice2,
+            bool searchRangePercent, decimal searchPercent1, decimal searchPercent2)
         {
             var query = from w in db.Whiskeys
                         where w.SoftDeleted == false
                         where (string.IsNullOrEmpty(searchName) || w.Name.Contains(searchName))
                         where (string.IsNullOrEmpty(searchBrand) || w.Brand.Contains(searchBrand))
-                        where (string.IsNullOrEmpty(searchCountry) || w.CountryOfOrigin.Contains(searchCountry))
+                        where (string.IsNullOrEmpty(searchCountry) || w.CountryOfOrigin.Country.Contains(searchCountry))
                         where (!searchForType || w.Type == searchType)
+                        where (!searchRangeAge && (searchAge1 == 0 || w.AgeYears == searchAge1) || w.AgeYears >= searchAge1 && w.AgeYears <= searchAge2)
+                        where (!searchRangePrice && (searchPrice1 == 0 || w.Price == searchPrice1) || w.Price >= searchPrice1 && w.Price <= searchPrice2)
+                        where (!searchRangePercent && (searchPercent1 == 0 || w.Percentage == searchPercent1) || w.Percentage >= searchPercent1 && w.Percentage <= searchPercent2)
                         orderby w.Name
                         select w;
 
@@ -133,7 +139,7 @@ namespace SjonnieLoper.DataBase
 
         public async Task<WhiskeyBase> GetWhiskeyById(int id)
         {
-            return await db.Whiskeys.FirstOrDefaultAsync(w => w.Id == id);
+            return await db.Whiskeys.Include(w => w.CountryOfOrigin).FirstOrDefaultAsync(w => w.Id == id);
         }
 
         public OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder)

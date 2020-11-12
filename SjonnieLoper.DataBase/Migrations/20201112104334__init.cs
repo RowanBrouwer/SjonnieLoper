@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class init : Migration
+    public partial class _init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,25 +54,16 @@ namespace SjonnieLoper.DataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Whiskeys",
+                name: "Country",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Brand = table.Column<string>(nullable: true),
-                    AgeYears = table.Column<int>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
-                    CountryOfOrigin = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Percentage = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    ImagePath = table.Column<string>(nullable: true),
-                    AmountInStorage = table.Column<int>(nullable: false),
-                    SoftDeleted = table.Column<bool>(nullable: false)
+                    Country = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Whiskeys", x => x.Id);
+                    table.PrimaryKey("PK_Country", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,6 +173,34 @@ namespace SjonnieLoper.DataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Whiskeys",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Brand = table.Column<string>(nullable: true),
+                    AgeYears = table.Column<int>(nullable: false),
+                    Type = table.Column<int>(nullable: false),
+                    CountryOfOriginId = table.Column<int>(nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Percentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ImagePath = table.Column<string>(nullable: true),
+                    AmountInStorage = table.Column<int>(nullable: false),
+                    SoftDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Whiskeys", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Whiskeys_Country_CountryOfOriginId",
+                        column: x => x.CountryOfOriginId,
+                        principalTable: "Country",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -258,6 +277,11 @@ namespace SjonnieLoper.DataBase.Migrations
                 name: "IX_Orders_Orderd_WiskeyId",
                 table: "Orders",
                 column: "Orderd_WiskeyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Whiskeys_CountryOfOriginId",
+                table: "Whiskeys",
+                column: "CountryOfOriginId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -288,6 +312,9 @@ namespace SjonnieLoper.DataBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "Whiskeys");
+
+            migrationBuilder.DropTable(
+                name: "Country");
         }
     }
 }
