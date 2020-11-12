@@ -5,6 +5,8 @@ using SjonnieLoper.Core;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using SjonnieLoper.Core.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SjonnieLoper.DataBase
 {
@@ -24,6 +26,7 @@ namespace SjonnieLoper.DataBase
         public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey);
         public Task<WhiskeyBase> DeleteWhiskey(int id);
         public Task<int> GetCountOfWhiskeys();
+        public Task<IEnumerable<Countrys>> GetAllCountrys();
 
         //user commands//
 

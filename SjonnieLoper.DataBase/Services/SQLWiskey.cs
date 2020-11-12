@@ -7,6 +7,7 @@ using SjonnieLoper.Core;
 using SjonnieLoper.Data;
 using System.Threading.Tasks;
 using SjonnieLoper.Core.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SjonnieLoper.DataBase
 {
@@ -126,6 +127,16 @@ namespace SjonnieLoper.DataBase
         {
             return await db.Whiskeys.CountAsync();
         }
+
+        public async Task<IEnumerable<Countrys>> GetAllCountrys()
+        {
+            var countrys = from c in db.Country
+                        orderby c.Country
+                        select c;
+            return await countrys.ToListAsync();
+        }
+
+
 
         public async Task<OrdersAndReservations> GetOrderById(int id)
         {

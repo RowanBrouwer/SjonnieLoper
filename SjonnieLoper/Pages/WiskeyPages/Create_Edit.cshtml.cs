@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using SjonnieLoper.Core;
+using SjonnieLoper.Core.Models;
 using SjonnieLoper.DataBase;
 
 namespace SjonnieLoper.Pages.WiskeyPages
@@ -21,6 +22,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
         [BindProperty(SupportsGet = true )]
         public WhiskeyBase Whiskey { get; set; }
 
+        public IEnumerable<SelectListItem> countrys { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Images { get; set; }
 
@@ -33,6 +35,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
+            countrys = new SelectList(await context.GetAllCountrys(), "CountryId", "CountryName");
             Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
             Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
 
@@ -53,8 +56,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnPost()
         {
+
             if (!ModelState.IsValid)
             {
+                countrys = new SelectList(await context.GetAllCountrys(), "CountryId", "CountryName", Whiskey.CountryOfOrigin);
                 Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
                 return Page();
             }
