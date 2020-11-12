@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SjonnieLoper.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +27,7 @@ namespace SjonnieLoper.Core
         
 
         [DisplayName("Country of origin")]
-        public string CountryOfOrigin { get; set; }
+        public Countrys CountryOfOrigin { get; set; }
 
 
         [DisplayFormat(DataFormatString = "{0:0.##}")]
