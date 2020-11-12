@@ -1,0 +1,25 @@
+﻿@model int
+
+<div class="btn-toolbar">
+
+    <div class="btn-group">
+        <a class="btn btn-light"
+           asp-page="/ShoppingCartPages/Index"
+           asp-page-handler="AddToShoppingCart"
+           asp-route-whiskeyId="@Model">
+            Add to Cart
+        </a>
+    </div>
+
+    <form class="btn-group"
+          asp-page="/ShoppingCartPages/Index"
+          asp-page-handler="AddToShoppingCart"
+          asp-route-whiskeyId="@Model">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <input type="submit" value="Add Multiple" class="btn btn-light" />
+            </div>
+            <input type="number" min="1" class="form-control" name="amount" value="1">
+        </div>
+    </form>
+</div>

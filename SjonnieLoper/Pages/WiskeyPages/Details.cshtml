@@ -16,7 +16,7 @@
     Name: @Model.Whiskey.Name
 </div>
 <div>
-    <img src="@Url.Content("~/Images/" + Model.Whiskey.ImagePath)"/>
+    <img src="@Url.Content("~/Images/" + Model.Whiskey.ImagePath)" />
 </div>
 <div>
     Brand: @Model.Whiskey.Brand
@@ -41,3 +41,4 @@
 </div>
 
 <a asp-page="./Index" class="btn btn-outline-dark">All Whiskeys</a>
+<partial name="_AddToCartBtn" model="@Model.Whiskey.Id" />

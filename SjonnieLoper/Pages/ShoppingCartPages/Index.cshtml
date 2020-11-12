@@ -1,0 +1,35 @@
+﻿@page
+@model SjonnieLoper.Pages.ShoppingCartPages.IndexModel
+@{
+}
+
+<h4>Your ShoppingCart</h4>
+<table>
+    <thead>
+        <tr>
+            <th>Selected amount</th>
+            <th>Whiskey</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model._shoppingCart.ShoppingCartItems)
+        {
+        <tr>
+            <td class="text-center">@Html.DisplayFor(c => line.Amount)</td>
+            <td class="text-center">@Html.DisplayFor(c => line.Whiskey.Name)</td>
+            <td class="text-right">@Html.DisplayFor(c => line.Whiskey.Price)</td>
+            <td class="text-right">@((line.Amount * line.Whiskey.Price).ToString("c"))</td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.PriceTotal.ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
