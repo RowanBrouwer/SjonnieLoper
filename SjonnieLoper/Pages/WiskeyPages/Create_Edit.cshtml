@@ -31,9 +31,9 @@
         <span class="text-danger" asp-validation-for="Whiskey.Type"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Whiskey.CountryOfOrigin"></label>
-        <input asp-for="Whiskey.CountryOfOrigin" class="form-control" />
-        <span class="text-danger" asp-validation-for="Whiskey.CountryOfOrigin"></span>
+        <label asp-for="Whiskey.CountryOfOrigin.Country"></label>
+        <input asp-for="Whiskey.CountryOfOrigin.Country" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.CountryOfOrigin.Country"></span>
     </div>
     <div class="form-group">
         <label asp-for="Whiskey.Price"></label>
@@ -62,5 +62,8 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    }
+
+    
+
 }
+

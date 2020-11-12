@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
+using SjonnieLoper.Core.Models;
 using SjonnieLoper.DataBase.Data;
 
 namespace SjonnieLoper.Data
@@ -15,7 +16,7 @@ namespace SjonnieLoper.Data
         {
         }
 
-
+        public DbSet<Countrys> Country { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<WhiskeyBase> Whiskeys { get; set; }
         public DbSet<OrdersAndReservations> Orders { get; set; }
