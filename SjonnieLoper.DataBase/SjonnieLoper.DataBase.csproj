@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Images\**" />
+    <EmbeddedResource Remove="Images\**" />
+    <None Remove="Images\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20201102095753_initializeDB2.cs" />
     <Compile Remove="Migrations\20201102095753_initializeDB2.Designer.cs" />
     <Compile Remove="Migrations\20201109105512_ModelWhiskyUpdate.cs" />
@@ -34,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Images\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
