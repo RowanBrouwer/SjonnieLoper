@@ -38,27 +38,25 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public string SearchCountry { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        [DataType(DataType.Date)]
-        public DateTime SearchDate1 { get; set; }
+        public int SearchAge1 { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        [DataType(DataType.Date)]
-        public DateTime SearchDate2 { get; set; }
+        public int SearchAge2 { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public WhiskeyType SearchType { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public double SearchPercent1 { get; set; }
+        public decimal SearchPercent1 { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public double SearchPercent2 { get; set; }
+        public decimal SearchPercent2 { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public double SearchPrice1 { get; set; }
+        public decimal SearchPrice1 { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public double SearchPrice2 { get; set; }
+        public decimal SearchPrice2 { get; set; }
         #endregion
 
         #region booleans
@@ -69,7 +67,13 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public bool SearchForType { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public bool SearchForDate { get; set; }
+        public bool SearchRangeAge { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool SearchRangePrice { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool SearchRangePercent { get; set; }
         #endregion
         #endregion
 
@@ -81,7 +85,11 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public async Task<IActionResult> OnGet()
         {
             if (DoAdvancedSearch)
-                Whiskeys = await context.GetAllWhiskeysSearch(SearchName, SearchBrand, SearchCountry, SearchForType, SearchType);
+                Whiskeys = await context.GetAllWhiskeysSearch(SearchName, SearchBrand, SearchCountry, 
+                    SearchForType, SearchType,
+                    SearchRangeAge, SearchAge1, SearchAge2,
+                    SearchRangePrice, SearchPrice1, SearchPrice2,
+                    SearchRangePercent, SearchPercent1, SearchPercent2);
             else
                 Whiskeys = await context.GetAllWhiskeys(SearchTerm);
             return Page();
