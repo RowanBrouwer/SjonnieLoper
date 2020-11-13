@@ -42,14 +42,8 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
-            if (NewCountry)
-            {
 
-            }
-            else
-            {
-                countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country");
-            }
+            countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country");
             Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
             Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
 
