@@ -36,11 +36,11 @@ namespace SjonnieLoper.DataBase
         {
             if (newCountry == true)
             {
-                if (db.Country.FirstOrDefault(c => c.Country == Country) == null)
+                if (db.Countries.FirstOrDefault(c => c.Name == Country) == null)
                 {
-                    Countrys newCustomCountry = new Countrys
+                    Country newCustomCountry = new Country
                     {
-                        Country = Country
+                        Name = Country
                     };
                     await Commit();
 
@@ -50,7 +50,7 @@ namespace SjonnieLoper.DataBase
                 }
                 else
                 {
-                    NewWhiskey.CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == Country);
+                    NewWhiskey.CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == Country);
                     await db.AddAsync(NewWhiskey);
                 }
             }
@@ -108,7 +108,7 @@ namespace SjonnieLoper.DataBase
                         o.Customer.Email.StartsWith(name) ||
                         o.Orderd_Wiskey.Name.StartsWith(name) ||
                         o.Orderd_Wiskey.Brand.StartsWith(name) ||
-                        o.Orderd_Wiskey.CountryOfOrigin.Country.Contains(name)
+                        o.Orderd_Wiskey.CountryOfOrigin.Name.Contains(name)
                         orderby o.AmountOrderd
                         select o;
             return await query.ToListAsync();
@@ -119,7 +119,7 @@ namespace SjonnieLoper.DataBase
 
             var query = from w in db.Whiskeys
                         where w.SoftDeleted == false
-                        where string.IsNullOrEmpty(name) || w.Name.Contains(name) || w.Brand.Contains(name) || w.CountryOfOrigin.Country.Contains(name)
+                        where string.IsNullOrEmpty(name) || w.Name.Contains(name) || w.Brand.Contains(name) || w.CountryOfOrigin.Name.Contains(name)
                         orderby w.Name
                         select w;
 
@@ -136,7 +136,7 @@ namespace SjonnieLoper.DataBase
                         where w.SoftDeleted == false
                         where (string.IsNullOrEmpty(searchName) || w.Name.Contains(searchName))
                         where (string.IsNullOrEmpty(searchBrand) || w.Brand.Contains(searchBrand))
-                        where (string.IsNullOrEmpty(searchCountry) || w.CountryOfOrigin.Country.Contains(searchCountry))
+                        where (string.IsNullOrEmpty(searchCountry) || w.CountryOfOrigin.Name.Contains(searchCountry))
                         where (!searchForType || w.Type == searchType)
                         where (!searchRangeAge && (searchAge1 == 0 || w.AgeYears == searchAge1) || w.AgeYears >= searchAge1 && w.AgeYears <= searchAge2)
                         where (!searchRangePrice && (searchPrice1 == 0 || w.Price == searchPrice1) || w.Price >= searchPrice1 && w.Price <= searchPrice2)
@@ -157,12 +157,25 @@ namespace SjonnieLoper.DataBase
             return await db.Whiskeys.CountAsync();
         }
 
-        public async Task<IEnumerable<Countrys>> GetAllCountrys()
+        /// <summary>
+        /// Rowans GetAllCountries
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Country>> GetAllCountrys()
         {
-            var countrys = from c in db.Country
-                        orderby c.Country
+            var countrys = from c in db.Countries
+                        orderby c.Name
                         select c;
             return await countrys.ToListAsync();
+        }
+
+        /// <summary>
+        /// Stella's GetAllCountries
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Country>> GetAllCountriesAsync()
+        {
+            return await db.Countries.ToListAsync();
         }
 
         public async Task<OrdersAndReservations> GetOrderById(int id)
@@ -194,15 +207,22 @@ namespace SjonnieLoper.DataBase
             return updatedUser;
         }
 
+        /// <summary>
+        /// Rowans Update Code.
+        /// </summary>
+        /// <param name="UpdatedWhiskey"></param>
+        /// <param name="newCountry"></param>
+        /// <param name="Country"></param>
+        /// <returns></returns>
         public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey, bool newCountry, string Country)
         {
             if (newCountry == true)
             {
-                if (db.Country.FirstOrDefault(c => c.Country == Country) == null)
+                if (db.Countries.FirstOrDefault(c => c.Name == Country) == null)
                 {
-                    Countrys newCustomCountry = new Countrys
+                    Country newCustomCountry = new Country
                     {
-                        Country = Country
+                        Name = Country
                     };
                     db.Add(newCountry);
 
@@ -214,13 +234,55 @@ namespace SjonnieLoper.DataBase
                 }
                 else
                 {
-                    UpdatedWhiskey.CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == Country);
+                    UpdatedWhiskey.CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == Country);
                     var entity = db.Whiskeys.Attach(UpdatedWhiskey);
 
                     entity.State = EntityState.Modified;
                 }
             }
             else if (newCountry == false && Country == null)
+            {
+                var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                entity.State = EntityState.Modified;
+            }
+            return UpdatedWhiskey;
+        }
+
+        /// <summary>
+        /// Stella's update code.
+        /// </summary>
+        /// <param name="UpdatedWhiskey"></param>
+        /// <param name="addNewCountry">Bool to check if a new country is being added.</param>
+        /// <param name="CountryName">Name of new country being added.</param>
+        /// <returns></returns>
+        public async Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase UpdatedWhiskey, bool addNewCountry, string CountryName)
+        {
+            if (addNewCountry)
+            {
+                if ((await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName)) == null)
+                {
+                    Country customCountry = new Country
+                    {
+                        Name = CountryName
+                    };
+                    db.Add(customCountry);
+
+                    UpdatedWhiskey.CountryOfOrigin = customCountry;
+
+                    var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                    entity.State = EntityState.Modified;
+                }
+                else
+                {
+                    UpdatedWhiskey.CountryOfOrigin = await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName);
+                    var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                    entity.State = EntityState.Modified;
+                }
+            }
+            else if (!addNewCountry && CountryName == null)
             {
                 var entity = db.Whiskeys.Attach(UpdatedWhiskey);
 

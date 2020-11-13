@@ -22,11 +22,19 @@ namespace SjonnieLoper.DataBase
             bool searchRangePercent, decimal searchPercent1, decimal searchPercent2);
 
         public Task<WhiskeyBase> GetWhiskeyById(int id);
+
+        //Async Version is second version.
         public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey, bool newCountry, string Country);
+        public Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase UpdatedWhiskey, bool newCountry, string Country);
+
+
         public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey, bool newCountry, string Country);
         public Task<WhiskeyBase> DeleteWhiskey(int id);
         public Task<int> GetCountOfWhiskeys();
-        public Task<IEnumerable<Countrys>> GetAllCountrys();
+        
+        //Async Version is second version.
+        public Task<IEnumerable<Country>> GetAllCountrys();
+        public Task<IEnumerable<Country>> GetAllCountriesAsync();
 
         //user commands//
 

@@ -22,16 +22,16 @@ namespace SjonnieLoper.Pages.WiskeyPages
         [BindProperty(SupportsGet = true )]
         public WhiskeyBase Whiskey { get; set; }
 
-        public IEnumerable<SelectListItem> countrys { get; set; }
+        public IEnumerable<SelectListItem> CountriesList { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Images { get; set; }
 
 
         [BindProperty(SupportsGet = true)]
-        public bool NewCountry { get; set; }
+        public bool AddNewCountry { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string NewCountryString { get; set; }
+        public string NewCountryName { get; set; }
 
         public Create_EditModel(IWiskey context, IHtmlHelper htmlHelper)
         {
@@ -57,7 +57,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
             Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
 
-            countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country", Whiskey.CountryOfOrigin);
+            CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
 
             Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
 
@@ -71,20 +71,21 @@ namespace SjonnieLoper.Pages.WiskeyPages
             {
                 Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
 
-                countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country", Whiskey.CountryOfOrigin);
+                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
 
                 return Page();
             }
             if (Whiskey.Id > 0)
             {
-                context.UpdateWiskey(Whiskey, NewCountry, NewCountryString);
+                await context.UpdateWiskeyAsync(Whiskey, AddNewCountry, NewCountryName);
             }
             else
             {
-                await context.AddWhiskey(Whiskey, NewCountry, NewCountryString);
+                await context.AddWhiskey(Whiskey, AddNewCountry, NewCountryName);
             }
 
             await context.Commit();
+
             TempData["Message"] = "Whiskey saved!";
             return RedirectToPage("./Details", new { whiskeyId = Whiskey.Id });
         }

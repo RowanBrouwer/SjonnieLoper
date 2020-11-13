@@ -32,29 +32,29 @@ namespace SjonnieLoper.DataBase.Data
             };
 
 
-            if (db.Country.FirstOrDefault(c => c.Country == "Scotland") == null)
+            if (db.Countries.FirstOrDefault(c => c.Name == "Scotland") == null)
             {
-                Countrys country = new Countrys
+                Country country = new Country
                 {
-                    Country = "Scotland"
+                    Name = "Scotland"
                 };
                 db.Add(country);
                 db.SaveChanges();
             }
-            if (db.Country.FirstOrDefault(c => c.Country == "America") == null)
+            if (db.Countries.FirstOrDefault(c => c.Name == "America") == null)
             {
-                Countrys country = new Countrys
+                Country country = new Country
                 {
-                    Country = "America"
+                    Name = "America"
                 };
                 db.Add(country);
                 db.SaveChanges();
             }
-            if (db.Country.FirstOrDefault(c => c.Country == "Ireland") == null)
+            if (db.Countries.FirstOrDefault(c => c.Name == "Ireland") == null)
             {
-                Countrys country = new Countrys
+                Country country = new Country
                 {
-                    Country = "Ireland"
+                    Name = "Ireland"
                 };
                 db.Add(country);
                 db.SaveChanges();
@@ -68,7 +68,7 @@ namespace SjonnieLoper.DataBase.Data
                         Brand = "Lagavulin",
                         AgeYears = 9,
                         Type = WhiskeyType.Single_Malt,
-                        CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == "Scotland"),
+                        CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == "Scotland"),
                         Price = 74.95m,
                         Percentage = 0.46m,
                         ImagePath = ImageNames.Img3,
@@ -86,7 +86,7 @@ namespace SjonnieLoper.DataBase.Data
                         Brand = "Ardbeg",
                         AgeYears = 4,
                         Type = WhiskeyType.Single_Malt,
-                        CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == "Scotland"),
+                        CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == "Scotland"),
                         Price = 44m,
                         Percentage = 0.47m,
                         ImagePath = ImageNames.Img1,
@@ -103,7 +103,7 @@ namespace SjonnieLoper.DataBase.Data
                         Brand = "Glenfiddich",
                         AgeYears = 18,
                         Type = WhiskeyType.Single_Malt,
-                        CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == "Scotland"),
+                        CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == "Scotland"),
                         Price = 44m,
                         Percentage = 0.43m,
                         ImagePath = ImageNames.Img2,
@@ -120,7 +120,7 @@ namespace SjonnieLoper.DataBase.Data
                         Brand = "Jack Daniels",
                         AgeYears = 5,
                         Type = WhiskeyType.Blended_Grain,
-                        CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == "America"),
+                        CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == "America"),
                         Price = 23.50m,
                         Percentage = 0.40m,
                         ImagePath = ImageNames.Img3,
@@ -137,7 +137,7 @@ namespace SjonnieLoper.DataBase.Data
                         Brand = "Talisker",
                         AgeYears = 10,
                         Type = WhiskeyType.Single_Malt,
-                        CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == "Scotland"),
+                        CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == "Scotland"),
                         Price = 37.50m,
                         Percentage = 0.45m,
                         ImagePath = ImageNames.Img2,
@@ -154,7 +154,7 @@ namespace SjonnieLoper.DataBase.Data
                         Brand = "Tullamore",
                         AgeYears = 21,
                         Type = WhiskeyType.Blended,
-                        CountryOfOrigin = db.Country.FirstOrDefault(c => c.Country == "Ireland"),
+                        CountryOfOrigin = db.Countries.FirstOrDefault(c => c.Name == "Ireland"),
                         Price = 25m,
                         Percentage = 0.4m,
                         ImagePath = ImageNames.Img1,

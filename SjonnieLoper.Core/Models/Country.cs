@@ -4,9 +4,9 @@ using System.Text;
 
 namespace SjonnieLoper.Core.Models
 {
-    public class Countrys
+    public class Country
     {
         public int Id { get; set; }
-        public string Country { get; set; }
+        public string Name { get; set; }
     }
 }

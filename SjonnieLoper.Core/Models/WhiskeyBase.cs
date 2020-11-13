@@ -27,7 +27,7 @@ namespace SjonnieLoper.Core
         
 
         [DisplayName("Country of origin")]
-        public Countrys CountryOfOrigin { get; set; }
+        public Country CountryOfOrigin { get; set; }
 
 
         [DisplayFormat(DataFormatString = "{0:0.##}")]

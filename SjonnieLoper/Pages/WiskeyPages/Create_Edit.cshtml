@@ -10,11 +10,11 @@
     <input type="hidden" asp-for="Whiskey.Id" />
 
     <div class="form-group">
-        <div class="form-group">
-            <label asp-for="Whiskey.Name"></label>
-            <input asp-for="Whiskey.Name" class="form-control" />
-            <span class="text-danger" asp-validation-for="Whiskey.Name"></span>
-        </div>
+        <label asp-for="Whiskey.Name"></label>
+        <input asp-for="Whiskey.Name" class="form-control" />
+        <span class="text-danger" asp-validation-for="Whiskey.Name"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Whiskey.Brand"></label>
         <input asp-for="Whiskey.Brand" class="form-control" />
         <span class="text-danger" asp-validation-for="Whiskey.Brand"></span>
@@ -30,21 +30,25 @@
         </select>
         <span class="text-danger" asp-validation-for="Whiskey.Type"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="Whiskey.CountryOfOrigin"></label>
-        <select asp-for="Whiskey.CountryOfOrigin" class="form-control" asp-items="Model.countrys" id="CountryList">
-        </select>
-        <span class="text-danger" asp-validation-for="Whiskey.CountryOfOrigin"></span>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" asp-for="NewCountry" type="checkbox" id="ASCheckbox" data-toggle="collapse" data-target="#NewCountryThing" />
-        <label class="form-check-label" asp-for="NewCountry" for="ASCheckbox">Add Country</label>
-    </div>
-    <div class="collapse" id="NewCountryThing">
-        <div class="col-4 form-group">
-            <input class="form-control" type="search" asp-for="NewCountryString" placeholder="Country" />
+
+    <div class="form-row">
+        <div class="form-group col-4">
+            <label asp-for="Whiskey.CountryOfOrigin.Id">Country</label>
+            <select asp-for="Whiskey.CountryOfOrigin.Id" class="form-control" asp-items="Model.CountriesList" id="CountryList">
+            </select>
+            <span class="text-danger" asp-validation-for="Whiskey.CountryOfOrigin.Id"></span>
+        </div>
+        <div class="form-check form-check-inline col-4">
+            <input class="form-check-input" asp-for="AddNewCountry" type="checkbox" id="CountryCheckbox" data-toggle="collapse" data-target="#NewCountryNameInput" />
+            <label class="form-check-label" asp-for="AddNewCountry" for="CountryCheckbox">Add Country</label>
+        </div>
+        <div class="collapse col-4 " id="NewCountryNameInput">
+            <div class="form-group">
+                <input class="form-control" type="search" asp-for="NewCountryName" placeholder="Country" />
+            </div>
         </div>
     </div>
+
     <div class="form-group">
         <label asp-for="Whiskey.Price"></label>
         <input asp-for="Whiskey.Price" class="form-control" />
@@ -59,12 +63,12 @@
         <label asp-for="Whiskey.ImagePath"></label>
         <select asp-for="Whiskey.ImagePath" class="form-control" asp-items="Model.Images">
         </select>
-        <span class="text-danger" asp-validation-for="Whiskey.ImagePath"></span>
+        <span class="text-danger" asp-validation-for="Whiskey.Price"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Whiskey.AmountInStorage"></label>
-        <input asp-for="Whiskey.AmountInStorage" class="form-control" min="0" />
-        <span class="text-danger" asp-validation-for="Whiskey.AmountInStorage"></span>
+        <label asp-for="Whiskey.Price"></label>
+        <input asp-for="Whiskey.Price" class="form-control" min="0" />
+        <span class="text-danger" asp-validation-for="Whiskey.Percentage"></span>
     </div>
 
     <button type="submit" class="btn btn-outline-dark">Save</button>
@@ -75,15 +79,38 @@
 
     
     <script>
-        $(function () {
-            $('#ASCheckbox').change(function(){
+        //Document ready function toegevoegd om te zorgen dat de code niet te vroeg laad.
+        $(document).ready(function () {
+
+            //Rowans code
+            @*$(function () {
+                $('#ASCheckbox').change(function () {
+                    if ($(this).is(':checked')) {
+                        $('#CountryList').attr('disabled', 'disabled');
+                    }
+                    else {
+                        $('#CountryList').removeAttr('disabled');
+                    }
+                });
+            });*@
+
+            
+            // Stella's code.
+            //Country Checkbox
+            if ($('#CountryCheckbox').is(':checked')) {
+                $('#CountryList').prop('disabled', true);
+            }
+
+            $('#CountryCheckbox').change(function () {
                 if ($(this).is(':checked')) {
-                    $('#CountryList').attr('disabled', 'disabled');
-                }
-                else {
-                    $('#CountryList').removeAttr('disabled');
+                    $('#CountryList').prop('disabled', true);
+                } else {
+                    $('#CountryList').prop('disabled', false);
                 }
             });
+
+            
+
         });
     </script>
 
