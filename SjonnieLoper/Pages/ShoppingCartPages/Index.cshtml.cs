@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
         [BindProperty]
         public List<ShoppingCartItem> ShCartItems { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:##}")]
+        [DisplayFormat(DataFormatString = "{0:0.##}")]
         public decimal PriceTotal { get; set; }
         #endregion
 
@@ -54,7 +55,6 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
             {
                 await _shoppingCart.AddToCartAsync(selectedWhiskey, sAmount);
             }
-            //return RedirectToAction("IngredientIndex", new { id = id });
             return RedirectToPage("Index");
         }
 
