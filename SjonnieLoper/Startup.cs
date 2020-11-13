@@ -43,7 +43,9 @@ namespace SjonnieLoper
             services.AddAuthorization(o => o.AddPolicy("Employee", (p => p.RequireRole("Employee"))));
 
             services.AddScoped<IWiskey, SQLWiskey>();
-            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            //services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCartDebug(sp));
+
             services.AddHttpContextAccessor();
             services.AddSession();
 

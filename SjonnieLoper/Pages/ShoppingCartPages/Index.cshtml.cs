@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SjonnieLoper.Core.Models;
 using SjonnieLoper.DataBase;
 using SjonnieLoper.DataBase.Services;
 
@@ -12,10 +14,14 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
     public class IndexModel : PageModel
     {
         private readonly IWiskey _whiskeyRepository;
-        //private readonly ShoppingCart _shoppingCart;
+        private readonly ShoppingCart _shoppingCart;
 
         #region public properties
-        public ShoppingCart _shoppingCart { get; set; }
+        //public ShoppingCart _shoppingCart { get; set; }
+        [BindProperty]
+        public List<ShoppingCartItem> ShCartItems { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:##}")]
         public decimal PriceTotal { get; set; }
         #endregion
 
@@ -30,13 +36,13 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
             var items = await _shoppingCart.GetCartItemsAsync();
             _shoppingCart.ShoppingCartItems = items;
 
-
+            ShCartItems = items;
             PriceTotal = await _shoppingCart.GetCartTotalAsync();
 
             return Page();
         }
 
-        public async Task<IActionResult> AddToShoppingCartAsync(int whiskeyId, int? amount)
+        public async Task<IActionResult> OnPostAddToShoppingCartAsync(int whiskeyId, int? amount)
         {
             int sAmount = 1;
             if (amount.HasValue)
@@ -48,10 +54,11 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
             {
                 await _shoppingCart.AddToCartAsync(selectedWhiskey, sAmount);
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("IngredientIndex", new { id = id });
+            return RedirectToPage("Index");
         }
 
-        public async Task<IActionResult> RemoveFromShoppingCartAsync(int whiskeyId, int? amount)
+        public async Task<IActionResult> OnPostRemoveFromShoppingCartAsync(int whiskeyId, int? amount)
         {
             int sAmount = 1;
             if (amount.HasValue)
@@ -63,7 +70,7 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
             {
                 await _shoppingCart.RemoveFromCartAsync(selectedWhiskey, sAmount);
             }
-            return RedirectToAction("Index");
+            return RedirectToPage("Index");
         }
     }
 }

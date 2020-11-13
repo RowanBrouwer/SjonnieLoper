@@ -46,6 +46,20 @@ namespace SjonnieLoper.DataBase.Services
         }
 
         /// <summary>
+        /// Sets the ShoppingCart to the same instance each time. This is for testing purposes.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static ShoppingCart GetCartDebug(IServiceProvider services)
+        {
+            string cartID = "1";
+
+            var context = services.GetService<ApplicationDbContext>();
+
+            return new ShoppingCart(context) { ShoppingCartId = cartID };
+        }
+
+        /// <summary>
         /// Creates a new ShoppingCartItem for selected whiskey or adds more if SHCartItem already existed.
         /// </summary>
         /// <param name="whiskey">Whiskey that is being added.</param>
@@ -66,7 +80,7 @@ namespace SjonnieLoper.DataBase.Services
                     Whiskey = whiskey,
                     Amount = amount
                 };
-                await _appDbContext.ShoppingCartItems.AddAsync(ShCartItem);
+                _appDbContext.ShoppingCartItems.Add(ShCartItem);
             }
             else
                 ShCartItem.Amount += amount;  
