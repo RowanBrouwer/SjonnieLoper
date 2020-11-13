@@ -26,6 +26,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Images { get; set; }
 
+
         [BindProperty(SupportsGet = true)]
         public bool NewCountry { get; set; }
 
@@ -78,11 +79,11 @@ namespace SjonnieLoper.Pages.WiskeyPages
             }
             if (Whiskey.Id > 0)
             {
-                context.UpdateWiskey(Whiskey);
+                context.UpdateWiskey(Whiskey, NewCountry, NewCountryString);
             }
             else
             {
-                await context.AddWhiskey(Whiskey);
+                await context.AddWhiskey(Whiskey, NewCountry, NewCountryString);
             }
             await context.Commit();
             TempData["Message"] = "Whiskey saved!";

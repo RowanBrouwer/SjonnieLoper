@@ -32,9 +32,26 @@ namespace SjonnieLoper.DataBase
             return NewUser;
         }
 
-        public async Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey)
+        public async Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey, bool newCountry, string Country)
         {
-            await db.AddAsync(NewWhiskey);
+            if (newCountry == true)
+            {
+                Countrys newCustomCountry = new Countrys
+                {
+                    Country = Country
+                };
+
+                await Commit();
+
+                NewWhiskey.CountryOfOrigin = newCustomCountry;
+
+                await db.AddAsync(NewWhiskey);
+
+            }
+            else if(newCountry == false && Country == null)
+            {
+                await db.AddAsync(NewWhiskey);
+            }
             return NewWhiskey;
         }
 
@@ -92,7 +109,11 @@ namespace SjonnieLoper.DataBase
         public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeys(string name)
         {
 
-            var query = db.Whiskeys.Where(w => w.SoftDeleted == false && w.Name.Contains(name) || string.IsNullOrEmpty(name) || w.Brand.Contains(name) || w.CountryOfOrigin.Country.Contains(name)).OrderBy(w => w.Name);
+            var query = from w in db.Whiskeys
+                        where w.SoftDeleted == false
+                        where string.IsNullOrEmpty(name) || w.Name.Contains(name) || w.Brand.Contains(name) || w.CountryOfOrigin.Country.Contains(name)
+                        orderby w.Name
+                        select w;
 
             return await query.ToListAsync();
         }
@@ -165,10 +186,29 @@ namespace SjonnieLoper.DataBase
             return updatedUser;
         }
 
-        public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey)
+        public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey, bool newCountry, string Country)
         {
-            var entity = db.Whiskeys.Attach(UpdatedWhiskey);
-            entity.State = EntityState.Modified;
+            if (newCountry == true)
+            {
+                Countrys newCustomCountry = new Countrys
+                {
+                    Country = Country
+                };
+
+                db.Add(newCustomCountry);
+
+                UpdatedWhiskey.CountryOfOrigin = newCustomCountry;
+
+                var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                entity.State = EntityState.Modified;
+            }
+            else if (newCountry == false && Country == null)
+            {
+                var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                entity.State = EntityState.Modified;
+            }
             return UpdatedWhiskey;
         }
     }

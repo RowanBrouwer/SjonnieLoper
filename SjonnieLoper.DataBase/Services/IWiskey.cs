@@ -22,8 +22,8 @@ namespace SjonnieLoper.DataBase
             bool searchRangePercent, decimal searchPercent1, decimal searchPercent2);
 
         public Task<WhiskeyBase> GetWhiskeyById(int id);
-        public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey);
-        public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey);
+        public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey, bool newCountry, string Country);
+        public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey, bool newCountry, string Country);
         public Task<WhiskeyBase> DeleteWhiskey(int id);
         public Task<int> GetCountOfWhiskeys();
         public Task<IEnumerable<Countrys>> GetAllCountrys();
