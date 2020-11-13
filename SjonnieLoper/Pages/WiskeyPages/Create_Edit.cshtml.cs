@@ -43,8 +43,8 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
 
-            countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country");
-            Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
+            
+            
             Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
 
             if (whiskeyId.HasValue)
@@ -59,6 +59,8 @@ namespace SjonnieLoper.Pages.WiskeyPages
             {
                 return RedirectToPage("./NotFound");
             }
+            Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
+            countrys = new SelectList(await context.GetAllCountrys(), "Id", "Country", Whiskey.CountryOfOrigin);
             return Page();
         }
 
