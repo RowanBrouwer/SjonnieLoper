@@ -9,19 +9,24 @@ using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
 using SjonnieLoper.Data;
 using SjonnieLoper.DataBase;
+using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.OrderPages
 {
     public class EditModel : PageModel
     {
         private readonly IWiskey context;
+        private readonly IGeneral general;
+        private readonly IOrdersAndReservations orderContext;
 
         [BindProperty]
         public OrdersAndReservations OrdersAndReservations { get; set; }
 
-        public EditModel(IWiskey context)
+        public EditModel(IWiskey context, IGeneral general, IOrdersAndReservations orderContext)
         {
             this.context = context;
+            this.general = general;
+            this.orderContext = orderContext;
         }
 
 
@@ -29,7 +34,7 @@ namespace SjonnieLoper.Pages.OrderPages
         {
             if (OrderId.HasValue)
             {
-                OrdersAndReservations = await context.GetOrderById(OrderId.Value);
+                OrdersAndReservations = await orderContext.GetOrderById(OrderId.Value);
             }
             else
             {
@@ -50,13 +55,13 @@ namespace SjonnieLoper.Pages.OrderPages
             }
             if (OrdersAndReservations.Id > 0)
             {
-                context.UpdateOrder(OrdersAndReservations);
+                orderContext.UpdateOrder(OrdersAndReservations);
             }
             else
             {
-                context.AddOrder(OrdersAndReservations);
+                orderContext.AddOrder(OrdersAndReservations);
             }
-            context.Commit();
+            general.Commit();
             TempData["Message"] = "Order saved!";
             return RedirectToPage("./Details", new { whiskeyId = OrdersAndReservations.Id });
 

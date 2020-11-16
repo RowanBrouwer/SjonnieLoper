@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using SjonnieLoper.Core;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.DataBase;
+using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.WiskeyPages
 {
@@ -18,6 +19,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
     {
         private readonly IWiskey context;
         private readonly IHtmlHelper HtmlHelper;
+        private readonly IGeneral general;
 
         [BindProperty(SupportsGet = true )]
         public WhiskeyBase Whiskey { get; set; }
@@ -33,10 +35,11 @@ namespace SjonnieLoper.Pages.WiskeyPages
         [BindProperty(SupportsGet = true)]
         public string NewCountryName { get; set; }
 
-        public Create_EditModel(IWiskey context, IHtmlHelper htmlHelper)
+        public Create_EditModel(IWiskey context, IHtmlHelper htmlHelper, IGeneral general)
         {
             this.context = context;
             this.HtmlHelper = htmlHelper;
+            this.general = general;
         }
 
 
@@ -45,12 +48,12 @@ namespace SjonnieLoper.Pages.WiskeyPages
             if (whiskeyId.HasValue)
             {
                 Whiskey = await context.GetWhiskeyById(whiskeyId.Value);
-                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
+                CountriesList = new SelectList(await general.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
             }
             else
             {
                 Whiskey = new WhiskeyBase();
-                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name");
+                CountriesList = new SelectList(await general.GetAllCountriesAsync(), "Id", "Name");
             }
             if (Whiskey == null)
             {
@@ -71,7 +74,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
             {
                 Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
 
-                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
+                CountriesList = new SelectList(await general.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
 
                 return Page();
             }
@@ -84,7 +87,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
                 await context.AddWhiskeyAsync(Whiskey, AddNewCountry, NewCountryName);
             }
 
-            await context.Commit();
+            await general.Commit();
 
             TempData["Message"] = "Whiskey saved!";
             return RedirectToPage("./Details", new { whiskeyId = Whiskey.Id });

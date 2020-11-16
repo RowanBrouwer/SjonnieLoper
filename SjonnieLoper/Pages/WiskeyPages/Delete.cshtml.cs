@@ -6,17 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonnieLoper.Core;
 using SjonnieLoper.DataBase;
+using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.WiskeyPages
 {
     public class DeleteModel : PageModel
     {
         private readonly IWiskey context;
+        private readonly IGeneral general;
 
         public WhiskeyBase Whiskey { get; set; }
-        public DeleteModel(IWiskey context)
+        public DeleteModel(IWiskey context, IGeneral general)
         {
             this.context = context;
+            this.general = general;
         }
 
         public async Task<IActionResult> OnGet(int whiskeyId)
@@ -32,7 +35,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
         public async Task<IActionResult> OnPost(int whiskeyId)
         {
             Whiskey = await context.DeleteWhiskey(whiskeyId);
-            await context.Commit();
+            await general.Commit();
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");

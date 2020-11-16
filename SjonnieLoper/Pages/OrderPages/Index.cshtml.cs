@@ -8,12 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
 using SjonnieLoper.Data;
 using SjonnieLoper.DataBase;
+using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.OrderPages
 {
     public class IndexModel : PageModel
     {
         private readonly IWiskey context;
+        private readonly IGeneral general;
+        private readonly IOrdersAndReservations orderContext;
 
         [TempData]
         public string Message { get; set; }
@@ -23,14 +26,16 @@ namespace SjonnieLoper.Pages.OrderPages
 
         public IEnumerable<OrdersAndReservations> OrdersAndReservations { get; set; }
 
-        public IndexModel(IWiskey context)
+        public IndexModel(IWiskey context, IGeneral general, IOrdersAndReservations orderContext)
         {
             this.context = context;
+            this.general = general;
+            this.orderContext = orderContext;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            OrdersAndReservations = await context.GetAllOrdersAndReservations(SearchTerm);
+            OrdersAndReservations = await orderContext.GetAllOrdersAndReservations(SearchTerm);
             return Page();
         }
     }
