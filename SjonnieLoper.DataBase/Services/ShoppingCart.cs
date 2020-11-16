@@ -88,15 +88,14 @@ namespace SjonnieLoper.DataBase.Services
             await _appDbContext.SaveChangesAsync();
         }
 
-        /* Currently removed to decreate clutter. Might be useful to add later.
         /// <summary>
         /// Removes a specific ShoppingCartItem entirely from the Cart.
         /// </summary>
         /// <param name="cItem">ShoppingCartItem</param>
-        public async Task RemoveFromCartAsync(ShoppingCartItem cItem)
+        public async Task RemoveItemFromCartAsync(ShoppingCartItem cItem)
         {
             var ShCartItem = await _appDbContext.ShoppingCartItems.SingleOrDefaultAsync(
-                s => s.ShoppingCartId== cItem.ShoppingCartId);
+                s => s.ShoppingCartId == cItem.ShoppingCartId);
 
             if (ShCartItem != null)
             {
@@ -105,7 +104,7 @@ namespace SjonnieLoper.DataBase.Services
 
             await _appDbContext.SaveChangesAsync();
         }
-        */
+        
 
         /// <summary>
         /// Removes a certain amount of whiskey from cart.
@@ -122,7 +121,7 @@ namespace SjonnieLoper.DataBase.Services
             {
                 //If removed amount is less than amount in cart, adjust amount.
                 //Otherwise remove ShCartItem entirely.
-                if ((ShCartItem.Amount - amount) > 1)
+                if ((ShCartItem.Amount - amount) >= 1)
                 {
                     ShCartItem.Amount -= amount;
                 }

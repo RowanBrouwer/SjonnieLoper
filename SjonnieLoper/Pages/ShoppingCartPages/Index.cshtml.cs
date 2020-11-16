@@ -72,5 +72,16 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
             }
             return RedirectToPage("Index");
         }
+
+        public async Task<IActionResult> OnPostRemoveItemFromShoppingCartAsync(int itemId)
+        {
+            var selectedItem = await _whiskeyRepository.GetCartItemByIdAsync(itemId);
+
+            if (selectedItem != null)
+            {
+                await _shoppingCart.RemoveItemFromCartAsync(selectedItem);
+            }
+            return RedirectToPage("Index");
+        }
     }
 }

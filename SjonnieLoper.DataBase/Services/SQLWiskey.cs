@@ -117,6 +117,11 @@ namespace SjonnieLoper.DataBase
             return await query.ToListAsync();
         }
 
+        public async Task<ShoppingCartItem> GetCartItemByIdAsync(int id)
+        {
+            return await db.ShoppingCartItems.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
         public async Task<int> GetCountOfOrders()
         {
             return await db.Orders.CountAsync();
@@ -162,5 +167,7 @@ namespace SjonnieLoper.DataBase
             entity.State = EntityState.Modified;
             return UpdatedWhiskey;
         }
+
+
     }
 }

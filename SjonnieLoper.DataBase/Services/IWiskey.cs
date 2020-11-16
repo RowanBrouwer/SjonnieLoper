@@ -5,6 +5,7 @@ using SjonnieLoper.Core;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.DataBase
 {
@@ -44,6 +45,10 @@ namespace SjonnieLoper.DataBase
         //general commands//
 
         public Task<int> Commit();
-        
+
+        //ShoppingCartItem commands//
+
+        public Task<ShoppingCartItem> GetCartItemByIdAsync(int id);
+
     }
 }
