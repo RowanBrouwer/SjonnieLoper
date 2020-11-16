@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonnieLoper.Core.Models;
 using SjonnieLoper.DataBase;
 using SjonnieLoper.DataBase.Services;
+using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.ShoppingCartPages
 {
@@ -16,6 +17,7 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
     {
         private readonly IWiskey _whiskeyRepository;
         private readonly ShoppingCart _shoppingCart;
+        private readonly IGeneral general;
 
         #region public properties
         //public ShoppingCart _shoppingCart { get; set; }
@@ -26,10 +28,11 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
         public decimal PriceTotal { get; set; }
         #endregion
 
-        public IndexModel(IWiskey whiskeyRepository, ShoppingCart shoppingCart)
+        public IndexModel(IWiskey whiskeyRepository, ShoppingCart shoppingCart, IGeneral general)
         {
             _whiskeyRepository = whiskeyRepository;
             _shoppingCart = shoppingCart;
+            this.general = general;
         }
 
         public async Task<IActionResult> OnGet()
