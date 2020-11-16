@@ -29,6 +29,8 @@ namespace SjonnieLoper.DataBase
 
 
         public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey, bool newCountry, string Country);
+
+        public Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool newCountry, string Country);
         public Task<WhiskeyBase> DeleteWhiskey(int id);
         public Task<int> GetCountOfWhiskeys();
         

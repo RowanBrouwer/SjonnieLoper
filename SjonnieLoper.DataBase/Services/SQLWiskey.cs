@@ -61,7 +61,74 @@ namespace SjonnieLoper.DataBase
             }
                 return NewWhiskey;
          }
-        
+
+        public async Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool addNewCountry, string CountryName)
+        {
+            if (addNewCountry)
+            {
+                if ((await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName)) == null)
+                {
+                    Country customCountry = new Country
+                    {
+                        Name = CountryName
+                    };
+                    db.Add(customCountry);
+                    await Commit();
+
+                    NewWhiskey.CountryOfOrigin = customCountry;
+
+                    db.Add(NewWhiskey);
+                }
+                else
+                {
+                    NewWhiskey.CountryOfOrigin = await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName);
+                    db.Add(NewWhiskey);
+                }
+            }
+
+            else if (addNewCountry == false && CountryName == null)
+            {
+                db.Add(NewWhiskey);
+            }
+            return NewWhiskey;
+        }
+
+        /*
+          public async Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase UpdatedWhiskey, bool addNewCountry, string CountryName)
+        {
+            if (addNewCountry)
+            {
+                if ((await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName)) == null)
+                {
+                    Country customCountry = new Country
+                    {
+                        Name = CountryName
+                    };
+                    db.Add(customCountry);
+
+                    UpdatedWhiskey.CountryOfOrigin = customCountry;
+
+                    var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                    entity.State = EntityState.Modified;
+                }
+                else
+                {
+                    UpdatedWhiskey.CountryOfOrigin = await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName);
+                    var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                    entity.State = EntityState.Modified;
+                }
+            }
+            else if (!addNewCountry && CountryName == null)
+            {
+                var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+
+                entity.State = EntityState.Modified;
+            }
+            return UpdatedWhiskey;
+        }*/
+
 
         public async Task<int> Commit()
         {

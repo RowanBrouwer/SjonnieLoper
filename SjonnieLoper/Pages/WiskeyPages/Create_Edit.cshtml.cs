@@ -45,10 +45,12 @@ namespace SjonnieLoper.Pages.WiskeyPages
             if (whiskeyId.HasValue)
             {
                 Whiskey = await context.GetWhiskeyById(whiskeyId.Value);
+                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
             }
             else
             {
                 Whiskey = new WhiskeyBase();
+                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name");
             }
             if (Whiskey == null)
             {
@@ -56,8 +58,6 @@ namespace SjonnieLoper.Pages.WiskeyPages
             }
 
             Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
-
-            CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
 
             Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
 
@@ -81,7 +81,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
             }
             else
             {
-                await context.AddWhiskey(Whiskey, AddNewCountry, NewCountryName);
+                await context.AddWhiskeyAsync(Whiskey, AddNewCountry, NewCountryName);
             }
 
             await context.Commit();
