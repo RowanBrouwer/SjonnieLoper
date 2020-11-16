@@ -1,0 +1,78 @@
+﻿@page
+@model SjonnieLoper.Pages.ShoppingCartPages.IndexModel
+@{
+}
+
+<h4>Your ShoppingCart</h4>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Selected amount</th>
+            <th>Whiskey</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Subtotal</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.ShCartItems)
+        {
+        <tr>
+            <td>@line.Amount</td>
+            <td>@Html.DisplayFor(c => line.Whiskey.Name)</td>
+            <td class="text-right">€@(line.Whiskey.Price.ToString())</td>
+            <td class="text-right">€@(line.SubTotal.ToString())</td>
+            <td>
+                <form class="d-inline-block" method="post">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <input class="btn"
+                                   type="submit"
+                                   asp-page="/ShoppingCartPages/Index"
+                                   asp-page-handler="RemoveFromShoppingCart"
+                                   asp-route-whiskeyId="@line.Whiskey.Id"
+                                   value="Remove" />
+                        </div>
+                        <input type="number" min="1" class="form-control" name="amount" value="1">
+                    </div>
+                </form>
+
+                @* Work in progress.
+
+        <form class="d-inline-block" method="post">
+            <div>
+                <a class="btn"
+                   type="submit"
+                   asp-page="/ShoppingCartPages/Index"
+                   asp-page-handler="RemoveItemFromShoppingCart"
+                   asp-route-itemId="@line.Id">
+                    <i class="fas fa-times"></i>
+                </a>
+            </div>
+        </form>
+
+        <form class="d-inline-block" method="post">
+            <div>
+                <input class="btn"
+                   type="submit"
+                   asp-page="/ShoppingCartPages/Index"
+                   asp-page-handler="RemoveItemFromShoppingCart"
+                   asp-route-itemId="@line.Id"
+                       value="fas fa-times"/>
+            </div>
+        </form>
+                *@
+            </td>
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                €@(Model.PriceTotal.ToString("0.00"))
+            </td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>

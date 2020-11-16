@@ -225,19 +225,42 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SjonnieLoper.Core.Models.Countrys", b =>
+            modelBuilder.Entity("SjonnieLoper.Core.Models.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Country")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("Countries");
+                });
+
+            modelBuilder.Entity("SjonnieLoper.Core.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("WhiskeyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WhiskeyId");
+
+                    b.ToTable("ShoppingCartItems");
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.OrdersAndReservations", b =>
@@ -393,6 +416,13 @@ namespace SjonnieLoper.DataBase.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SjonnieLoper.Core.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("SjonnieLoper.Core.WhiskeyBase", "Whiskey")
+                        .WithMany()
+                        .HasForeignKey("WhiskeyId");
+                });
+
             modelBuilder.Entity("SjonnieLoper.Core.OrdersAndReservations", b =>
                 {
                     b.HasOne("SjonnieLoper.Core.ApplicationUser", "Customer")
@@ -406,7 +436,7 @@ namespace SjonnieLoper.DataBase.Migrations
 
             modelBuilder.Entity("SjonnieLoper.Core.WhiskeyBase", b =>
                 {
-                    b.HasOne("SjonnieLoper.Core.Models.Countrys", "CountryOfOrigin")
+                    b.HasOne("SjonnieLoper.Core.Models.Country", "CountryOfOrigin")
                         .WithMany()
                         .HasForeignKey("CountryOfOriginId");
                 });

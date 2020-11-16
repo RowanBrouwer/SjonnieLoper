@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using SjonnieLoper.Core;
+using SjonnieLoper.Core.Models;
 using SjonnieLoper.DataBase;
 
 namespace SjonnieLoper.Pages.WiskeyPages
@@ -21,8 +22,16 @@ namespace SjonnieLoper.Pages.WiskeyPages
         [BindProperty(SupportsGet = true )]
         public WhiskeyBase Whiskey { get; set; }
 
+        public IEnumerable<SelectListItem> CountriesList { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Images { get; set; }
+
+
+        [BindProperty(SupportsGet = true)]
+        public bool AddNewCountry { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string NewCountryName { get; set; }
 
         public Create_EditModel(IWiskey context, IHtmlHelper htmlHelper)
         {
@@ -33,40 +42,50 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
-            Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
-            Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
-
             if (whiskeyId.HasValue)
             {
                 Whiskey = await context.GetWhiskeyById(whiskeyId.Value);
+                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
             }
             else
             {
                 Whiskey = new WhiskeyBase();
+                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name");
             }
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");
             }
+
+            Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
+
+            Images = new SelectList(new List<string> { Core.Helpers.ImageNames.Img1, Core.Helpers.ImageNames.Img2, Core.Helpers.ImageNames.Img3 });
+
             return Page();
         }
 
         public async Task<IActionResult> OnPost()
         {
+
             if (!ModelState.IsValid)
             {
                 Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
+
+                CountriesList = new SelectList(await context.GetAllCountriesAsync(), "Id", "Name", Whiskey.CountryOfOrigin.Id);
+
                 return Page();
             }
             if (Whiskey.Id > 0)
             {
-                context.UpdateWiskey(Whiskey);
+                await context.UpdateWiskeyAsync(Whiskey, AddNewCountry, NewCountryName);
             }
             else
             {
-                await context.AddWhiskey(Whiskey);
+                await context.AddWhiskeyAsync(Whiskey, AddNewCountry, NewCountryName);
             }
+
             await context.Commit();
+
             TempData["Message"] = "Whiskey saved!";
             return RedirectToPage("./Details", new { whiskeyId = Whiskey.Id });
         }

@@ -15,6 +15,7 @@ using SjonnieLoper.Data;
 using SjonnieLoper.Core;
 using SjonnieLoper.DataBase;
 using SjonnieLoper.DataBase.Data;
+using SjonnieLoper.DataBase.Services;
 
 namespace SjonnieLoper
 {
@@ -41,7 +42,12 @@ namespace SjonnieLoper
 
             services.AddAuthorization(o => o.AddPolicy("Employee", (p => p.RequireRole("Employee"))));
 
-            services.AddScoped<IWiskey, SQLWiskey>();            
+            services.AddScoped<IWiskey, SQLWiskey>();
+            //services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCartDebug(sp));
+
+            services.AddHttpContextAccessor();
+            services.AddSession();
 
             services.AddRazorPages();
         }
@@ -68,6 +74,7 @@ namespace SjonnieLoper
                 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

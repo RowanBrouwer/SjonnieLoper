@@ -5,6 +5,8 @@ using SjonnieLoper.Core;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using SjonnieLoper.Core.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SjonnieLoper.DataBase
 {
@@ -20,10 +22,23 @@ namespace SjonnieLoper.DataBase
             bool searchRangePercent, decimal searchPercent1, decimal searchPercent2);
 
         public Task<WhiskeyBase> GetWhiskeyById(int id);
-        public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey);
-        public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey);
+
+        //Async Version is second version.
+        //public WhiskeyBase UpdateWiskey(WhiskeyBase UpdatedWhiskey, bool newCountry, string Country);
+        public Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase UpdatedWhiskey, bool AddNewCountry, string CountryName);
+
+        //Old Add Method
+        //public Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey, bool newCountry, string Country);
+
+        public Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool AddNewCountry, string CountryName);
+
+
         public Task<WhiskeyBase> DeleteWhiskey(int id);
         public Task<int> GetCountOfWhiskeys();
+        
+        //Old get all countries.
+        //public Task<IEnumerable<Country>> GetAllCountrys();
+        public Task<IEnumerable<Country>> GetAllCountriesAsync();
 
         //user commands//
 
@@ -44,6 +59,10 @@ namespace SjonnieLoper.DataBase
         //general commands//
 
         public Task<int> Commit();
-        
+
+        //ShoppingCartItem commands//
+
+        public Task<ShoppingCartItem> GetCartItemByIdAsync(int id);
+
     }
 }

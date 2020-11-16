@@ -1,0 +1,32 @@
+﻿@model int
+
+<div>
+    <div class="pt-1 btn-group">
+
+        <form class="d-inline-flex" method="post">
+            <div>
+                <input class="btn btn-light"
+                       type="submit"
+                       asp-page="/ShoppingCartPages/Index"
+                       asp-page-handler="AddToShoppingCart"
+                       asp-route-whiskeyId="@Model"
+                       value="Add to Cart" />
+            </div>
+        </form>
+
+        <form class="d-inline-flex" method="post">
+            <div class="input-group">
+                <div class="input-group-append">
+                    <input class="btn btn-light"
+                           type="submit"
+                           asp-page="/ShoppingCartPages/Index"
+                           asp-page-handler="AddToShoppingCart"
+                           asp-route-whiskeyId="@Model"
+                           value="Add Multiple" />
+                </div>
+                <input type="number" min="1" class="form-control" name="amount" value="1">
+            </div>
+        </form>
+
+    </div>
+</div>

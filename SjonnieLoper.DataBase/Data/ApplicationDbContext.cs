@@ -16,10 +16,11 @@ namespace SjonnieLoper.Data
         {
         }
 
-        public DbSet<Countrys> Country { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<WhiskeyBase> Whiskeys { get; set; }
         public DbSet<OrdersAndReservations> Orders { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

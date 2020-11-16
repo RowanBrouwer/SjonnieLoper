@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class _init : Migration
+    public partial class _init_AfterMerge : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,16 +54,16 @@ namespace SjonnieLoper.DataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Country",
+                name: "Countries",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Country = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Country", x => x.Id);
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,9 +193,9 @@ namespace SjonnieLoper.DataBase.Migrations
                 {
                     table.PrimaryKey("PK_Whiskeys", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Whiskeys_Country_CountryOfOriginId",
+                        name: "FK_Whiskeys_Countries_CountryOfOriginId",
                         column: x => x.CountryOfOriginId,
-                        principalTable: "Country",
+                        principalTable: "Countries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -224,6 +224,27 @@ namespace SjonnieLoper.DataBase.Migrations
                     table.ForeignKey(
                         name: "FK_Orders_Whiskeys_Orderd_WiskeyId",
                         column: x => x.Orderd_WiskeyId,
+                        principalTable: "Whiskeys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WhiskeyId = table.Column<int>(nullable: true),
+                    Amount = table.Column<int>(nullable: false),
+                    ShoppingCartId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Whiskeys_WhiskeyId",
+                        column: x => x.WhiskeyId,
                         principalTable: "Whiskeys",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -279,6 +300,11 @@ namespace SjonnieLoper.DataBase.Migrations
                 column: "Orderd_WiskeyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartItems_WhiskeyId",
+                table: "ShoppingCartItems",
+                column: "WhiskeyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Whiskeys_CountryOfOriginId",
                 table: "Whiskeys",
                 column: "CountryOfOriginId");
@@ -305,6 +331,9 @@ namespace SjonnieLoper.DataBase.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
+                name: "ShoppingCartItems");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -314,7 +343,7 @@ namespace SjonnieLoper.DataBase.Migrations
                 name: "Whiskeys");
 
             migrationBuilder.DropTable(
-                name: "Country");
+                name: "Countries");
         }
     }
 }

@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20201109105512_ModelWhiskyUpdate.Designer.cs" />
     <Compile Remove="Migrations\20201109125900_DecimalAdjustment.cs" />
     <Compile Remove="Migrations\20201109125900_DecimalAdjustment.Designer.cs" />
+    <Compile Remove="Migrations\20201113105054_CartItemUpdate.cs" />
+    <Compile Remove="Migrations\20201113105054_CartItemUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20201113105217_CartItemUpdate.cs" />
+    <Compile Remove="Migrations\20201113105217_CartItemUpdate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +41,6 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.9" />
     <PackageReference Include="Npm" Version="3.5.2" />
     <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>
