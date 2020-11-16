@@ -10,8 +10,8 @@ using SjonnieLoper.Data;
 namespace SjonnieLoper.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201112104334__init")]
-    partial class _init
+    [Migration("20201113131443__init_CountriesFix")]
+    partial class _init_CountriesFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,19 +227,19 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SjonnieLoper.Core.Models.Countrys", b =>
+            modelBuilder.Entity("SjonnieLoper.Core.Models.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Country")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Country");
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("SjonnieLoper.Core.OrdersAndReservations", b =>
@@ -408,7 +408,7 @@ namespace SjonnieLoper.DataBase.Migrations
 
             modelBuilder.Entity("SjonnieLoper.Core.WhiskeyBase", b =>
                 {
-                    b.HasOne("SjonnieLoper.Core.Models.Countrys", "CountryOfOrigin")
+                    b.HasOne("SjonnieLoper.Core.Models.Country", "CountryOfOrigin")
                         .WithMany()
                         .HasForeignKey("CountryOfOriginId");
                 });
