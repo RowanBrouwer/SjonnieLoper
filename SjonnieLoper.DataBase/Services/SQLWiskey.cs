@@ -32,6 +32,7 @@ namespace SjonnieLoper.DataBase
             return NewUser;
         }
 
+        /* Old AddWhiseky Method
         public async Task<WhiskeyBase> AddWhiskey(WhiskeyBase NewWhiskey, bool newCountry, string Country)
         {
             if (newCountry == true)
@@ -60,7 +61,7 @@ namespace SjonnieLoper.DataBase
                 await db.AddAsync(NewWhiskey);
             }
                 return NewWhiskey;
-         }
+         }*/
 
         public async Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool addNewCountry, string CountryName)
         {
@@ -88,47 +89,11 @@ namespace SjonnieLoper.DataBase
 
             else if (addNewCountry == false && CountryName == null)
             {
+                NewWhiskey.CountryOfOrigin = await db.Countries.FirstOrDefaultAsync(c => c.Id == NewWhiskey.CountryOfOrigin.Id);
                 db.Add(NewWhiskey);
             }
             return NewWhiskey;
         }
-
-        /*
-          public async Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase UpdatedWhiskey, bool addNewCountry, string CountryName)
-        {
-            if (addNewCountry)
-            {
-                if ((await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName)) == null)
-                {
-                    Country customCountry = new Country
-                    {
-                        Name = CountryName
-                    };
-                    db.Add(customCountry);
-
-                    UpdatedWhiskey.CountryOfOrigin = customCountry;
-
-                    var entity = db.Whiskeys.Attach(UpdatedWhiskey);
-
-                    entity.State = EntityState.Modified;
-                }
-                else
-                {
-                    UpdatedWhiskey.CountryOfOrigin = await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName);
-                    var entity = db.Whiskeys.Attach(UpdatedWhiskey);
-
-                    entity.State = EntityState.Modified;
-                }
-            }
-            else if (!addNewCountry && CountryName == null)
-            {
-                var entity = db.Whiskeys.Attach(UpdatedWhiskey);
-
-                entity.State = EntityState.Modified;
-            }
-            return UpdatedWhiskey;
-        }*/
-
 
         public async Task<int> Commit()
         {
@@ -224,6 +189,7 @@ namespace SjonnieLoper.DataBase
             return await db.Whiskeys.CountAsync();
         }
 
+        /* Old GetAllCountries
         /// <summary>
         /// Rowans GetAllCountries
         /// </summary>
@@ -234,7 +200,7 @@ namespace SjonnieLoper.DataBase
                         orderby c.Name
                         select c;
             return await countrys.ToListAsync();
-        }
+        }*/
 
         /// <summary>
         /// Stella's GetAllCountries
@@ -274,6 +240,7 @@ namespace SjonnieLoper.DataBase
             return updatedUser;
         }
 
+        /* Old UpdateWhiskey
         /// <summary>
         /// Rowans Update Code.
         /// </summary>
@@ -314,7 +281,7 @@ namespace SjonnieLoper.DataBase
                 entity.State = EntityState.Modified;
             }
             return UpdatedWhiskey;
-        }
+        }*/
 
         /// <summary>
         /// Stella's update code.
