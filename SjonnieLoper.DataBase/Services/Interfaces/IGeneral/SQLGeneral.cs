@@ -38,7 +38,7 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         /// <param name="addNewCountry">Bool to check if a new country is being added.</param>
         /// <param name="CountryName">Name of new country being added.</param>
         /// <returns></returns>
-        public async Task<Country> CheckNewCountry(bool addNewCountry, string CountryName)
+        public async Task<Country> CheckNewCountry(bool addNewCountry, string CountryName, int? WhiskeyCountry)
         {
             if (addNewCountry)
             {
@@ -56,10 +56,10 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
                 }
                 else
                 {
-                    return await db.Countries.FirstAsync(c => c.Name == CountryName);
+                    return await db.Countries.FirstOrDefaultAsync(c => c.Id == WhiskeyCountry);
                 }
             }
-            return await db.Countries.FirstAsync(c => c.Name == CountryName);
+            return await db.Countries.FirstOrDefaultAsync(c => c.Id == WhiskeyCountry);
         }
     }
 }

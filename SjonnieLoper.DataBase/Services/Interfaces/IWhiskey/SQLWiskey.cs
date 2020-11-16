@@ -32,7 +32,8 @@ namespace SjonnieLoper.DataBase
         /// <returns></returns>
         public async Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool addNewCountry, string CountryName)
         {
-            NewWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, CountryName);
+            var WhiskeyCountry = NewWhiskey.CountryOfOrigin.Id;
+            NewWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, CountryName, WhiskeyCountry);
 
             db.Add(NewWhiskey);
 
@@ -101,7 +102,18 @@ namespace SjonnieLoper.DataBase
         /// <returns></returns>
         public async Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase UpdatedWhiskey, bool addNewCountry, string CountryName)
         {
-            UpdatedWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, CountryName);
+            int WhiskeyCountry;
+
+            if (!(UpdatedWhiskey.CountryOfOrigin == null))
+            {
+                WhiskeyCountry = UpdatedWhiskey.CountryOfOrigin.Id;
+            }
+            else
+            {
+                WhiskeyCountry = 0;
+            }
+            
+            UpdatedWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, CountryName, WhiskeyCountry);
 
             var entity = db.Whiskeys.Attach(UpdatedWhiskey);
 
