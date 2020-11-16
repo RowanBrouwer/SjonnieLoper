@@ -4,14 +4,14 @@
 }
 
 <h4>Your ShoppingCart</h4>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered table-cell-small">
     <thead>
         <tr>
             <th>Selected amount</th>
             <th>Whiskey</th>
             <th class="text-right">Price</th>
             <th class="text-right">Subtotal</th>
-            <th></th>
+            <th colspan="2"></th>
         </tr>
     </thead>
     <tbody>
@@ -22,47 +22,45 @@
             <td>@Html.DisplayFor(c => line.Whiskey.Name)</td>
             <td class="text-right">€@(line.Whiskey.Price.ToString())</td>
             <td class="text-right">€@(line.SubTotal.ToString())</td>
-            <td>
-                <form class="d-inline-block" method="post">
-                    <div class="input-group">
-                        <div class="input-group-append">
-                            <input class="btn"
-                                   type="submit"
-                                   asp-page="/ShoppingCartPages/Index"
-                                   asp-page-handler="RemoveFromShoppingCart"
-                                   asp-route-whiskeyId="@line.Whiskey.Id"
-                                   value="Remove" />
+
+            <td class="border-right-0">
+                    <form method="post">
+                        <div>
+                            <div class="input-group-prepend">
+                                <button class="btn btn-small"
+                                        type="submit"
+                                        asp-page="/ShoppingCartPages/Index"
+                                        asp-page-handler="AddToShoppingCart"
+                                        asp-route-whiskeyId="@line.Whiskey.Id">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="btn btn-small"
+                                        type="submit"
+                                        asp-page="/ShoppingCartPages/Index"
+                                        asp-page-handler="RemoveFromShoppingCart"
+                                        asp-route-whiskeyId="@line.Whiskey.Id">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" min="1" class="form-control form-small" name="amount" value="1">
+                            </div>
                         </div>
-                        <input type="number" min="1" class="form-control" name="amount" value="1">
+                    </form>
+            </td>
+
+            <td class="border-left-0">
+                <form method="post">
+                    <div>
+                        <button class="btn btn-small"
+                                type="submit"
+                                asp-page="/ShoppingCartPages/Index"
+                                asp-page-handler="RemoveItemFromShoppingCart"
+                                asp-route-itemId="@line.Id">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </form>
-
-                @* Work in progress.
-
-        <form class="d-inline-block" method="post">
-            <div>
-                <a class="btn"
-                   type="submit"
-                   asp-page="/ShoppingCartPages/Index"
-                   asp-page-handler="RemoveItemFromShoppingCart"
-                   asp-route-itemId="@line.Id">
-                    <i class="fas fa-times"></i>
-                </a>
-            </div>
-        </form>
-
-        <form class="d-inline-block" method="post">
-            <div>
-                <input class="btn"
-                   type="submit"
-                   asp-page="/ShoppingCartPages/Index"
-                   asp-page-handler="RemoveItemFromShoppingCart"
-                   asp-route-itemId="@line.Id"
-                       value="fas fa-times"/>
-            </div>
-        </form>
-                *@
             </td>
+
         </tr>
         }
     </tbody>
@@ -72,7 +70,7 @@
             <td class="text-right">
                 €@(Model.PriceTotal.ToString("0.00"))
             </td>
-            <td></td>
+            <td colspan="2"></td>
         </tr>
     </tfoot>
 </table>

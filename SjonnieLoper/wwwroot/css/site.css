@@ -74,3 +74,17 @@ body {
 .summary-img {
     width: 4em;
 }
+
+.btn-small {
+    padding: 0.1em;
+}
+
+.form-small {
+    padding: 0.1em;
+    margin: 0;
+}
+
+.table-cell-small td{
+    vertical-align:  middle;
+    padding: 0.25em;
+}

@@ -73,11 +73,10 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
             return RedirectToPage("Index");
         }
 
-        /* Work in progress.
-
+ 
         public async Task<IActionResult> OnPostRemoveItemFromShoppingCartAsync(int itemId)
         {
-            var selectedItem = await _whiskeyRepository.GetCartItemByIdAsync(itemId);
+            ShoppingCartItem selectedItem = await _whiskeyRepository.GetCartItemByIdAsync(itemId);
 
             if (selectedItem != null)
             {
@@ -85,6 +84,6 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
             }
             return RedirectToPage("Index");
         }
-        */
+        
     }
 }
