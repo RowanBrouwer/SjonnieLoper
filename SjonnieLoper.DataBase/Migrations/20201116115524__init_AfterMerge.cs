@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class _init_CountriesFix : Migration
+    public partial class _init_AfterMerge : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -229,6 +229,27 @@ namespace SjonnieLoper.DataBase.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WhiskeyId = table.Column<int>(nullable: true),
+                    Amount = table.Column<int>(nullable: false),
+                    ShoppingCartId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Whiskeys_WhiskeyId",
+                        column: x => x.WhiskeyId,
+                        principalTable: "Whiskeys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -279,6 +300,11 @@ namespace SjonnieLoper.DataBase.Migrations
                 column: "Orderd_WiskeyId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartItems_WhiskeyId",
+                table: "ShoppingCartItems",
+                column: "WhiskeyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Whiskeys_CountryOfOriginId",
                 table: "Whiskeys",
                 column: "CountryOfOriginId");
@@ -303,6 +329,9 @@ namespace SjonnieLoper.DataBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCartItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
