@@ -70,21 +70,29 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-/*Custom Types*/
+/* Custom Types
+------------------------------------*/
 .summary-img {
     width: 4em;
 }
 
-.btn-small {
-    padding: 0.1em;
+.btn-icon {
+    padding: 0.375rem 0.1rem;
+    margin: 0em;
+    background-color: transparent;
+    /*border-color: #ced4da;*/
 }
 
-.form-small {
-    padding: 0.1em;
-    margin: 0;
+.btn-icon:hover {
+    background-color: #e2e6ea;
+    border-color: transparent;
 }
 
-.table-cell-small td{
-    vertical-align:  middle;
-    padding: 0.25em;
+.cell-small {
+}
+
+.table-smallcells td.cell-small {
+    vertical-align: middle;
+    padding: 0.25rem;
+    padding-left: 0.4rem;
 }
