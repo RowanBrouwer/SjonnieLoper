@@ -17,7 +17,7 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
     {
         private readonly IWiskey _whiskeyRepository;
         private readonly ShoppingCart _shoppingCart;
-        private readonly IGeneral general;
+        private readonly IGeneral _general;
 
         #region public properties
         //public ShoppingCart _shoppingCart { get; set; }
@@ -32,7 +32,7 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
         {
             _whiskeyRepository = whiskeyRepository;
             _shoppingCart = shoppingCart;
-            this.general = general;
+            _general = general;
         }
 
         public async Task<IActionResult> OnGet()
@@ -79,7 +79,7 @@ namespace SjonnieLoper.Pages.ShoppingCartPages
  
         public async Task<IActionResult> OnPostRemoveItemFromShoppingCartAsync(int itemId)
         {
-            ShoppingCartItem selectedItem = await _whiskeyRepository.GetCartItemByIdAsync(itemId);
+            ShoppingCartItem selectedItem = await _general.GetCartItemByIdAsync(itemId);
 
             if (selectedItem != null)
             {
