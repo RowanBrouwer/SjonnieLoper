@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using NuGet.Frameworks;
 using SjonnieLoper.Core;
 using SjonnieLoper.DataBase;
+using SjonnieLoper.DataBase.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

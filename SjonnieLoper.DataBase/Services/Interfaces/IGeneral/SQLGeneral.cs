@@ -56,7 +56,7 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
                 }
                 else
                 {
-                    return await db.Countries.FirstOrDefaultAsync(c => c.Id == WhiskeyCountry);
+                    return await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName);
                 }
             }
             return await db.Countries.FirstOrDefaultAsync(c => c.Id == WhiskeyCountry);
