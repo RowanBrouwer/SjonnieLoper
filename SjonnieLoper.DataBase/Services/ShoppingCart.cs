@@ -94,8 +94,8 @@ namespace SjonnieLoper.DataBase.Services
         /// <param name="cItem">ShoppingCartItem</param>
         public async Task RemoveItemFromCartAsync(ShoppingCartItem cItem)
         {
-            var ShCartItem = await _appDbContext.ShoppingCartItems.SingleOrDefaultAsync(
-                s => s.ShoppingCartId == cItem.ShoppingCartId);
+            ShoppingCartItem ShCartItem = await _appDbContext.ShoppingCartItems.SingleOrDefaultAsync(
+                s => s.Id == cItem.Id && s.ShoppingCartId == cItem.ShoppingCartId);
 
             if (ShCartItem != null)
             {

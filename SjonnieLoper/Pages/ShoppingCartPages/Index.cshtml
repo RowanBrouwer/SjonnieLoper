@@ -4,10 +4,10 @@
 }
 
 <h4>Your ShoppingCart</h4>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered table-smallcells">
     <thead>
         <tr>
-            <th>Selected amount</th>
+            <th>Amount</th>
             <th>Whiskey</th>
             <th class="text-right">Price</th>
             <th class="text-right">Subtotal</th>
@@ -22,46 +22,49 @@
             <td>@Html.DisplayFor(c => line.Whiskey.Name)</td>
             <td class="text-right">€@(line.Whiskey.Price.ToString())</td>
             <td class="text-right">€@(line.SubTotal.ToString())</td>
-            <td>
-                <form class="d-inline-block" method="post">
-                    <div class="input-group">
-                        <div class="input-group-append">
-                            <input class="btn"
-                                   type="submit"
-                                   asp-page="/ShoppingCartPages/Index"
-                                   asp-page-handler="RemoveFromShoppingCart"
-                                   asp-route-whiskeyId="@line.Whiskey.Id"
-                                   value="Remove" />
-                        </div>
-                        <input type="number" min="1" class="form-control" name="amount" value="1">
+
+            <td class="cell-small">
+
+                <div class="row">
+
+                    <div class="col">
+                        <form method="post">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-icon"
+                                        type="submit"
+                                        asp-page="/ShoppingCartPages/Index"
+                                        asp-page-handler="AddToShoppingCart"
+                                        asp-route-whiskeyId="@line.Whiskey.Id">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="btn btn-icon"
+                                        type="submit"
+                                        asp-page="/ShoppingCartPages/Index"
+                                        asp-page-handler="RemoveFromShoppingCart"
+                                        asp-route-whiskeyId="@line.Whiskey.Id">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" min="1" class="form-control" name="amount" value="1">
+                            </div>
+                        </form>
                     </div>
-                </form>
 
-                @* Work in progress.
+                    <div class="col col-3 px-0">
+                        <form class="form-inline" method="post">
+                            <div>
+                                <button class="btn btn-icon"
+                                        type="submit"
+                                        asp-page="/ShoppingCartPages/Index"
+                                        asp-page-handler="RemoveItemFromShoppingCart"
+                                        asp-route-itemId="@line.Id">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
 
-        <form class="d-inline-block" method="post">
-            <div>
-                <a class="btn"
-                   type="submit"
-                   asp-page="/ShoppingCartPages/Index"
-                   asp-page-handler="RemoveItemFromShoppingCart"
-                   asp-route-itemId="@line.Id">
-                    <i class="fas fa-times"></i>
-                </a>
-            </div>
-        </form>
+                </div>
 
-        <form class="d-inline-block" method="post">
-            <div>
-                <input class="btn"
-                   type="submit"
-                   asp-page="/ShoppingCartPages/Index"
-                   asp-page-handler="RemoveItemFromShoppingCart"
-                   asp-route-itemId="@line.Id"
-                       value="fas fa-times"/>
-            </div>
-        </form>
-                *@
             </td>
         </tr>
         }
