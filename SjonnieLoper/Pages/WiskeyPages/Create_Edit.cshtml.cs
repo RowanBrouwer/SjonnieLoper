@@ -91,6 +91,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
             TempData["Message"] = "Whiskey saved!";
             return RedirectToPage("./Details", new { whiskeyId = Whiskey.Id });
+
         }
     }
 }
