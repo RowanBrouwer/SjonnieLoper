@@ -53,13 +53,15 @@
                             <i class="glyphicon glyphicon-zoom-in"></i>
                         </a>
                     </div>
-
+                    @if (User.IsInRole("Employee"))
+                    {
                     <div class="col col-3 px-0">
                         <a class="btn btn-lg" asp-page="./Delete"
                            asp-route-orderId="@order.Id">
                             <i class="glyphicon glyphicon-trash"></i>
                         </a>
                     </div>
+                    }
                 </div>
             </td>
 

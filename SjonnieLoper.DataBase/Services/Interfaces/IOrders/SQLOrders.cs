@@ -24,6 +24,9 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return NewOrder;
         }
 
+        /// <summary>
+        /// Soft deletes an Order by Id.
+        /// </summary>
         public async Task<Order> DeleteOrder(int id)
         {
             var DelOrder = await GetOrderById(id);
@@ -59,12 +62,17 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return await query.ToListAsync();
         }
 
-
+        /// <summary>
+        /// Gets count of all orders, deleted orders included.
+        /// </summary>
         public async Task<int> GetCountOfOrders()
         {
             return await db.Orders.CountAsync();
         }
 
+        /// <summary>
+        /// Gets Order based on Id.
+        /// </summary>
         public async Task<Order> GetOrderById(int id)
         {
             return await db.Orders.FirstOrDefaultAsync(o => o.Id == id);

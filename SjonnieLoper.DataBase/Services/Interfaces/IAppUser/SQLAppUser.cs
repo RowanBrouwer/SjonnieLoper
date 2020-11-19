@@ -22,6 +22,9 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return NewUser;
         }
 
+        /// <summary>
+        /// Soft deletes an user by UserName
+        /// </summary>
         public async Task<ApplicationUser> DeleteUser(string name)
         {
             var appuser = await GetUserByNameAsync(name);
@@ -32,6 +35,9 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return appuser;
         }
 
+        /// <summary>
+        /// Gets an ApplicationUser by UserName
+        /// </summary>
         public async Task<ApplicationUser> GetUserByNameAsync(string name)
         {
             return await db.ApplicationUsers.FirstOrDefaultAsync(a => a.UserName == name);

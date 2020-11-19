@@ -40,6 +40,9 @@ namespace SjonnieLoper.DataBase
             return NewWhiskey;
         }
 
+        /// <summary>
+        /// Soft deletes an Whiskey by Id.
+        /// </summary>
         public async Task<WhiskeyBase> DeleteWhiskey(int id)
         {
             var whiskey = await GetWhiskeyById(id);
@@ -50,6 +53,10 @@ namespace SjonnieLoper.DataBase
             return whiskey;
         }
 
+
+        /// <summary>
+        /// General query for the basic search.
+        /// </summary>
         public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeys(string name)
         {
 
@@ -62,6 +69,9 @@ namespace SjonnieLoper.DataBase
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// Query for the advanced search.
+        /// </summary>
         public async Task<IEnumerable<WhiskeyBase>> GetAllWhiskeysSearch(string searchName, string searchBrand, string searchCountry, 
             bool searchForType, WhiskeyType searchType,
             bool searchRangeAge, int searchAge1, int searchAge2,
@@ -84,11 +94,17 @@ namespace SjonnieLoper.DataBase
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// Gets a count of all the whiskeys in the system.
+        /// </summary>
         public async Task<int> GetCountOfWhiskeys()
         {
             return await db.Whiskeys.CountAsync();
         }
 
+        /// <summary>
+        /// Gets a specific whiskey by Id, includes the country.
+        /// </summary>
         public async Task<WhiskeyBase> GetWhiskeyById(int id)
         {
             return await db.Whiskeys.Include(w => w.CountryOfOrigin).FirstOrDefaultAsync(w => w.Id == id);

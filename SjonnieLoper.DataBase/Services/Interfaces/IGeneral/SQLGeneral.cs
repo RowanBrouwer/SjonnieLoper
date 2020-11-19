@@ -22,11 +22,17 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return PB;
         }
 
+        /// <summary>
+        /// Gets a cartItem by Id.
+        /// </summary>
         public async Task<ShoppingCartItem> GetCartItemByIdAsync(int id)
         {
             return await db.ShoppingCartItems.FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        /// <summary>
+        /// Gets a IEnumerable with all countries in the database.
+        /// </summary>
         public async Task<IEnumerable<Country>> GetAllCountriesAsync()
         {
             return await db.Countries.ToListAsync();

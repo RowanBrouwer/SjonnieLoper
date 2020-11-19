@@ -87,6 +87,7 @@ namespace SjonnieLoper
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Seed method call.
             ApplicationDbInit.Seed(userManager, db, roleManager);
 
             app.UseEndpoints(endpoints =>
