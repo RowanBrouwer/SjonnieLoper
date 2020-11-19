@@ -10,8 +10,8 @@ using SjonnieLoper.Data;
 namespace SjonnieLoper.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201119100815__init")]
-    partial class _init
+    [Migration("20201119131348_Mergetest")]
+    partial class Mergetest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -242,6 +242,34 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.ToTable("Countries");
                 });
 
+            modelBuilder.Entity("SjonnieLoper.Core.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("WhiskeyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("WhiskeyId");
+
+                    b.ToTable("OrderItems");
+                });
+
             modelBuilder.Entity("SjonnieLoper.Core.Models.ShoppingCartItem", b =>
                 {
                     b.Property<int>("Id")
@@ -252,9 +280,6 @@ namespace SjonnieLoper.DataBase.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ShoppingCartId")
                         .HasColumnType("nvarchar(max)");
 
@@ -262,8 +287,6 @@ namespace SjonnieLoper.DataBase.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
 
                     b.HasIndex("WhiskeyId");
 
@@ -415,12 +438,23 @@ namespace SjonnieLoper.DataBase.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SjonnieLoper.Core.Models.ShoppingCartItem", b =>
+            modelBuilder.Entity("SjonnieLoper.Core.Models.OrderItem", b =>
                 {
                     b.HasOne("SjonnieLoper.Core.Order", null)
-                        .WithMany("CartItems")
-                        .HasForeignKey("OrderId");
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
+                    b.HasOne("SjonnieLoper.Core.WhiskeyBase", "Whiskey")
+                        .WithMany()
+                        .HasForeignKey("WhiskeyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SjonnieLoper.Core.Models.ShoppingCartItem", b =>
+                {
                     b.HasOne("SjonnieLoper.Core.WhiskeyBase", "Whiskey")
                         .WithMany()
                         .HasForeignKey("WhiskeyId");

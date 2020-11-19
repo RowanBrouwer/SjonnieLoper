@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class _init : Migration
+    public partial class Mergetest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -222,6 +222,34 @@ namespace SjonnieLoper.DataBase.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(nullable: false),
+                    WhiskeyId = table.Column<int>(nullable: false),
+                    Amount = table.Column<int>(nullable: false),
+                    SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Whiskeys_WhiskeyId",
+                        column: x => x.WhiskeyId,
+                        principalTable: "Whiskeys",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCartItems",
                 columns: table => new
                 {
@@ -229,18 +257,11 @@ namespace SjonnieLoper.DataBase.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WhiskeyId = table.Column<int>(nullable: true),
                     Amount = table.Column<int>(nullable: false),
-                    ShoppingCartId = table.Column<string>(nullable: true),
-                    OrderId = table.Column<int>(nullable: true)
+                    ShoppingCartId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCartItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ShoppingCartItems_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ShoppingCartItems_Whiskeys_WhiskeyId",
                         column: x => x.WhiskeyId,
@@ -289,14 +310,19 @@ namespace SjonnieLoper.DataBase.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_WhiskeyId",
+                table: "OrderItems",
+                column: "WhiskeyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_OrderId",
-                table: "ShoppingCartItems",
-                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_WhiskeyId",
@@ -325,6 +351,9 @@ namespace SjonnieLoper.DataBase.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCartItems");
