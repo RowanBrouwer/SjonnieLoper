@@ -9,21 +9,20 @@ using System.Threading.Tasks;
 
 namespace SjonnieLoper.Core
 {
-    public class OrdersAndReservations
+    public class Order
     {
         [Key]
         public int Id { get; set; }
         
         public ApplicationUser Customer { get; set; }
 
-        [DisplayName("Amount Orderd")]
-        public int AmountOrderd { get; set; }
-
         public IList<ShoppingCartItem> CartItems { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:0.##}")]
+        public int TotalBottleAmount { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Ordercost { get; set; }
+        public decimal TotalCost { get; set; }
 
         public bool SoftDeleted { get; set; }
 

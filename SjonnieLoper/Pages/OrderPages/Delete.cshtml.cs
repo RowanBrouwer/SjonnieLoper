@@ -15,23 +15,23 @@ namespace SjonnieLoper.Pages.OrderPages
 {
     public class DeleteModel : PageModel
     {
-        private readonly IWiskey context;
-        private readonly IGeneral general;
-        private readonly IOrdersAndReservations orderContext;
+        private readonly IWiskey _whiskeyContext;
+        private readonly IGeneral _generalContext;
+        private readonly IOrders _orderContext;
 
-        public OrdersAndReservations Order { get; set; }
+        public Order Order { get; set; }
         public List<ShoppingCartItem> Items { get; set; }
 
-        public DeleteModel(IWiskey context, IGeneral general, IOrdersAndReservations orderContext)
+        public DeleteModel(IWiskey context, IGeneral general, IOrders orderContext)
         {
-            this.context = context;
-            this.general = general;
-            this.orderContext = orderContext;
+            _whiskeyContext = context;
+            _generalContext = general;
+            _orderContext = orderContext;
         }
 
-        public async Task<IActionResult> OnGet(int OrderId)
+        public async Task<IActionResult> OnGet(int orderId)
         {
-            Order = await orderContext.GetOrderById(OrderId);
+            Order = await _orderContext.GetOrderById(orderId);
             if (Order == null)
             {
                 return RedirectToPage("./NotFound");
@@ -39,10 +39,10 @@ namespace SjonnieLoper.Pages.OrderPages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(int OrderId)
+        public async Task<IActionResult> OnPost(int orderId)
         {
-            Order = await orderContext.DeleteOrder(OrderId);
-            await general.Commit();
+            Order = await _orderContext.DeleteOrder(orderId);
+            await _generalContext.Commit();
             if (Order == null)
             {
                 return RedirectToPage("./NotFound");

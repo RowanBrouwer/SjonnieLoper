@@ -47,7 +47,7 @@ namespace SjonnieLoper
             services.AddScoped<IGeneral, SQLGeneral>();
             services.AddScoped<IWiskey, SQLWiskey>();
             services.AddScoped<IAppUser, SQLAppUser>();
-            services.AddScoped<IOrdersAndReservations, SQLOrdersAndReservations>();
+            services.AddScoped<IOrders, SQLOrders>();
             
             //services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCartDebug(sp));

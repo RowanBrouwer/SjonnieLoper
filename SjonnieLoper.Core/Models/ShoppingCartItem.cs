@@ -13,7 +13,7 @@ namespace SjonnieLoper.Core.Models
         public int Amount { get; set; }
         public string ShoppingCartId { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:0.##}")]
+        [DisplayFormat(DataFormatString = "{0:0.00}")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal SubTotal 
         {

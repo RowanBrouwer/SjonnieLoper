@@ -16,17 +16,17 @@ namespace SjonnieLoper.Pages.OrderPages
     {
         private readonly IWiskey context;
         private readonly IGeneral general;
-        private readonly IOrdersAndReservations orderContext;
+        private readonly IOrders orderContext;
 
         [TempData]
         public string Message { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public string SearchTerm { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public string SearchTerm { get; set; }
 
-        public IEnumerable<OrdersAndReservations> OrdersAndReservations { get; set; }
+        public IEnumerable<Order> Orders{ get; set; }
 
-        public IndexModel(IWiskey context, IGeneral general, IOrdersAndReservations orderContext)
+        public IndexModel(IWiskey context, IGeneral general, IOrders orderContext)
         {
             this.context = context;
             this.general = general;
@@ -35,7 +35,7 @@ namespace SjonnieLoper.Pages.OrderPages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            OrdersAndReservations = await orderContext.GetAllOrdersAndReservations(SearchTerm);
+            Orders = await orderContext.GetAllOrdersAsync();
             return Page();
         }
     }

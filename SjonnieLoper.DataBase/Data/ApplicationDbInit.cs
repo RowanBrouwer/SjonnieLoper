@@ -168,9 +168,10 @@ namespace SjonnieLoper.DataBase.Data
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    FName = "Rowan",
-                    MName = "",
-                    LName = "Brouwer",
+                    FirstName = "Rowan",
+                    //MiddleName = "",
+                    LastName = "Brouwer",
+                    AgeYears = 23,
                     SoftDeleted = false,
                     Employee = true,
                     Email = "Admin1@Admin1",

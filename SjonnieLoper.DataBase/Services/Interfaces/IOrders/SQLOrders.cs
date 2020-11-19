@@ -7,24 +7,24 @@ using System.Linq;
 
 namespace SjonnieLoper.DataBase.Services.Interfaces
 {
-    public class SQLOrdersAndReservations : IOrdersAndReservations
+    public class SQLOrders : IOrders
     {
         private readonly ApplicationDbContext db;
-        private readonly IGeneral general;
+        private readonly IGeneral _generalContext;
 
-        public SQLOrdersAndReservations(ApplicationDbContext db, IGeneral general)
+        public SQLOrders(ApplicationDbContext db, IGeneral general)
         {
             this.db = db;
-            this.general = general;
+            _generalContext = general;
         }
 
-        public async Task<OrdersAndReservations> AddOrder(OrdersAndReservations NewOrder)
+        public async Task<Order> AddOrder(Order NewOrder)
         {
             await db.AddAsync(NewOrder);
             return NewOrder;
         }
 
-        public async Task<OrdersAndReservations> DeleteOrder(int id)
+        public async Task<Order> DeleteOrder(int id)
         {
             var DelOrder = await GetOrderById(id);
             if (DelOrder != null)
@@ -34,7 +34,12 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return DelOrder;
         }
 
-        public async Task<IEnumerable<OrdersAndReservations>> GetAllOrdersAndReservations(string name)
+        /// <summary>
+        /// Rowans method. Including search.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Order>> GetAllOrdersAndReservations(string name)
         {
             var query = from o in db.Orders
                         where o.SoftDeleted == false
@@ -42,17 +47,30 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return await query.ToListAsync();
         }
 
+        /// <summary>
+        /// Stella's method. Excluding search.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync()
+        {
+            var query = from o in db.Orders
+                        where o.SoftDeleted == false
+                        select o;
+            return await query.ToListAsync();
+        }
+
+
         public async Task<int> GetCountOfOrders()
         {
             return await db.Orders.CountAsync();
         }
 
-        public async Task<OrdersAndReservations> GetOrderById(int id)
+        public async Task<Order> GetOrderById(int id)
         {
             return await db.Orders.FirstOrDefaultAsync(o => o.Id == id);
         }
 
-        public OrdersAndReservations UpdateOrder(OrdersAndReservations updatedOrder)
+        public Order UpdateOrder(Order updatedOrder)
         {
             var entity = db.Orders.Attach(updatedOrder);
             entity.State = EntityState.Modified;

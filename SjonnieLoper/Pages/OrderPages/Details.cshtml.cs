@@ -14,27 +14,27 @@ namespace SjonnieLoper.Pages.OrderPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly IWiskey context;
-        private readonly IGeneral general;
-        private readonly IOrdersAndReservations orderContext;
+        private readonly IWiskey _whiskeyContext;
+        private readonly IGeneral _GeneralContext;
+        private readonly IOrders _orderContext;
 
-        public OrdersAndReservations Order { get; set; }
+        #region public properties
+        public Order Order { get; set; }
 
         [TempData]
         public string Message { get; set; }
+        #endregion
 
-        public DetailsModel(IWiskey context, IGeneral general, IOrdersAndReservations orderContext)
+        public DetailsModel(IWiskey context, IGeneral general, IOrders orderContext)
         {
-            this.context = context;
-            this.general = general;
-            this.orderContext = orderContext;
+            _whiskeyContext = context;
+            _GeneralContext = general;
+            _orderContext = orderContext;
         }
 
-        public OrdersAndReservations OrdersAndReservations { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int OrderId)
+        public async Task<IActionResult> OnGetAsync(int orderId)
         {
-            Order = await orderContext.GetOrderById(OrderId);
+            Order = await _orderContext.GetOrderById(orderId);
             if (Order == null)
             {
                 return RedirectToPage("./NotFound");
