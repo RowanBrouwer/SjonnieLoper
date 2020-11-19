@@ -9,6 +9,10 @@ using SjonnieLoper.Core;
 using SjonnieLoper.Data;
 using SjonnieLoper.DataBase;
 using SjonnieLoper.DataBase.Services.Interfaces;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Drawing;
+using System.IO;
 
 namespace SjonnieLoper.Pages.OrderPages
 {
@@ -40,6 +44,31 @@ namespace SjonnieLoper.Pages.OrderPages
                 return RedirectToPage("./NotFound");
             }
             return Page();
+        }
+
+        public Task<IActionResult> ConvertToPdf(int orderId)
+        {
+            PdfDocument document = new PdfDocument();
+
+            PdfPage page = document.Pages.Add();
+
+            PdfGraphics graphics = page.Graphics;
+
+            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+
+            graphics.DrawString($"{Order.Id}", font, PdfBrushes.Black, new PointF(0, 0));
+
+            MemoryStream stream = new MemoryStream();
+
+            document.Save(stream);
+
+            stream.Position = 0;
+
+            FileStreamResult fileStreamResult = new FileStreamResult(stream, "SjonnieLoper/Pdf");
+
+            fileStreamResult.FileDownloadName = $"{Order.Id}.pdf";
+
+            return fileStreamResult;
         }
     }
 }
