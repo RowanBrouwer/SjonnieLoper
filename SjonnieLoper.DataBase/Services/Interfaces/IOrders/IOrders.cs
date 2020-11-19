@@ -12,7 +12,10 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         public Task<IEnumerable<Order>> GetAllOrdersAsync();
         public Task<Order> GetOrderById(int id);
         public Order UpdateOrder(Order updatedOrder);
-        public Task<Order> AddOrder(Order NewOrder);
+
+        //public Task<Order> AddOrder(Order NewOrder);
+
+        public Task CreateOrderAsync(ApplicationUser user);
         public Task<Order> DeleteOrder(int id);
         public Task<int> GetCountOfOrders();
     }

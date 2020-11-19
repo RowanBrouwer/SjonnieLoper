@@ -17,56 +17,56 @@
     <tbody>
         @foreach (var line in Model.ShCartItems)
         {
-        <tr>
-            <td>@line.Amount</td>
-            <td>@Html.DisplayFor(c => line.Whiskey.Name)</td>
-            <td class="text-right">€@(line.Whiskey.Price.ToString())</td>
-            <td class="text-right">€@(line.SubTotal.ToString())</td>
+            <tr>
+                <td>@line.Amount</td>
+                <td>@Html.DisplayFor(c => line.Whiskey.Name)</td>
+                <td class="text-right">€@(line.Whiskey.Price.ToString())</td>
+                <td class="text-right">€@(line.SubTotal.ToString())</td>
 
-            <td class="cell-small">
+                <td class="cell-small">
 
-                <div class="row">
+                    <div class="row">
 
-                    <div class="col">
-                        <form method="post">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-icon"
-                                        type="submit"
-                                        asp-page="/ShoppingCartPages/Index"
-                                        asp-page-handler="AddToShoppingCart"
-                                        asp-route-whiskeyId="@line.Whiskey.Id">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                                <button class="btn btn-icon"
-                                        type="submit"
-                                        asp-page="/ShoppingCartPages/Index"
-                                        asp-page-handler="RemoveFromShoppingCart"
-                                        asp-route-whiskeyId="@line.Whiskey.Id">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input type="number" min="1" class="form-control" name="amount" value="1">
-                            </div>
-                        </form>
+                        <div class="col">
+                            <form method="post">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-icon"
+                                            type="submit"
+                                            asp-page="/ShoppingCartPages/Index"
+                                            asp-page-handler="AddToShoppingCart"
+                                            asp-route-whiskeyId="@line.Whiskey.Id">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button class="btn btn-icon"
+                                            type="submit"
+                                            asp-page="/ShoppingCartPages/Index"
+                                            asp-page-handler="RemoveFromShoppingCart"
+                                            asp-route-whiskeyId="@line.Whiskey.Id">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="number" min="1" class="form-control" name="amount" value="1">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col col-3 px-0">
+                            <form class="form-inline" method="post">
+                                <div>
+                                    <button class="btn btn-icon"
+                                            type="submit"
+                                            asp-page="/ShoppingCartPages/Index"
+                                            asp-page-handler="RemoveItemFromShoppingCart"
+                                            asp-route-itemId="@line.Id">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
 
-                    <div class="col col-3 px-0">
-                        <form class="form-inline" method="post">
-                            <div>
-                                <button class="btn btn-icon"
-                                        type="submit"
-                                        asp-page="/ShoppingCartPages/Index"
-                                        asp-page-handler="RemoveItemFromShoppingCart"
-                                        asp-route-itemId="@line.Id">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
     </tbody>
     <tfoot>
@@ -80,3 +80,15 @@
     </tfoot>
 </table>
 <a class="btn btn-dark" asp-page="../WiskeyPages/Index">Continue shopping</a>
+</table>
+
+<div>
+    <form method="post">
+        <button class="btn btn-dark"
+                type="submit"
+                asp-page="/OrderPages/Index"
+                asp-page-handler="AddOrder">
+            Add Order
+        </button>
+    </form>
+</div>

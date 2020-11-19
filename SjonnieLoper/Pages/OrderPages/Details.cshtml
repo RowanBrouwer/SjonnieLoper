@@ -6,8 +6,6 @@
 }
 
 
-<h2>@Model.Order.Id</h2>
-
 @if (Model.Message != null)
 {
     <div class="alert alert-info">@Model.Message</div>
@@ -36,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var line in Model.Order.CartItems)
+                        @foreach (var line in Model.Order.OrderItems)
                         {
                             <tr>
                                 <td>@line.Amount</td>
@@ -63,4 +61,4 @@
 
 
 
-<a asp-page="./Index" class="btn btn-outline-dark">All Whiskeys</a>
+<a asp-page="./Index" class="btn btn-outline-dark">Back to Orders</a>
