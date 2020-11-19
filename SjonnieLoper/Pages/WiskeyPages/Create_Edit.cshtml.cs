@@ -47,6 +47,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
+            /// <summary>
+            /// Decides on whiskey Id if it needs to get a exsisting whiskey or create a new whiskey.
+            /// If there is an exsisting whiskey he links the selectlist to the correct data field.
+            /// </summary>
             if (whiskeyId.HasValue)
             {
                 Whiskey = await context.GetWhiskeyById(whiskeyId.Value);
@@ -71,7 +75,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnPost()
         {
-
+            /// <summary>
+            /// Checks if the ModelState is invalid, if it is invalid returns the page and repopulates select lists.
+            /// If ModelState is valid it sends the whiskey to the interface, if the Id is higher than 0 it is an exsisting whiskey otherwise it is new.
+            /// </summary>
             if (!ModelState.IsValid)
             {
                 Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
