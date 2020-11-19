@@ -4,6 +4,7 @@ using SjonnieLoper.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using SjonnieLoper.Core.Models;
 
 namespace SjonnieLoper.DataBase.Services.Interfaces
 {
@@ -11,17 +12,55 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
     {
         private readonly ApplicationDbContext db;
         private readonly IGeneral _generalContext;
+        private readonly ShoppingCart _shoppingCart;
 
-        public SQLOrders(ApplicationDbContext db, IGeneral general)
+        public SQLOrders(ApplicationDbContext db, IGeneral general, ShoppingCart shoppingCart)
         {
             this.db = db;
             _generalContext = general;
+            _shoppingCart = shoppingCart;
         }
 
-        public async Task<Order> AddOrder(Order NewOrder)
+        /// <summary>
+        /// Old method Rowan. Replaced by CreateOrderAsync
+        /// </summary>
+        /// <param name="NewOrder"></param>
+        /// <returns></returns>
+        /*public async Task<Order> AddOrder(Order NewOrder)
         {
             await db.AddAsync(NewOrder);
             return NewOrder;
+        }*/
+
+        public async Task CreateOrderAsync(ApplicationUser user)
+        {
+            Order newOrder = new Order
+            {
+                Customer = user
+            };
+
+            db.Add(newOrder);
+            await _generalContext.Commit();
+
+            //Per ShoppingCart item, make new OrderItem.
+            var shoppingCartItems = _shoppingCart.ShoppingCartItems;
+            foreach (var cartItem in shoppingCartItems)
+            {
+                var orderItem = new OrderItem()
+                {
+                    Amount = cartItem.Amount,
+                    WhiskeyId = cartItem.Whiskey.Id,
+                    OrderId = newOrder.Id,
+                    SubTotal = cartItem.SubTotal
+                };
+                db.OrderItems.Add(orderItem);
+
+                //For each orderItem add Amount and Subtotal to TotalBottleAmount and TotalCost.
+                newOrder.TotalBottleAmount += orderItem.Amount;
+                newOrder.TotalCost += orderItem.SubTotal;
+            }
+
+            await db.SaveChangesAsync();
         }
 
         public async Task<Order> DeleteOrder(int id)
@@ -54,6 +93,8 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
             var query = from o in db.Orders
+                        .Include(o => o.Customer)
+                        .Include(o => o.OrderItems).ThenInclude(oi => oi.Whiskey)
                         where o.SoftDeleted == false
                         select o;
             return await query.ToListAsync();
@@ -67,7 +108,10 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
 
         public async Task<Order> GetOrderById(int id)
         {
-            return await db.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            return await db.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrderItems).ThenInclude(oi => oi.Whiskey)
+                .FirstOrDefaultAsync(o => o.Id == id);
         }
 
         public Order UpdateOrder(Order updatedOrder)

@@ -8,15 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using SjonnieLoper.Core;
 using SjonnieLoper.Data;
 using SjonnieLoper.DataBase;
+using SjonnieLoper.DataBase.Services;
 using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.OrderPages
 {
     public class IndexModel : PageModel
     {
-        private readonly IWiskey context;
-        private readonly IGeneral general;
-        private readonly IOrders orderContext;
+        private readonly IWiskey _whiskeyRepository;
+        private readonly IGeneral _generalContext;
+        private readonly IOrders _orderContext;
+        private readonly IAppUser _appUserRepository;
+        private readonly ShoppingCart _shoppingCart;
 
         [TempData]
         public string Message { get; set; }
@@ -26,17 +29,43 @@ namespace SjonnieLoper.Pages.OrderPages
 
         public IEnumerable<Order> Orders{ get; set; }
 
-        public IndexModel(IWiskey context, IGeneral general, IOrders orderContext)
+        public IndexModel(IWiskey context, IGeneral general, IOrders orderContext, IAppUser appUserContext, ShoppingCart shoppingCart)
         {
-            this.context = context;
-            this.general = general;
-            this.orderContext = orderContext;
+            _whiskeyRepository = context;
+            _generalContext = general;
+            _orderContext = orderContext;
+            _appUserRepository = appUserContext;
+            _shoppingCart = shoppingCart;
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Orders = await orderContext.GetAllOrdersAsync();
+            Orders = await _orderContext.GetAllOrdersAsync();
             return Page();
+        }
+        
+
+        public async Task<IActionResult> OnPostAddOrderAsync()
+        {
+            var items = await _shoppingCart.GetCartItemsAsync();
+            _shoppingCart.ShoppingCartItems = items;
+
+            if (_shoppingCart.ShoppingCartItems.Count == 0)
+            {
+                Message = "Your cart is empty, add some whiskey first.";
+                return RedirectToPage("/ShoppingCartPages/Index");
+            }
+
+            var customer = await _appUserRepository.GetUserByNameAsync(User.Identity.Name);
+            if (customer == null)
+            {
+                return RedirectToPage("/ShoppingCartPages/Index");
+            }
+
+            await _orderContext.CreateOrderAsync(customer);
+            await _shoppingCart.ClearCartAsync();
+
+            return RedirectToPage("Index");
         }
     }
 }

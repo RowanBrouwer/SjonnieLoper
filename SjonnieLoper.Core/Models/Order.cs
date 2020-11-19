@@ -13,10 +13,10 @@ namespace SjonnieLoper.Core
     {
         [Key]
         public int Id { get; set; }
-        
+
         public ApplicationUser Customer { get; set; }
 
-        public IList<ShoppingCartItem> CartItems { get; set; }
+        public IList<OrderItem> OrderItems { get; set; }
 
         public int TotalBottleAmount { get; set; }
 

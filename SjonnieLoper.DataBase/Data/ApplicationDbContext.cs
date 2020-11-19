@@ -19,8 +19,10 @@ namespace SjonnieLoper.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<WhiskeyBase> Whiskeys { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

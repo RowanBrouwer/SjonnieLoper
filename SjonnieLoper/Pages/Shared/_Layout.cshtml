@@ -30,10 +30,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/WiskeyPages/Index">Whiskeys</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/OrderPages/Index">Orders</a>
+                        </li>
                         @*Replaced by ShoppingCart Component.
-                            <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/ShoppingCartPages/Index">ShoppingCart</a>
-                            </li>*@
+        <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/ShoppingCartPages/Index">ShoppingCart</a>
+        </li>*@
                         @await Component.InvokeAsync("ShoppingCartWidget")
                     </ul>
 
