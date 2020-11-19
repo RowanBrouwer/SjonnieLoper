@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SjonnieLoper.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,21 +13,17 @@ namespace SjonnieLoper.Core
     {
         [Key]
         public int Id { get; set; }
-
         
         public ApplicationUser Customer { get; set; }
 
-        
-        [DisplayName("Orderd/Reservated Wiskey")]
-        public WhiskeyBase Orderd_Wiskey { get; set; }
-
-        
         [DisplayName("Amount Orderd")]
         public int AmountOrderd { get; set; }
 
-        
-        public double Ordercost { get; set; }
+        public IList<ShoppingCartItem> CartItems { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:0.##}")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Ordercost { get; set; }
 
         public bool SoftDeleted { get; set; }
 
