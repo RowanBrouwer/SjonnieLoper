@@ -46,7 +46,7 @@ namespace SjonnieLoper.Pages.OrderPages
             return Page();
         }
 
-        public Task<IActionResult> ConvertToPdf(int orderId)
+        public IActionResult ConvertToPdf()
         {
             PdfDocument document = new PdfDocument();
 
