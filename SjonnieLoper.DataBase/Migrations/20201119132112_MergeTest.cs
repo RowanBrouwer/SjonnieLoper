@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SjonnieLoper.DataBase.Migrations
 {
-    public partial class Mergetest : Migration
+    public partial class MergeTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

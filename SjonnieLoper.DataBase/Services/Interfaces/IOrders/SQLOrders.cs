@@ -49,9 +49,10 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
                 var orderItem = new OrderItem()
                 {
                     Amount = cartItem.Amount,
-                    WhiskeyId = cartItem.Whiskey.Id,
+                    WhiskeyId = db.Whiskeys.FirstOrDefault(w => w.Id == (cartItem.Whiskey.Id)).Id,
                     OrderId = newOrder.Id,
-                    SubTotal = cartItem.SubTotal
+                    SubTotal = cartItem.SubTotal,
+                    Whiskey = db.Whiskeys.FirstOrDefault(w => w.Id == cartItem.Whiskey.Id)
                 };
                 db.OrderItems.Add(orderItem);
 
@@ -59,7 +60,6 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
                 newOrder.TotalBottleAmount += orderItem.Amount;
                 newOrder.TotalCost += orderItem.SubTotal;
             }
-
             await db.SaveChangesAsync();
         }
 

@@ -10,8 +10,8 @@ using SjonnieLoper.Data;
 namespace SjonnieLoper.DataBase.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201119131348_Mergetest")]
-    partial class Mergetest
+    [Migration("20201119132112_MergeTest")]
+    partial class MergeTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
