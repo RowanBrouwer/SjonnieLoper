@@ -8,12 +8,12 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
 {
     public interface IOrders
     {
-        public Task<IEnumerable<Order>> GetAllOrdersAndReservations(string name);
-        public Task<IEnumerable<Order>> GetAllOrdersAsync();
+        public Task<IEnumerable<Order>> GetAllOrdersAsync(
+            string searchName,
+            bool searchRangeAge, int searchAge1, int searchAge2,
+            bool includeSoftDelete);
         public Task<Order> GetOrderById(int id);
         public Order UpdateOrder(Order updatedOrder);
-
-        //public Task<Order> AddOrder(Order NewOrder);
 
         public Task CreateOrderAsync(ApplicationUser user);
         public Task<Order> DeleteOrder(int id);

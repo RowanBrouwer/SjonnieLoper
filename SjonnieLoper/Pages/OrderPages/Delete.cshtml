@@ -5,13 +5,19 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete!</h2>
-
-<div class="alert alert-danger">
-    Are you sure you want to delete order @*@Model.OrdersAndReservations.Id?*@
+<div class="row">
+    <h2>Delete!</h2>
 </div>
 
-<form method="post">
-    <button type="submit" class="btn btn-dark">Yes!</button>
-    <a asp-page="Index" class="btn btn-outline-dark">Cancel</a>
-</form>
+<div class="row">
+    <div class="alert alert-danger">
+        Are you sure you want to delete order @Model.Order.Id?
+    </div>
+</div>
+
+<div class="row">
+    <form method="post">
+        <button type="submit" class="btn btn-dark">Yes!</button>
+        <button asp-page="Index" class="btn btn-outline-dark">Cancel</button>
+    </form>
+</div>

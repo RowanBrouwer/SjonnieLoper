@@ -21,17 +21,6 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             _shoppingCart = shoppingCart;
         }
 
-        /// <summary>
-        /// Old method Rowan. Replaced by CreateOrderAsync
-        /// </summary>
-        /// <param name="NewOrder"></param>
-        /// <returns></returns>
-        /*public async Task<Order> AddOrder(Order NewOrder)
-        {
-            await db.AddAsync(NewOrder);
-            return NewOrder;
-        }*/
-
         public async Task CreateOrderAsync(ApplicationUser user)
         {
             Order newOrder = new Order
@@ -77,29 +66,22 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         }
 
         /// <summary>
-        /// Rowans method. Including search.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public async Task<IEnumerable<Order>> GetAllOrdersAndReservations(string name)
-        {
-            var query = from o in db.Orders
-                        where o.SoftDeleted == false
-                        select o;
-            return await query.ToListAsync();
-        }
-
-        /// <summary>
-        /// Stella's method. Excluding search.
+        /// Get's all orders excluding softdeleted ones.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Order>> GetAllOrdersAsync()
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync(
+            string searchName,
+            bool searchRangeAge, int searchAge1, int searchAge2,
+            bool includeSoftDelete)
         {
-            var query = from o in db.Orders
+            var query = from order in db.Orders
                         .Include(o => o.Customer)
                         .Include(o => o.OrderItems).ThenInclude(oi => oi.Whiskey)
-                        where o.SoftDeleted == false
-                        select o;
+                        where (includeSoftDelete || order.SoftDeleted == false)
+                        where (!searchRangeAge && (searchAge1 == 0 || order.Customer.AgeYears == searchAge1) || (order.Customer.AgeYears >= searchAge1 && order.Customer.AgeYears <= searchAge2))
+                        where (string.IsNullOrEmpty(searchName) || (order.Customer.FirstName.Contains(searchName) || order.Customer.LastName.Contains(searchName)))
+                        select order;
+
             return await query.ToListAsync();
         }
 
