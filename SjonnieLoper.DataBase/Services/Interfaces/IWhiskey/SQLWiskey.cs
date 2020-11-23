@@ -34,7 +34,7 @@ namespace SjonnieLoper.DataBase
         {
             int WhiskeyCountry ;
 
-            if (NewWhiskey.Id != 0)
+             if (NewWhiskey.CountryOfOrigin.Id != 0)
             {
                 WhiskeyCountry = NewWhiskey.CountryOfOrigin.Id;
             }
