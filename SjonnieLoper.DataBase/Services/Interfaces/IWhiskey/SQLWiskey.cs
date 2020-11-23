@@ -34,7 +34,7 @@ namespace SjonnieLoper.DataBase
         {
             int whiskeyCountryId = 0;
 
-            if (NewWhiskey.CountryOfOrigin.Id != 0)
+            if (NewWhiskey.CountryOfOrigin != null)
                 whiskeyCountryId = NewWhiskey.CountryOfOrigin.Id;
 
             NewWhiskey.CountryOfOrigin = await _general.CheckNewCountry(addNewCountry, countryName, whiskeyCountryId);
