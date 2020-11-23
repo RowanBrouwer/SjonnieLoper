@@ -45,30 +45,5 @@ namespace SjonnieLoper.Pages.OrderPages
             }
             return Page();
         }
-
-        public IActionResult ConvertToPdf()
-        {
-            PdfDocument document = new PdfDocument();
-
-            PdfPage page = document.Pages.Add();
-
-            PdfGraphics graphics = page.Graphics;
-
-            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
-
-            graphics.DrawString($"{Order.Id}", font, PdfBrushes.Black, new PointF(0, 0));
-
-            MemoryStream stream = new MemoryStream();
-
-            document.Save(stream);
-
-            stream.Position = 0;
-
-            FileStreamResult fileStreamResult = new FileStreamResult(stream, "SjonnieLoper/Pdf");
-
-            fileStreamResult.FileDownloadName = $"{Order.Id}.pdf";
-
-            return fileStreamResult;
-        }
     }
 }

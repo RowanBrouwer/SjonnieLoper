@@ -32,9 +32,9 @@ namespace SjonnieLoper.DataBase
         /// <returns></returns>
         public async Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool addNewCountry, string CountryName)
         {
-            int WhiskeyCountry ;
+            int WhiskeyCountry;
 
-            if (NewWhiskey.Id != 0)
+            if (NewWhiskey.CountryOfOrigin.Id != 0)
             {
                 WhiskeyCountry = NewWhiskey.CountryOfOrigin.Id;
             }

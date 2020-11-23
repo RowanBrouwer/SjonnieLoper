@@ -1,15 +1,14 @@
-﻿@page "{orderId}"
-@model SjonnieLoper.Pages.OrderPages.DeleteModel
-
+﻿@page "{orderId:int}"
+@model SjonnieLoper.Pages.OrderPages.ConvertToPdfModel
 @{
-    ViewData["Title"] = "Delete";
 }
 
-<h2>Delete!</h2>
 
 <div class="alert alert-danger">
-    Are you sure you want to delete order @Model.Order.Id?
+    Are you sure you want to Convert @Model.order.Id?
 </div>
+
+
 
 <form method="post">
     <button type="submit" class="btn btn-dark">Yes!</button>
