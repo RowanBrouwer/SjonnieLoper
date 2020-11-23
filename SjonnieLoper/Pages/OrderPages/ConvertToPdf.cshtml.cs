@@ -48,6 +48,7 @@ namespace SjonnieLoper.Pages.OrderPages
             {
                 return RedirectToPage("./NotFound");
             }
+
             PdfDocument document = new PdfDocument();
 
             PdfPage page = document.Pages.Add();
@@ -79,7 +80,6 @@ namespace SjonnieLoper.Pages.OrderPages
 
             fileStreamResult.FileDownloadName = $"{order.Id}.pdf";
 
-            RedirectToPage("./Index");
             return fileStreamResult;
         }
     }
