@@ -36,9 +36,21 @@
 <div>
     Age: @Model.Whiskey.AgeYears Years
 </div>
-<div>
-    Amount avaible: @Model.Whiskey.AmountInStorage
-</div>
+
+@if (!Model.Whiskey.SoftDeleted)
+{
+    <div>
+        Amount avaible: @Model.Whiskey.AmountInStorage
+    </div>
+}
+else
+{
+    <div>No longer available.</div>
+
+}
 
 <a asp-page="./Index" class="btn btn-outline-dark">All Whiskeys</a>
-<partial name="_AddToCartBtn" model="@Model.Whiskey.Id" />
+@if (!Model.Whiskey.SoftDeleted)
+{
+    <partial name="_AddToCartBtn" model="@Model.Whiskey.Id" />
+}

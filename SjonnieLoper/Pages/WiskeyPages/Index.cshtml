@@ -2,7 +2,6 @@
 @model SjonnieLoper.Pages.WiskeyPages.IndexModel
 @{
 }
-@System.Globalization.CultureInfo.CurrentUICulture
 <head>
     <script src="https://kit.fontawesome.com/f6dbf9a0a1.js" crossorigin="anonymous"></script>
 </head>
@@ -131,11 +130,15 @@
     </form>
 </div>
 
+
+<a asp-page="./Create_Edit" class="btn btn-default">Add New</a>
+
+
 @foreach (var W in Model.Whiskeys)
 {
     <partial name="_Summary" model="W" />
 }
-<a asp-page="./Create_Edit" class="btn btn-default">Add New</a>
+
 
 
 @section Scripts{

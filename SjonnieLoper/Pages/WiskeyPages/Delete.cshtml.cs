@@ -42,7 +42,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
             {
                 return RedirectToPage("./NotFound");
             }
-            TempData["Message"] = $"{Whiskey.Brand}{Whiskey.Name} deleted";
+            TempData["Message"] = $"{Whiskey.Brand} {Whiskey.Name} deleted";
             return RedirectToPage("./Index");
         }
     }

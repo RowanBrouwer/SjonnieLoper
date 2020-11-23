@@ -11,7 +11,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
 {
     public class DetailsModel : PageModel
     {
-        private readonly IWiskey context;
+        private readonly IWiskey _whiskeyRepository;
 
         public WhiskeyBase Whiskey { get; set; }
 
@@ -20,12 +20,12 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public DetailsModel(IWiskey context)
         {
-            this.context = context;
+            this._whiskeyRepository = context;
         }
 
         public async Task<IActionResult> OnGet(int whiskeyId)
         {
-            Whiskey = await context.GetWhiskeyById(whiskeyId);
+            Whiskey = await _whiskeyRepository.GetWhiskeyById(whiskeyId);
             if (Whiskey == null)
             {
                 return RedirectToPage("./NotFound");

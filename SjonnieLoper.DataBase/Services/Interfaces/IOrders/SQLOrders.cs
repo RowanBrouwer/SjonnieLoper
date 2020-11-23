@@ -21,17 +21,6 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             _shoppingCart = shoppingCart;
         }
 
-        /// <summary>
-        /// Old method Rowan. Replaced by CreateOrderAsync
-        /// </summary>
-        /// <param name="NewOrder"></param>
-        /// <returns></returns>
-        /*public async Task<Order> AddOrder(Order NewOrder)
-        {
-            await db.AddAsync(NewOrder);
-            return NewOrder;
-        }*/
-
         public async Task CreateOrderAsync(ApplicationUser user)
         {
             Order newOrder = new Order
@@ -46,15 +35,25 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             var shoppingCartItems = _shoppingCart.ShoppingCartItems;
             foreach (var cartItem in shoppingCartItems)
             {
+                var whiskey = await db.Whiskeys.FirstOrDefaultAsync(w => w.Id == cartItem.Whiskey.Id);
                 var orderItem = new OrderItem()
                 {
                     Amount = cartItem.Amount,
-                    WhiskeyId = db.Whiskeys.FirstOrDefault(w => w.Id == (cartItem.Whiskey.Id)).Id,
+                    WhiskeyId = whiskey.Id,
                     OrderId = newOrder.Id,
                     SubTotal = cartItem.SubTotal,
-                    Whiskey = db.Whiskeys.FirstOrDefault(w => w.Id == cartItem.Whiskey.Id)
+                    Whiskey = whiskey
                 };
                 db.OrderItems.Add(orderItem);
+
+                //Update AmountInStorage for Whiskey in the order.
+                if (whiskey.AmountInStorage - cartItem.Amount <= 0)
+                    whiskey.AmountInStorage = 0;
+                else
+                    whiskey.AmountInStorage -= cartItem.Amount;
+
+                var entity = db.Whiskeys.Attach(whiskey);
+                entity.State = EntityState.Modified;
 
                 //For each orderItem add Amount and Subtotal to TotalBottleAmount and TotalCost.
                 newOrder.TotalBottleAmount += orderItem.Amount;
@@ -66,40 +65,49 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         /// <summary>
         /// Soft deletes an Order by Id.
         /// </summary>
-        public async Task<Order> DeleteOrder(int id)
+        public async Task<Order> DeleteOrderAsync(Order delOrder)
         {
-            var DelOrder = await GetOrderById(id);
-            if (DelOrder != null)
+            //var delOrder = await GetOrderById(id);
+            if (delOrder != null)
             {
-                DelOrder.SoftDeleted = true;
+                //Foreach orderItem. Take the whiskey and add back the whiskeys of the order to the amount of whiskeys in storage.
+                foreach (var orderItem in delOrder.OrderItems)
+                {
+                    var whiskey = await db.Whiskeys.FirstOrDefaultAsync(w => w.Id == orderItem.Whiskey.Id);
+                    if (whiskey != null && !whiskey.SoftDeleted)
+                    {
+                        whiskey.AmountInStorage += orderItem.Amount;
+                        
+                        var entity = db.Whiskeys.Attach(whiskey);
+                        entity.State = EntityState.Modified;
+                    }
+                }
+                //Save changes to all whiskeys.
+                await db.SaveChangesAsync();
+
+                delOrder.SoftDeleted = true;
             }
-            return DelOrder;
+         
+            return delOrder;
         }
 
         /// <summary>
-        /// Rowans method. Including search.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public async Task<IEnumerable<Order>> GetAllOrdersAndReservations(string name)
-        {
-            var query = from o in db.Orders
-                        where o.SoftDeleted == false
-                        select o;
-            return await query.ToListAsync();
-        }
-
-        /// <summary>
-        /// Stella's method. Excluding search.
+        /// Get's all orders excluding softdeleted ones.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Order>> GetAllOrdersAsync()
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync(
+            string searchName,
+            bool searchRangeAge, int searchAge1, int searchAge2,
+            bool includeSoftDelete)
         {
-            var query = from o in db.Orders
+            var query = from order in db.Orders
                         .Include(o => o.Customer)
                         .Include(o => o.OrderItems).ThenInclude(oi => oi.Whiskey)
-                        where o.SoftDeleted == false
-                        select o;
+                        where (includeSoftDelete || order.SoftDeleted == false)
+                        where (!searchRangeAge && (searchAge1 == 0 || order.Customer.AgeYears == searchAge1) || (order.Customer.AgeYears >= searchAge1 && order.Customer.AgeYears <= searchAge2))
+                        where (string.IsNullOrEmpty(searchName) || (order.Customer.FirstName.Contains(searchName) || order.Customer.LastName.Contains(searchName)))
+                        select order;
+
             return await query.ToListAsync();
         }
 

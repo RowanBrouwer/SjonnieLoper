@@ -22,13 +22,30 @@ namespace SjonnieLoper.Pages.OrderPages
         private readonly IAppUser _appUserRepository;
         private readonly ShoppingCart _shoppingCart;
 
+        #region properties
         [TempData]
         public string Message { get; set; }
-
-        //[BindProperty(SupportsGet = true)]
-        //public string SearchTerm { get; set; }
-
         public IEnumerable<Order> Orders{ get; set; }
+
+
+
+        #region Search properties
+        [BindProperty(SupportsGet = true)]
+        public string SearchName { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int SearchAge1 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int SearchAge2 { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool SearchRangeAge { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool IncludeSoftDelete { get; set; }
+        #endregion
+        #endregion
 
         public IndexModel(IWiskey context, IGeneral general, IOrders orderContext, IAppUser appUserContext, ShoppingCart shoppingCart)
         {
@@ -41,7 +58,10 @@ namespace SjonnieLoper.Pages.OrderPages
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Orders = await _orderContext.GetAllOrdersAsync();
+            Orders = await _orderContext.GetAllOrdersAsync(
+                SearchName,
+                SearchRangeAge, SearchAge1, SearchAge2,
+                IncludeSoftDelete);
             return Page();
         }
         

@@ -6,62 +6,70 @@
 }
 
 
-@if (Model.Message != null)
-{
-    <div class="alert alert-info">@Model.Message</div>
-}
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Age</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>@Model.Order.Customer.FullName</td>
-            <td>@Model.Order.Customer.AgeYears</td>
-        </tr>
-        <tr>
-            <td>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Amount</th>
-                            <th>Whiskey</th>
-                            <th class="text-right">Price</th>
-                            <th class="text-right">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var line in Model.Order.OrderItems)
-                        {
+
+    @if (Model.Message != null)
+    {
+        <div class="alert alert-info">@Model.Message</div>
+    }
+
+<div class="row">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Order.Customer.FullName</td>
+                <td>@Model.Order.Customer.AgeYears</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table class="table table-striped table-bordered mb-0">
+                        <thead>
                             <tr>
-                                <td>@line.Amount</td>
-                                <td>@Html.DisplayFor(c => line.Whiskey.Name)</td>
-                                <td class="text-right">€@(line.Whiskey.Price.ToString())</td>
-                                <td class="text-right">€@(line.SubTotal.ToString())</td>
+                                <th>Whiskey</th>
+                                <th>Amount</th>
+                                <th class="text-right">Price</th>
+                                <th class="text-right">Subtotal</th>
                             </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td>@Model.Order.TotalBottleAmount</td>
-                            <td colspan="2" class="text-right">Total:</td>
-                            <td class="text-right">
-                                €@(Model.Order.TotalCost.ToString("0.00"))
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                        </thead>
+                        <tbody>
+                            @foreach (var line in Model.Order.OrderItems)
+                            {
+                                <tr>
+
+                                    <td>@Html.DisplayFor(c => line.Whiskey.Name)</td>
+                                    <td>@line.Amount</td>
+                                    <td class="text-right">€@(line.Whiskey.Price.ToString())</td>
+                                    <td class="text-right">€@(line.SubTotal.ToString())</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td>@Model.Order.TotalBottleAmount</td>
+                                <td class="text-right">Total:</td>
+                                <td class="text-right">
+                                    €@(Model.Order.TotalCost.ToString("0.00"))
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    <div class="row">
+        <a class="btn btn-outline-dark" asp-page="./Index">Back to Orders</a>
 
 <a class="btn btn-lg" asp-page="./ConvertToPdf"
    asp-route-orderId="@Model.Order.Id">
     <i class="fas fa-file"></i>
 </a>
 
-<a asp-page="./Index" class="btn btn-outline-dark">Back to Orders</a>
