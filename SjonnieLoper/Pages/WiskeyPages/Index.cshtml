@@ -130,11 +130,15 @@
     </form>
 </div>
 
+
+<a asp-page="./Create_Edit" class="btn btn-default">Add New</a>
+
+
 @foreach (var W in Model.Whiskeys)
 {
     <partial name="_Summary" model="W" />
 }
-<a asp-page="./Create_Edit" class="btn btn-default">Add New</a>
+
 
 
 @section Scripts{

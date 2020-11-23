@@ -45,7 +45,7 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         /// <param name="countryName">Name of new country being added.</param>
         /// <param name="whiskeyCountryId"></param>
         /// <returns></returns>
-        public async Task<Country> CheckNewCountry(bool addNewCountry, string countryName, int? whiskeyCountryId)
+        public async Task<Country> CheckNewCountry(bool addNewCountry, string countryName, int whiskeyCountryId)
         {
             if (addNewCountry)
             {

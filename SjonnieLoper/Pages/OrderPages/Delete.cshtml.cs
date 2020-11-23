@@ -43,14 +43,17 @@ namespace SjonnieLoper.Pages.OrderPages
 
         public async Task<IActionResult> OnPost(int orderId)
         {
+            //First check if orders exists. Then delete.
+            Order = await _orderContext.GetOrderById(orderId);
             if (Order == null)
             {
                 return RedirectToPage("./NotFound");
             }
-            Order = await _orderContext.DeleteOrderAsync(orderId);
+            Order = await _orderContext.DeleteOrderAsync(Order);
             await _generalContext.Commit();
+          
 
-            TempData["Message"] = $"{Order.Id} order deleted";
+            TempData["Message"] = $"Order {Order.Id} deleted";
             return RedirectToPage("./Index");
         }
     }

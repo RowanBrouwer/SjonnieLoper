@@ -65,13 +65,13 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         /// <summary>
         /// Soft deletes an Order by Id.
         /// </summary>
-        public async Task<Order> DeleteOrderAsync(int id)
+        public async Task<Order> DeleteOrderAsync(Order delOrder)
         {
-            var DelOrder = await GetOrderById(id);
-            if (DelOrder != null)
+            //var delOrder = await GetOrderById(id);
+            if (delOrder != null)
             {
                 //Foreach orderItem. Take the whiskey and add back the whiskeys of the order to the amount of whiskeys in storage.
-                foreach (var orderItem in DelOrder.OrderItems)
+                foreach (var orderItem in delOrder.OrderItems)
                 {
                     var whiskey = await db.Whiskeys.FirstOrDefaultAsync(w => w.Id == orderItem.Whiskey.Id);
                     if (whiskey != null && !whiskey.SoftDeleted)
@@ -85,10 +85,10 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
                 //Save changes to all whiskeys.
                 await db.SaveChangesAsync();
 
-                DelOrder.SoftDeleted = true;
+                delOrder.SoftDeleted = true;
             }
          
-            return DelOrder;
+            return delOrder;
         }
 
         /// <summary>

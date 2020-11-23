@@ -15,12 +15,12 @@ namespace SjonnieLoper.DataBase
     public class SQLWiskey : IWiskey
     {
         private readonly ApplicationDbContext db;
-        private readonly IGeneral general;
+        private readonly IGeneral _general;
 
         public SQLWiskey(ApplicationDbContext db, IGeneral general)
         {
             this.db = db;
-            this.general = general;
+            _general = general;
         }
 
         /// <summary>
@@ -28,22 +28,16 @@ namespace SjonnieLoper.DataBase
         /// </summary>
         /// <param name="NewWhiskey"></param>
         /// <param name="addNewCountry">Bool to check if a new country is being added.</param>
-        /// <param name="CountryName">Name of new country being added.</param>
+        /// <param name="countryName">Name of new country being added.</param>
         /// <returns></returns>
-        public async Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool addNewCountry, string CountryName)
+        public async Task<WhiskeyBase> AddWhiskeyAsync(WhiskeyBase NewWhiskey, bool addNewCountry, string countryName)
         {
-            int WhiskeyCountry ;
+            int whiskeyCountryId = 0;
 
-             if (NewWhiskey.CountryOfOrigin.Id != 0)
-            {
-                WhiskeyCountry = NewWhiskey.CountryOfOrigin.Id;
-            }
-            else
-            {
-                WhiskeyCountry = 0;
-            }
-            
-            NewWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, CountryName, WhiskeyCountry);
+            if (NewWhiskey.CountryOfOrigin.Id != 0)
+                whiskeyCountryId = NewWhiskey.CountryOfOrigin.Id;
+
+            NewWhiskey.CountryOfOrigin = await _general.CheckNewCountry(addNewCountry, countryName, whiskeyCountryId);
 
             db.Add(NewWhiskey);
 
@@ -134,7 +128,7 @@ namespace SjonnieLoper.DataBase
             if (updatedWhiskey.CountryOfOrigin != null)
                 whiskeyCountryId = updatedWhiskey.CountryOfOrigin.Id;
 
-            updatedWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, countryName, whiskeyCountryId);
+            updatedWhiskey.CountryOfOrigin = await _general.CheckNewCountry(addNewCountry, countryName, whiskeyCountryId);
 
             var entity = db.Whiskeys.Attach(updatedWhiskey);
             entity.State = EntityState.Modified;
