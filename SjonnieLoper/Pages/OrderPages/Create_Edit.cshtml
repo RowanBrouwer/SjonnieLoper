@@ -1,0 +1,48 @@
+﻿@page "{OrderId:int?}"
+@model SjonnieLoper.Pages.OrderPages.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Editing @Model.OrdersAndReservations.Id</h2>
+
+<form method="post">
+
+    <input type="hidden" asp-for="OrdersAndReservations.Id" />
+
+    <div class="form-group">
+        <label asp-for="OrdersAndReservations.Customer.Email"></label>
+        <input asp-for="OrdersAndReservations.Customer.Email" class="form-control" />
+        <span class="text-danger" asp-validation-for="OrdersAndReservations.Customer.Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="OrdersAndReservations.Orderd_Wiskey.Name"></label>
+        <input asp-for="OrdersAndReservations.Orderd_Wiskey.Name" class="form-control" />
+        <span class="text-danger" asp-validation-for="OrdersAndReservations.Orderd_Wiskey.Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="OrdersAndReservations.AmountOrderd"></label>
+        <input asp-for="OrdersAndReservations.AmountOrderd" class="form-control" />
+        <span class="text-danger" asp-validation-for="OrdersAndReservations.AmountOrderd"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="OrdersAndReservations.Ordercost"></label>
+        <span class="text-danger" asp-validation-for="OrdersAndReservations.Ordercost"></span>
+    </div>
+
+    <button type="submit" class="btn btn-outline-dark">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

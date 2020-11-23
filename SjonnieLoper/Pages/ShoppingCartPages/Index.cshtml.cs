@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonnieLoper.Core.Models;
@@ -14,7 +13,6 @@ using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.ShoppingCartPages
 {
-    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IWiskey _whiskeyRepository;

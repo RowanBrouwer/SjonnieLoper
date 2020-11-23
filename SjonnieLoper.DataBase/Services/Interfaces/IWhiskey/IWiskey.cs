@@ -19,8 +19,7 @@ namespace SjonnieLoper.DataBase
             bool searchForType, WhiskeyType searchType,
             bool searchRangeAge, int searchAge1, int searchAge2,
             bool searchRangePrice, decimal searchPrice1, decimal searchPrice2,
-            bool searchRangePercent, decimal searchPercent1, decimal searchPercent2,
-            bool includeSoftDelete);
+            bool searchRangePercent, decimal searchPercent1, decimal searchPercent2);
 
         public Task<WhiskeyBase> GetWhiskeyById(int id);
 
