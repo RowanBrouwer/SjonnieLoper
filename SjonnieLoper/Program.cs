@@ -23,9 +23,6 @@ namespace SjonnieLoper
 
             using (var scope = host.Services.CreateScope())
             {
-                /// <summary>
-                /// Dependencies for the Seed method.
-                /// </summary>
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {

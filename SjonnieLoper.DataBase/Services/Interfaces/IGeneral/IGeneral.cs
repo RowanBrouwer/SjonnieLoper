@@ -13,6 +13,6 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
 
         public Task<ShoppingCartItem> GetCartItemByIdAsync(int id);
         
-        public Task<Country> CheckNewCountry(bool addNewCountry, string countryName, int whiskeyCountryId);
+        public Task<Country> CheckNewCountry(bool addNewCountry, string CountryName, int? WhiskeyCountry);
     }
 }

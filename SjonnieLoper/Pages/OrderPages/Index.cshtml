@@ -1,133 +1,56 @@
 ﻿@page
 @model SjonnieLoper.Pages.OrderPages.IndexModel
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<div class="row">
-    <h2>Index</h2>
-</div>
-
+<h1>Index</h1>
 @if (Model.Message != null)
 {
-    <div class="row">
-        <div class="alert alert-info">@Model.Message</div>
-    </div>
+    <div class="alert alert-info">@Model.Message</div>
 }
 
-<div class="row">
-    <form method="get">
-
-        <div class="form-group">
-            <input class="form-control" type="search" asp-for="SearchName" placeholder="Name" />
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchTerm" />
+            <span class="input-group-btn">
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
         </div>
-
-        <div class="form-group">
-            <div class="row">
-                <div class="input-group col-6">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <div>
-                                <label class="form-check-label" for="AgeCheckbox">Age Range</label>
-                                <input class="form-check form-check-inline" type="checkbox" asp-for="SearchRangeAge" id="AgeCheckbox" />
-                            </div>
-                        </div>
-                    </div>
-                    <input class="form-control" type="search" asp-for="SearchAge1" placeholder="Age" />
-                </div>
-                <div class="input-group col-6">
-                    <input class="form-control" type="search" asp-for="SearchAge2" placeholder="Age" id="InputAge2" disabled />
-                </div>
-            </div>
-        </div>
-
-        @if (User.IsInRole("Employee"))
-        {
-            <div class="form-check form-check-inline">
-                <input class="form-check form-check-inline" type="checkbox" asp-for="IncludeSoftDelete" />
-                <label class="form-check-label" asp-for="IncludeSoftDelete">Include Cancelled Orders</label>
-            </div>
-        }
-
-        <div class="form-group">
-            <button id="faded" class="btn btn-outline-secondary">
-                <i class="fas fa-search"></i>
-                Search
-            </button>
-        </div>
-
-    </form>
+    </div>
+</form>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+@foreach (var o in Model.OrdersAndReservations)
+{
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>@o.Customer.FName</h3>
+    </div>
+    <div class="panel-body d-flex flex-column">
+        <span>Brand: @o.Orderd_Wiskey.Brand</span>
+        <span>Alch%: @o.Orderd_Wiskey.Percentage</span>
+        <span>Price: @o.Orderd_Wiskey.Price</span>
+        <span>Age: @o.Orderd_Wiskey.AgeYears Years</span>
+    </div>
+    <div class="panel-footer">
+        <a class="btn btn-lg" asp-page="./Details"
+           asp-route-whiskeyId="@o.Id">
+            <i class="glyphicon glyphicon-zoom-in"></i>
+        </a>
+        <a class="btn btn-lg" asp-page="./Create_Edit"
+           asp-route-whiskeyId="@o.Id">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-lg" asp-page="./Delete"
+           asp-route-whiskeyId="@o.Id">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
 </div>
-
-<div class="row">
-    <table class="table table-striped table-bordered table-smallcells fadedTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Amount of Bottles</th>
-                <th class="text-right">Price</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Model.Orders)
-            {
-                string fadedRow = "";
-                if (Model.IncludeSoftDelete)
-                {
-                    if (order.SoftDeleted)
-                    {
-                        fadedRow = "fadedRow";
-                    }
-                }
-                <tr class="@fadedRow">
-                    <td>@order.Customer.FullName</td>
-                    <td>@Html.DisplayFor(c => order.Customer.AgeYears)</td>
-                    <td>@(order.TotalBottleAmount)</td>
-                    <td class="text-right">€@(order.TotalCost.ToString())</td>
-
-                    <td class="cell-small">
-                        <div class="btn-group">
-                            <div class="">
-                                <a class="btn btn-lg" asp-page="./Details"
-                                   asp-route-orderId="@order.Id">
-                                    <i class="fas fa-search-plus"></i>
-                                </a>
-                            </div>
-                            @if (User.IsInRole("Employee"))
-                            {
-                                <div class=" px-0">
-                                    <a class="btn btn-lg" asp-page="./Delete"
-                                       asp-route-orderId="@order.Id">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </div>
-                            }
-                        </div>
-                    </td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            //Age Checkbox
-            if ($('#AgeCheckbox').is(':checked')) {
-                $('#InputAge2').prop('disabled', false);
-            }
-
-            $('#AgeCheckbox').change(function () {
-                if ($(this).is(':checked')) {
-                    $('#InputAge2').prop('disabled', false);
-                } else {
-                    $('#InputAge2').prop('disabled', true);
-                }
-            });
-        });
-    </script>
 }

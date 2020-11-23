@@ -2,6 +2,7 @@
 @model SjonnieLoper.Pages.WiskeyPages.IndexModel
 @{
 }
+@System.Globalization.CultureInfo.CurrentUICulture
 <head>
     <script src="https://kit.fontawesome.com/f6dbf9a0a1.js" crossorigin="anonymous"></script>
 </head>
@@ -108,15 +109,36 @@
                         <input class="form-control" type="search" asp-for="SearchPercent2" placeholder="0.00" id="InputWPercent2" disabled />
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="input-group col-6">
-                        <div>
-                            <input class="form-check form-check-inline" type="checkbox" asp-for="IncludeSoftDelete" />
-                            <label class="form-check-label" asp-for="IncludeSoftDelete">Include Discontinued</label>
-                        </div>
-                    </div>
-                </div>
 
+
+                <div>
+                    @*
+            <div class="input-group">
+                <input type="checkbox" class="form-check" asp-for="SearchForDate" />
+                <label asp-for="SearchDate1"></label>
+                <input type="search" class="form-control" asp-for="SearchDate1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchDate2"></label>
+                <input type="search" class="form-control" asp-for="SearchDate2" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPercent1"></label>
+                <input type="search" class="form-control" asp-for="SearchPercent1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPercent2"></label>
+                <input type="search" class="form-control" asp-for="SearchPercent2" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPrice1"></label>
+                <input type="search" class="form-control" asp-for="SearchPrice1" />
+            </div>
+            <div class="input-group">
+                <label asp-for="SearchPrice2"></label>
+                <input type="search" class="form-control" asp-for="SearchPrice2" />
+            </div>*@
+                </div>
 
                 <span>
                     <button class="btn btn-default btn-light">
@@ -130,15 +152,11 @@
     </form>
 </div>
 
-
-<a asp-page="./Create_Edit" class="btn btn-default">Add New</a>
-
-
 @foreach (var W in Model.Whiskeys)
 {
     <partial name="_Summary" model="W" />
 }
-
+<a asp-page="./Create_Edit" class="btn btn-default">Add New</a>
 
 
 @section Scripts{

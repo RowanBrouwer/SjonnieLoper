@@ -10,29 +10,17 @@ namespace SjonnieLoper.Core
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        public string FirstName { get; set; }
+        public string FName { get; set; }
+
+        public string MName { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        public string LName { get; set; }
 
-        public string FullName 
-        { 
-            get 
-            { 
-                return FirstName + " " + LastName; 
-            }
-        }
-
-        //Temporarily removed birthday. Easier to use int for Age.
-
-        /* [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{MM/dd/yyyy}")]
-        public DateTime Birthday  { get; set; }*/
-
-        [Required]
-        public int AgeYears { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{MM/dd/yyyy}")]
+        public DateTime Birthday  { get; set; }
 
         public bool SoftDeleted { get; set; }
-
         public bool Employee { get; set; }
     }
 }

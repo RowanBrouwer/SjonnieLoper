@@ -96,23 +96,3 @@ body {
     padding: 0.25rem;
     padding-left: 0.4rem;
 }
-
-.fadedTable{
-
-}
-
-.fadedRow {
-}
-    .fadedRow td {
-        opacity: 0.5;
-        background-color: rgba(0, 0, 0, 0.10);
-        border-color: rgba(0, 0, 0, 0.10);
-    }
-        .fadedRow td btn {
-            color: inherit;
-            opacity: 0.6;
-        }
-
-        .fadedTable tbody tr.fadedRow{
-            background-color: whitesmoke;
-        }
