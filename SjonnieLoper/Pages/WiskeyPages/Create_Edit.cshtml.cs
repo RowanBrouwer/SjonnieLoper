@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,6 +16,7 @@ using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.WiskeyPages
 {
+    [Authorize(Roles = "Employee")]
     public class Create_EditModel : PageModel
     {
         private readonly IWiskey context;
@@ -45,6 +47,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnGet(int? whiskeyId)
         {
+            /// <summary>
+            /// Decides on whiskey Id if it needs to get a exsisting whiskey or create a new whiskey.
+            /// If there is an exsisting whiskey he links the selectlist to the correct data field.
+            /// </summary>
             if (whiskeyId.HasValue)
             {
                 Whiskey = await context.GetWhiskeyById(whiskeyId.Value);
@@ -69,7 +75,10 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         public async Task<IActionResult> OnPost()
         {
-
+            /// <summary>
+            /// Checks if the ModelState is invalid, if it is invalid returns the page and repopulates select lists.
+            /// If ModelState is valid it sends the whiskey to the interface, if the Id is higher than 0 it is an exsisting whiskey otherwise it is new.
+            /// </summary>
             if (!ModelState.IsValid)
             {
                 Types = HtmlHelper.GetEnumSelectList<WhiskeyType>();
