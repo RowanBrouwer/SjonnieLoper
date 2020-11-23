@@ -75,6 +75,9 @@ namespace SjonnieLoper.Pages.WiskeyPages
 
         [BindProperty(SupportsGet = true)]
         public bool SearchRangePercent { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool IncludeSoftDelete { get; set; }
         #endregion
         #endregion
 
@@ -90,7 +93,8 @@ namespace SjonnieLoper.Pages.WiskeyPages
                     SearchForType, SearchType,
                     SearchRangeAge, SearchAge1, SearchAge2,
                     SearchRangePrice, SearchPrice1, SearchPrice2,
-                    SearchRangePercent, SearchPercent1, SearchPercent2);
+                    SearchRangePercent, SearchPercent1, SearchPercent2,
+                    IncludeSoftDelete);
             else
                 Whiskeys = await context.GetAllWhiskeys(SearchTerm);
             return Page();

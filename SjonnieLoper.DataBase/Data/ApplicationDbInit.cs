@@ -19,7 +19,9 @@ namespace SjonnieLoper.DataBase.Data
     {
         public static void Seed(UserManager<ApplicationUser> userManager, ApplicationDbContext db, RoleManager<IdentityRole> roleManager)
         {
-
+            /// <summary>
+            /// Checks if a role namen Employee exists, if not it gets generated on startup.
+            /// </summary>
             if (roleManager.FindByNameAsync("Employee").Result == null)
             {
                 IdentityRole Employees = new IdentityRole
@@ -31,7 +33,9 @@ namespace SjonnieLoper.DataBase.Data
                 db.SaveChanges();
             };
 
-
+            /// <summary>
+            /// Checks the database for countries based on their name, if not exsisting generates them on startup.
+            /// </summary>
             if (db.Countries.FirstOrDefault(c => c.Name == "Scotland") == null)
             {
                 Country country = new Country
@@ -60,6 +64,9 @@ namespace SjonnieLoper.DataBase.Data
                 db.SaveChanges();
             }
 
+            /// <summary>
+            /// Checks the database for whiskeys based on their name, if not exsisting generates them on startup.
+            /// </summary>
             if (db.Whiskeys.FirstOrDefault(w => w.Name == "Lagavulin 9 years House Lannister ") == null)
             {
                 WhiskeyBase whiskey = new WhiskeyBase
@@ -77,7 +84,6 @@ namespace SjonnieLoper.DataBase.Data
                 };
                 db.Add(whiskey);
             }
-
             if (db.Whiskeys.FirstOrDefault(w => w.Name == "Ardbeg 5 years Wee Beastie") == null)
             {
                 WhiskeyBase whiskey = new WhiskeyBase
@@ -164,13 +170,16 @@ namespace SjonnieLoper.DataBase.Data
                 db.Add(whiskey);
             }
 
+            /// <summary>
+            /// Checks the database for an User based on their UserName, if not exsisting generates it on startup.
+            /// </summary>
             if (userManager.FindByNameAsync("Admin1@Admin1").Result == null)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    FName = "Rowan",
-                    MName = "",
-                    LName = "Brouwer",
+                    FirstName = "Rowan",
+                    LastName = "Brouwer",
+                    AgeYears = 23,
                     SoftDeleted = false,
                     Employee = true,
                     Email = "Admin1@Admin1",
@@ -182,6 +191,9 @@ namespace SjonnieLoper.DataBase.Data
 
                 IdentityResult result = userManager.CreateAsync(user, "!Admin123").Result;
 
+                /// <summary>
+                /// Adds the user to the Employee role and creates a claim based on the role.
+                /// </summary>
                 if (result.Succeeded)
                 {
                     userManager.AddToRoleAsync(user, "Employee").Wait();

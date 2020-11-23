@@ -18,6 +18,12 @@
            asp-route-whiskeyId="@Model.Id">
             <i class="fas fa-search-plus"></i>
         </a>
+        @if (!Model.SoftDeleted)
+        {
+
+
+        @if (User.IsInRole("Employee"))
+        {
         <a class="btn btn-lg" asp-page="./Create_Edit"
            asp-route-whiskeyId="@Model.Id">
             <i class="fas fa-edit"></i>
@@ -26,7 +32,10 @@
            asp-route-whiskeyId="@Model.Id">
             <i class="fas fa-trash-alt"></i>
         </a>
+        }
 
         <partial name="_AddToCartBtn" model="@Model.Id" />
+        }
+    
     </div>
 </div>

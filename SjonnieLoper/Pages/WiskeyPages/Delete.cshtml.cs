@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SjonnieLoper.Core;
@@ -10,6 +11,7 @@ using SjonnieLoper.DataBase.Services.Interfaces;
 
 namespace SjonnieLoper.Pages.WiskeyPages
 {
+    [Authorize(Roles = "Employee")]
     public class DeleteModel : PageModel
     {
         private readonly IWiskey context;
@@ -40,7 +42,7 @@ namespace SjonnieLoper.Pages.WiskeyPages
             {
                 return RedirectToPage("./NotFound");
             }
-            TempData["Message"] = $"{Whiskey.Brand}{Whiskey.Name} deleted";
+            TempData["Message"] = $"{Whiskey.Brand} {Whiskey.Name} deleted";
             return RedirectToPage("./Index");
         }
     }

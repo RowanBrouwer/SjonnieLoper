@@ -22,31 +22,38 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             return PB;
         }
 
+        /// <summary>
+        /// Gets a cartItem by Id.
+        /// </summary>
         public async Task<ShoppingCartItem> GetCartItemByIdAsync(int id)
         {
             return await db.ShoppingCartItems.FirstOrDefaultAsync(c => c.Id == id);
         }
 
+        /// <summary>
+        /// Gets a IEnumerable with all countries in the database.
+        /// </summary>
         public async Task<IEnumerable<Country>> GetAllCountriesAsync()
         {
             return await db.Countries.ToListAsync();
         }
 
         /// <summary>
-        /// Checks if this is a new country being added
+        /// 
         /// </summary>
         /// <param name="addNewCountry">Bool to check if a new country is being added.</param>
-        /// <param name="CountryName">Name of new country being added.</param>
+        /// <param name="countryName">Name of new country being added.</param>
+        /// <param name="whiskeyCountryId"></param>
         /// <returns></returns>
-        public async Task<Country> CheckNewCountry(bool addNewCountry, string CountryName, int? WhiskeyCountry)
+        public async Task<Country> CheckNewCountry(bool addNewCountry, string countryName, int whiskeyCountryId)
         {
             if (addNewCountry)
             {
-                if ((await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName)) == null)
+                if ((await db.Countries.FirstOrDefaultAsync(c => c.Name == countryName)) == null)
                 {
                     Country customCountry = new Country
                     {
-                        Name = CountryName
+                        Name = countryName
                     };
                     db.Add(customCountry);
 
@@ -56,10 +63,10 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
                 }
                 else
                 {
-                    return await db.Countries.FirstOrDefaultAsync(c => c.Name == CountryName);
+                    return await db.Countries.FirstOrDefaultAsync(c => c.Name == countryName);
                 }
             }
-            return await db.Countries.FirstOrDefaultAsync(c => c.Id == WhiskeyCountry);
+            return await db.Countries.FirstOrDefaultAsync(c => c.Id == whiskeyCountryId);
         }
     }
 }

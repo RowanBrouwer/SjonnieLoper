@@ -6,18 +6,17 @@ using System.Text;
 
 namespace SjonnieLoper.Core.Models
 {
-    public class ShoppingCartItem
+    public class OrderItem
     {
         public int Id { get; set; }
-        public WhiskeyBase Whiskey { get; set; }
+        public int OrderId { get; set; }
+
+        public int WhiskeyId { get; set; }
         public int Amount { get; set; }
-        public string ShoppingCartId { get; set; }
+        public WhiskeyBase Whiskey { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:0.00}")]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal SubTotal 
-        {
-            get { return (Amount * Whiskey.Price); }
-        }
+        public decimal SubTotal { get; set; }
     }
 }
