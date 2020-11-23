@@ -11,6 +11,7 @@ using SjonnieLoper.DataBase.Services.Interfaces;
 using Syncfusion.Drawing;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;
+using Syncfusion.Pdf.Grid;
 
 namespace SjonnieLoper.Pages.OrderPages
 {
@@ -51,11 +52,22 @@ namespace SjonnieLoper.Pages.OrderPages
 
             PdfPage page = document.Pages.Add();
 
-            PdfGraphics graphics = page.Graphics;
+            PdfGrid pdfGrid = new PdfGrid();
 
-            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+            DataTable dataTable = new DataTable();
 
-            DataTable dtCsv = new DataTable();
+            dataTable.Columns.Add("Whiskey Id");
+            dataTable.Columns.Add("Whiskey Name");
+            dataTable.Columns.Add("Amount of whiskey");
+
+            foreach (var OIT in order.OrderItems)
+            {
+                dataTable.Rows.Add(new object[] { $"{OIT.Id}", $"{OIT.Whiskey.Name}", $"{OIT.Amount}" });
+            }
+
+            pdfGrid.DataSource = dataTable;
+
+            pdfGrid.Draw(page, new PointF(10, 10));
 
             MemoryStream stream = new MemoryStream();
 
