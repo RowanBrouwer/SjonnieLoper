@@ -43,13 +43,14 @@ namespace SjonnieLoper.Pages.OrderPages
 
         public async Task<IActionResult> OnPost(int orderId)
         {
-            Order = await _orderContext.DeleteOrder(orderId);
-            await _generalContext.Commit();
             if (Order == null)
             {
                 return RedirectToPage("./NotFound");
             }
-            TempData["Message"] = $"{Order.Id}{Order}{Order} order deleted";
+            Order = await _orderContext.DeleteOrderAsync(orderId);
+            await _generalContext.Commit();
+
+            TempData["Message"] = $"{Order.Id} order deleted";
             return RedirectToPage("./Index");
         }
     }

@@ -123,30 +123,23 @@ namespace SjonnieLoper.DataBase
         /// <summary>
         /// Stella's update code.
         /// </summary>
-        /// <param name="UpdatedWhiskey"></param>
+        /// <param name="updatedWhiskey"></param>
         /// <param name="addNewCountry">Bool to check if a new country is being added.</param>
-        /// <param name="CountryName">Name of new country being added.</param>
+        /// <param name="countryName">Name of new country being added.</param>
         /// <returns></returns>
-        public async Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase UpdatedWhiskey, bool addNewCountry, string CountryName)
+        public async Task<WhiskeyBase> UpdateWiskeyAsync(WhiskeyBase updatedWhiskey, bool addNewCountry, string countryName)
         {
-            int WhiskeyCountry;
+            int whiskeyCountryId = 0;
 
-            if (!(UpdatedWhiskey.CountryOfOrigin == null))
-            {
-                WhiskeyCountry = UpdatedWhiskey.CountryOfOrigin.Id;
-            }
-            else
-            {
-                WhiskeyCountry = 0;
-            }
-            
-            UpdatedWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, CountryName, WhiskeyCountry);
+            if (updatedWhiskey.CountryOfOrigin != null)
+                whiskeyCountryId = updatedWhiskey.CountryOfOrigin.Id;
 
-            var entity = db.Whiskeys.Attach(UpdatedWhiskey);
+            updatedWhiskey.CountryOfOrigin = await general.CheckNewCountry(addNewCountry, countryName, whiskeyCountryId);
 
+            var entity = db.Whiskeys.Attach(updatedWhiskey);
             entity.State = EntityState.Modified;
             
-            return UpdatedWhiskey;
+            return updatedWhiskey;
         }
 
 

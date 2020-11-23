@@ -35,15 +35,25 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
             var shoppingCartItems = _shoppingCart.ShoppingCartItems;
             foreach (var cartItem in shoppingCartItems)
             {
+                var whiskey = await db.Whiskeys.FirstOrDefaultAsync(w => w.Id == cartItem.Whiskey.Id);
                 var orderItem = new OrderItem()
                 {
                     Amount = cartItem.Amount,
-                    WhiskeyId = db.Whiskeys.FirstOrDefault(w => w.Id == (cartItem.Whiskey.Id)).Id,
+                    WhiskeyId = whiskey.Id,
                     OrderId = newOrder.Id,
                     SubTotal = cartItem.SubTotal,
-                    Whiskey = db.Whiskeys.FirstOrDefault(w => w.Id == cartItem.Whiskey.Id)
+                    Whiskey = whiskey
                 };
                 db.OrderItems.Add(orderItem);
+
+                //Update AmountInStorage for Whiskey in the order.
+                if (whiskey.AmountInStorage - cartItem.Amount <= 0)
+                    whiskey.AmountInStorage = 0;
+                else
+                    whiskey.AmountInStorage -= cartItem.Amount;
+
+                var entity = db.Whiskeys.Attach(whiskey);
+                entity.State = EntityState.Modified;
 
                 //For each orderItem add Amount and Subtotal to TotalBottleAmount and TotalCost.
                 newOrder.TotalBottleAmount += orderItem.Amount;
@@ -55,13 +65,29 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         /// <summary>
         /// Soft deletes an Order by Id.
         /// </summary>
-        public async Task<Order> DeleteOrder(int id)
+        public async Task<Order> DeleteOrderAsync(int id)
         {
             var DelOrder = await GetOrderById(id);
             if (DelOrder != null)
             {
+                //Foreach orderItem. Take the whiskey and add back the whiskeys of the order to the amount of whiskeys in storage.
+                foreach (var orderItem in DelOrder.OrderItems)
+                {
+                    var whiskey = await db.Whiskeys.FirstOrDefaultAsync(w => w.Id == orderItem.Whiskey.Id);
+                    if (whiskey != null && !whiskey.SoftDeleted)
+                    {
+                        whiskey.AmountInStorage += orderItem.Amount;
+                        
+                        var entity = db.Whiskeys.Attach(whiskey);
+                        entity.State = EntityState.Modified;
+                    }
+                }
+                //Save changes to all whiskeys.
+                await db.SaveChangesAsync();
+
                 DelOrder.SoftDeleted = true;
             }
+         
             return DelOrder;
         }
 

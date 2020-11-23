@@ -16,7 +16,7 @@ namespace SjonnieLoper.DataBase.Services.Interfaces
         public Order UpdateOrder(Order updatedOrder);
 
         public Task CreateOrderAsync(ApplicationUser user);
-        public Task<Order> DeleteOrder(int id);
+        public Task<Order> DeleteOrderAsync(int id);
         public Task<int> GetCountOfOrders();
     }
 }
