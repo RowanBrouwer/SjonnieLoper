@@ -51,4 +51,8 @@
     <ProjectReference Include="..\SjonnieLoper.Core\SjonnieLoper.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
