@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20201113105054_CartItemUpdate.Designer.cs" />
     <Compile Remove="Migrations\20201113105217_CartItemUpdate.cs" />
     <Compile Remove="Migrations\20201113105217_CartItemUpdate.Designer.cs" />
+    <Compile Remove="Migrations\20201123085659_test.cs" />
+    <Compile Remove="Migrations\20201123085659_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

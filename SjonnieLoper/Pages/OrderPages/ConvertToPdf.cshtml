@@ -1,0 +1,16 @@
+﻿@page "{orderId:int}"
+@model SjonnieLoper.Pages.OrderPages.ConvertToPdfModel
+@{
+}
+
+
+<div class="alert alert-danger">
+    Are you sure you want to Convert @Model.order.Id?
+</div>
+
+
+
+<form method="post">
+    <button type="submit" class="btn btn-dark">Yes!</button>
+    <a asp-page="Index" class="btn btn-outline-dark">Cancel</a>
+</form>
